@@ -1,0 +1,5 @@
+package com.ridesync.app.loginPageController;
+
+public class UserRepository {
+
+}

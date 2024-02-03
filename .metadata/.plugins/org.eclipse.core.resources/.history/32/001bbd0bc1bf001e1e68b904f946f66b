@@ -1,0 +1,22 @@
+package com.ridesync.app.loginPageController;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class loginService {
+	private List<User> users = new ArrayList<>(Arrays.asList(
+			new User("Puru",1),
+			new User("Rahul",2),
+			new User("Shakti",3),
+			new User("Kishore",4)
+			));
+	
+	public List<User> getAllTopics(){
+		return users;
+	}
+	
+	public User getUser(int id) {
+		return users.stream().filter(t-> t.getId() == id).findFirst().get();
+	}
+}

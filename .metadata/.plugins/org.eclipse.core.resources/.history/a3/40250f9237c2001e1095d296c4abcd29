@@ -1,0 +1,40 @@
+package com.ridesync.app.loginPageController;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.Data;
+
+@Entity
+@Data
+@Table(name = "STUDENT")
+public class User {
+	private String name;
+	@Id
+	private int id;
+	
+	public User() {
+		super();
+	}
+	
+	public User(String name, int id) {
+		super();
+		this.name = name;
+		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+
+}
