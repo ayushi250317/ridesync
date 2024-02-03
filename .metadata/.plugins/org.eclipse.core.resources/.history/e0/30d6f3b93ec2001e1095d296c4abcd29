@@ -1,7 +1,0 @@
-package com.ridesync.app.loginPageController;
-
-import org.springframework.data.repository.CrudRepository;
-
-public interface UserRepository extends CrudRepository<User, String>{
-	
-}

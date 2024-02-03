@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<session version="1.0">
-<refactoring comment="Rename package &apos;com.ridesync.loginPageController&apos; to &apos;com.ridesync.app.loginPageController&apos;&#x0D;&#x0A;- Original project: &apos;ridesync&apos;&#x0D;&#x0A;- Original element: &apos;ridesync/src/main/java/com.ridesync.loginPageController&apos;&#x0D;&#x0A;- Renamed element: &apos;ridesync/src/main/java/com.ridesync.app.loginPageController&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" description="Rename package &apos;com.ridesync.loginPageController&apos;" flags="589830" hierarchical="false" id="org.eclipse.jdt.ui.rename.package" input="/src\/main\/java=/optional=/true=/=/maven.pomderived=/true=/&lt;com.ridesync.loginPageController" name="com.ridesync.app.loginPageController" qualified="false" references="true" stamp="1706653821686" textual="false" version="1.0"/>
-</session>

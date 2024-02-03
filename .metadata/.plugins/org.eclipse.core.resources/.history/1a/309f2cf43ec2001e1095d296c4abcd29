@@ -1,9 +1,0 @@
-package com.ridesync.app.loginPageController;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-public interface UserRepository extends JpaRepository<User, String>{
-	
-	User findById(int id);
-	
-}
