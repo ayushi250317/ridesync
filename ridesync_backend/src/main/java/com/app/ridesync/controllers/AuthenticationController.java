@@ -4,13 +4,17 @@ import com.app.ridesync.dto.requests.AuthenticationRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.services.AuthenticationService;
+
+import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,7 +27,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ){
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.validateRequest(request));
     }
 
     @PostMapping("/authenticate")
@@ -33,4 +37,19 @@ public class AuthenticationController {
     ){
         return ResponseEntity.ok(service.authenticate(request));
     }
+
+    @PostMapping("/forgotPassword")
+    public ResponseEntity<AuthenticationResponse> forgotPassword(
+            @RequestBody AuthenticationRequest request
+    ) throws MessagingException {
+        return ResponseEntity.ok(service.forgotPassword(request));
+    }
+
+    @GetMapping("/resetPassword")
+    public ResponseEntity<AuthenticationResponse> resetPassword
+    (@RequestParam String token,
+     @RequestParam Integer id
+    ){
+        return ResponseEntity.ok(service.resetPassword(id,token));
+}
 }
