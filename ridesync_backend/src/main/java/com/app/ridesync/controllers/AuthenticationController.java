@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @RestController
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
+
 public class AuthenticationController {
     private final AuthenticationService service;
 
