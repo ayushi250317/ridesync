@@ -81,7 +81,7 @@ public class AuthenticationService {
       message.setFrom("ayushimalhotra9799@gmail.com");
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
-      String htmlContent="<p>Click the <a href=\"http://localhost:8073/api/v1/auth/resetPassword?token="+resetToken+"&id="+user.getUserId()+"\">link</a> to reset your password </p>";
+      String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       message.setContent(htmlContent,"text/html;charset=utf-8");
       javaMailSender.send(message);
       return AuthenticationResponse.builder().message("email sent successfully").success(true).build();

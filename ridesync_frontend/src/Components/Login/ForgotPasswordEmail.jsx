@@ -1,15 +1,17 @@
-import { Box, Button, Center, Flex, Image, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Image, Input, Text } from '@chakra-ui/react'
 import axios from 'axios';
 import React from 'react'
 import { useState } from 'react';
 import { IoChevronBackSharp } from "react-icons/io5";
+import { API } from '../../sharedComponent/API';
 const ForgotPasswordEmail = () => {
 
     const [email, setEmail] = useState('')
     const [sentSuccess, setSentSuccess] = useState(false)
 
     const handleSubmitEmail = () => {
-        axios.post('http://localhost:8073/api/v1/auth/forgotPassword', { email }).then(resp => {
+        console.log({ email });
+        axios.post(`${API}/auth/forgotPassword`, { email }).then(resp => {
             console.log(resp.data)
             if (resp.data?.success) {
                 setSentSuccess(true)

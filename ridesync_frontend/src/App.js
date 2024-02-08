@@ -17,7 +17,7 @@ function App() {
           <Route element={<Signup />} path="/signup" />
           <Route element={<Home />} path="/" />
           <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
-          <Route element={<ConfirmPassword />} path="/confirm_password" />
+          <Route element={<ConfirmPassword />} path="/confirm_password/:token/:userId" />
         </Routes>
       </Router>
     </Box>

@@ -2,6 +2,7 @@ import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { API } from '../../sharedComponent/API'
 
 
 const Login = () => {
@@ -12,7 +13,7 @@ const Login = () => {
             email: email,
             password: password
         }
-        axios.post('http://localhost:8073/api/v1/auth/authenticate', requestObj)
+        axios.post(`${API}/auth/authenticate`, requestObj)
             .then(response => {
                 console.log('Response:', response);
                 let { token, user } = response
