@@ -1,6 +1,7 @@
 package com.app.ridesync.services;
 
 import com.app.ridesync.dto.requests.AuthenticationRequest;
+import com.app.ridesync.dto.requests.PasswordResetRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.repositories.UserRepository;
@@ -9,6 +10,8 @@ import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
 import com.app.ridesync.entities.User;
+
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -93,6 +96,16 @@ public class AuthenticationService {
             return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();    
         }
         return AuthenticationResponse.builder().message("Email did not match").success(false).build();
+    }
+
+    public AuthenticationResponse setNewPassword(PasswordResetRequest request) {
+        if(request.getNewPassword().equals(request.getReNewPassword())){
+            var user=repository.findById(request.getId()).orElseThrow();
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            repository.save(user);
+            return AuthenticationResponse.builder().message("Password Reset Successful").success(true).build();
+        }
+        return AuthenticationResponse.builder().message("Passwords do not match").success(false).build();
     }
 
 }

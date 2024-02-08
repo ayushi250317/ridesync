@@ -133,6 +133,37 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "newPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\" : \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk3OTlAZ21haWwuY29tIn0.HzcMHIVOlqFnuPQRzP6RMYAWU8OyfdraEyT2-j7v4Sg\",\r\n    \"id\" : 302,\r\n    \"newPassword\" : \"12345\",\r\n    \"reNewPassword\" : \"1235\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/newPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"newPassword"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}

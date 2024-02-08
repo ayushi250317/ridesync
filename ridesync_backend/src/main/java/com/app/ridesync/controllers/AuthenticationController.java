@@ -1,6 +1,7 @@
 package com.app.ridesync.controllers;
 
 import com.app.ridesync.dto.requests.AuthenticationRequest;
+import com.app.ridesync.dto.requests.PasswordResetRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.services.AuthenticationService;
@@ -51,5 +52,11 @@ public class AuthenticationController {
      @RequestParam Integer id
     ){
         return ResponseEntity.ok(service.resetPassword(id,token));
+}
+
+    @PostMapping("/newPassword")
+    public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request)
+   {
+        return ResponseEntity.ok(service.setNewPassword(request));
 }
 }
