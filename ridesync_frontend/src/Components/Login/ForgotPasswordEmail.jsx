@@ -32,7 +32,7 @@ const ForgotPasswordEmail = () => {
             <Box border="1px solid lightgray" padding="5" px="7" borderRadius="xl" boxShadow="xl" w={["90%", "80%", "45%", "35%"]} className="flip-card-inner">
                 {!sentSuccess ? <Box className="flip-card-front">
 
-                    <IoChevronBackSharp />
+                    <IoChevronBackSharp onClick={() => window.history.go(-1)} className='hovercursor' />
                     <Text textAlign="center" fontSize="2xl" fontWeight="semibold">Reset Password</Text>
                     <Text fontSize="large" my="2">To reset your password, enter the email address you use to signin to Ridesync.</Text>
                     <br />
