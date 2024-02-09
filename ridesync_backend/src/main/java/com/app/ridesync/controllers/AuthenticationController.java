@@ -29,8 +29,8 @@ public class AuthenticationController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
-    ){
-        return ResponseEntity.ok(service.validateRequest(request));
+    ) throws MessagingException{
+        return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/authenticate")
@@ -42,6 +42,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/forgotPassword")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> forgotPassword(
             @RequestBody AuthenticationRequest request
     ) throws MessagingException {
@@ -49,6 +50,7 @@ public class AuthenticationController {
     }
 
     @GetMapping("/resetPassword")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> resetPassword
     (@RequestParam String token,
      @RequestParam Integer id
@@ -56,9 +58,19 @@ public class AuthenticationController {
         return ResponseEntity.ok(service.resetPassword(id,token));
 }
 
+    @GetMapping("/verifyEmail")
+    @CrossOrigin(origins = "*")
+    public ResponseEntity<AuthenticationResponse> verifyEmail
+    (@RequestParam String email,
+     @RequestParam Integer id
+    ){
+        return ResponseEntity.ok(service.verifyEmail(id,email));  
+    }
+
     @PostMapping("/newPassword")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request)
-   {
-        return ResponseEntity.ok(service.setNewPassword(request));
+   {    
+    return ResponseEntity.ok(service.setNewPassword(request));
 }
 }

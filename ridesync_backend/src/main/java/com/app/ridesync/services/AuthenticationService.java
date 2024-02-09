@@ -11,12 +11,11 @@ import jakarta.mail.internet.MimeMessage;
 
 import com.app.ridesync.entities.User;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,17 +33,16 @@ public class AuthenticationService {
     @Autowired
     private final JavaMailSender javaMailSender;
 
-    public AuthenticationResponse validateRequest(RegisterRequest request) {
-        var user=repository.findByEmail(request.getEmail());
-        if(user.isPresent()){
+    public AuthenticationResponse validateRequest(RegisterRequest request) throws MessagingException {
+        User user=repository.findByEmail(request.getEmail());
+        if(user!=null){
             return AuthenticationResponse.builder().message("Email already registered").build();
         }
-        
         return register(request);
     }
 
-    public AuthenticationResponse register(RegisterRequest request) {
-        var user = User.builder()
+    public AuthenticationResponse register(RegisterRequest request) throws MessagingException {
+        User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
                 .address(request.getAddress())
@@ -53,18 +51,44 @@ public class AuthenticationService {
                 .password(passwordEncoder.encode(request.getPassword()))
                 .build();
         repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
+        MimeMessage message = javaMailSender.createMimeMessage();
+        message.setFrom("ayushimalhotra9799@gmail.com");
+        message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
+        message.setSubject("Reset Password");
+        String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
+        message.setContent(htmlContent,"text/html;charset=utf-8");
+        javaMailSender.send(message);
         return AuthenticationResponse.builder()
-                .token(jwtToken)
                 .message("Registration Successful")
                 .success(true)
                 .user(user)
                 .build();
+    
+    }
+    public AuthenticationResponse verifyEmail(Integer id,String email) {
+        User user=repository.findByUserId(id);
+        if(user.getEmail().equals(email)){
+            user.setVerified(true);
+            repository.save(user);
+            return AuthenticationResponse.builder().message("Email Verification Successful").success(true).build();
+        }
+       return AuthenticationResponse.builder().message("Email Verification Unsuccessful").build(); 
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        User user=repository.findByEmail(request.getEmail());
+        if(user==null){
+            return AuthenticationResponse.builder().message("Email not registered").build();
+        }
+        if(!user.isVerified()){
+           return AuthenticationResponse.builder().message("Please verify your account").build();
+        }
+        try{
         manager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        var user=repository.findByEmail(request.getEmail()).orElseThrow();
+        }
+        catch(AuthenticationException e){
+            return AuthenticationResponse.builder().message("Incorrect Password").build();
+        }
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .message("Login Successful")
@@ -75,7 +99,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse forgotPassword(AuthenticationRequest request) throws MessagingException {
-      var user=repository.findByEmail(request.getEmail()).orElseThrow();
+      User user=repository.findByEmail(request.getEmail());
+      if(user==null){
+        return AuthenticationResponse.builder().message("Email do not exist").build();
+      }
       String resetToken=jwtService.generateToken(user);
       MimeMessage message = javaMailSender.createMimeMessage();
       message.setFrom("ayushimalhotra9799@gmail.com");
@@ -89,23 +116,23 @@ public class AuthenticationService {
 }
 
     public AuthenticationResponse resetPassword(Integer id, String token) {
-        var user=repository.findById(id).orElseThrow();
+        User user=repository.findByUserId(id);
         String userEmail=user.getEmail();
         String tokenEmail=jwtService.extractUserEmail(token);
         if(userEmail.equals(tokenEmail)){
             return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();    
         }
-        return AuthenticationResponse.builder().message("Email did not match").success(false).build();
+        return AuthenticationResponse.builder().message("Email did not match").build();
     }
 
     public AuthenticationResponse setNewPassword(PasswordResetRequest request) {
         if(request.getNewPassword().equals(request.getReNewPassword())){
-            var user=repository.findById(request.getId()).orElseThrow();
+            User user=repository.findByUserId(request.getId());
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
             repository.save(user);
             return AuthenticationResponse.builder().message("Password Reset Successful").success(true).build();
         }
-        return AuthenticationResponse.builder().message("Passwords do not match").success(false).build();
+        return AuthenticationResponse.builder().message("Passwords do not match").build();
     }
 
 }
