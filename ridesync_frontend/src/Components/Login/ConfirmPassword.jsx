@@ -76,7 +76,7 @@ const ConfirmPassword = () => {
                 duration: 3000,
                 isClosable: true,
             })
-            console.log("password doesnt match");
+            // console.log("password doesnt match");
         }
     };
 

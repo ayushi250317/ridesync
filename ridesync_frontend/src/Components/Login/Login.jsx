@@ -1,13 +1,14 @@
 import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { API } from '../../sharedComponent/API'
 
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const naviagate = useNavigate()
     const handleSubmit = () => {
         let requestObj = {
             email: email,
@@ -18,6 +19,7 @@ const Login = () => {
                 console.log('Response:', response);
                 let { token, user } = response
                 localStorage.setItem('loggedInUserDetails', { token, user });
+                naviagate("/")
             })
             .catch(error => {
                 console.error('Error:', error);
