@@ -33,6 +33,7 @@ public class User implements UserDetails {
     private LocalDate dateOfBirth;
     private String password;
     private String phoneNumber;
+    private boolean isVerified;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("user"));
