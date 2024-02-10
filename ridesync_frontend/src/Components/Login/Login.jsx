@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Image, Input, Text, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -8,18 +8,29 @@ import { API } from '../../sharedComponent/API'
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const naviagate = useNavigate()
+    const naviagate = useNavigate();
+    const toast = useToast();
+
     const handleSubmit = () => {
         let requestObj = {
             email: email,
             password: password
-        }
+        };
         axios.post(`${API}/auth/authenticate`, requestObj)
             .then(response => {
-                console.log('Response:', response);
-                let { token, user } = response
-                localStorage.setItem('loggedInUserDetails', { token, user });
-                naviagate("/")
+                if (response.data.success) {
+                    let { token, user } = response;
+                    localStorage.setItem('loggedInUserDetails', { token, user });
+                    naviagate("/");
+                } else {
+                    toast({
+                        title: response.data.message,
+                        status: 'error',
+                        duration: 5000,
+                        isClosable: true,
+                    });
+                    console.log('Response:', response);
+                }
             })
             .catch(error => {
                 console.error('Error:', error);
