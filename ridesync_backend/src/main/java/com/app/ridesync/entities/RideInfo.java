@@ -24,17 +24,31 @@ public class RideInfo {
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private int rideInfoId;
 	private int rideId;
-	private String isActive;
+	private boolean isActive;
 	private int userId;
 	private int startLocationId;
 	private int endLocationId;
-	private String isDriver;
+	private boolean isDriver;
 	private int fare;
 	private int rating;
 	private String comments;
 	private Date waitTime;
 	private Date estimatedTripStartTime;
 	private Date estimatedTripEndTime;
+	
+	public RideInfo(int rideId, int userId, int startLocationId, int endLocationId, boolean isDriver, int fare,
+			String comments, Date estimatedTripStartTime, Date estimatedTripEndTime) {
+		super();
+		this.rideId = rideId;
+		this.userId = userId;
+		this.startLocationId = startLocationId;
+		this.endLocationId = endLocationId;
+		this.isDriver = isDriver;
+		this.fare = fare;
+		this.comments = comments;
+		this.estimatedTripStartTime = estimatedTripStartTime;
+		this.estimatedTripEndTime = estimatedTripEndTime;
+	}
 	
 	
 	public int getRideInfoId() {
@@ -49,10 +63,10 @@ public class RideInfo {
 	public void setRideId(int rideId) {
 		this.rideId = rideId;
 	}
-	public String getIsActive() {
+	public boolean getIsActive() {
 		return isActive;
 	}
-	public void setIsActive(String isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 	public int getUserId() {
@@ -73,10 +87,10 @@ public class RideInfo {
 	public void setEndLocationId(int endLocationId) {
 		this.endLocationId = endLocationId;
 	}
-	public String getIsDriver() {
+	public boolean getIsDriver() {
 		return isDriver;
 	}
-	public void setIsDriver(String isDriver) {
+	public void setIsDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
 	public int getFare() {
@@ -115,7 +129,5 @@ public class RideInfo {
 	public void setEstimatedTripEndTime(Date estimatedTripEndTime) {
 		this.estimatedTripEndTime = estimatedTripEndTime;
 	}
-	
-	
 	
 }

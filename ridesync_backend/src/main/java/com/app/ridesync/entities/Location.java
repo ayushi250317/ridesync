@@ -26,6 +26,13 @@ public class Location {
 	private String landmark;
 	private String address;
 	
+	public Location(int lattitude, int longitude, String landmark, String address) {
+		super();
+		this.lattitude = lattitude;
+		this.longitude = longitude;
+		this.landmark = landmark;
+		this.address = address;
+	}
 	
 	public int getLocationId() {
 		return locationId;
@@ -57,6 +64,5 @@ public class Location {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	
 	
 }

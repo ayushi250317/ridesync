@@ -32,6 +32,18 @@ public class Ride {
 	private int seatsAvailable;
 	private int vehicleId;
 	
+	public Ride(Date startTime, Date createdTime, int oneTimePassword, String status, String description,
+			int seatsAvailable, int vehicleId) {
+		super();
+		this.startTime = startTime;
+		this.createdTime = createdTime;
+		this.oneTimePassword = oneTimePassword;
+		this.status = status;
+		this.description = description;
+		this.seatsAvailable = seatsAvailable;
+		this.vehicleId = vehicleId;
+	}
+	
 	public int getRideId() {
 		return rideId;
 	}

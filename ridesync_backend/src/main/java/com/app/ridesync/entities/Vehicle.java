@@ -28,6 +28,15 @@ public class Vehicle {
 	private String type;
 	private int userId;
 	
+	public Vehicle(String regNo, int documentId, String model, String make, String type, int userId) {
+		this.regNo = regNo;
+		this.documentId = documentId;
+		this.model = model;
+		this.make = make;
+		this.type = type;
+		this.userId = userId;
+	}
+	
 	public int getVehicleId() {
 		return vehicleId;
 	}
@@ -70,4 +79,5 @@ public class Vehicle {
 	public void setUserId(int driverId) {
 		this.userId = driverId;
 	}
+	
 }

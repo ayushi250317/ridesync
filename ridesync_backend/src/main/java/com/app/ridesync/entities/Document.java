@@ -28,6 +28,13 @@ public class Document{
 	private String documentType;
 	private Date expiryDate;
 	
+	public Document(String documentName, int userId, String documentType, Date expiryDate) {
+		super();
+		this.documentName = documentName;
+		this.userId = userId;
+		this.documentType = documentType;
+		this.expiryDate = expiryDate;
+	}
 	
 	public int getDocumentId() {
 		return documentId;
@@ -59,6 +66,7 @@ public class Document{
 	public void setExpiryDate(Date expiryDate) {
 		this.expiryDate = expiryDate;
 	}
+	
 	
 	
 }
