@@ -13,12 +13,13 @@ public class RideInfoService {
 	
 	@Autowired
 	private RideInfoRepository rideInfoRepository;
+	@Autowired
 	private LocationService locationService;
 	
 	public String addRideInfo(RideInfoInput riInput) { // format for data that includes location.
 		
 		//add location 1
-		 int locationId1 = locationService.addLocation(new Location(
+		long locationId1 = locationService.addLocation(new Location(
 								 riInput.getLattitude1(),
 								 riInput.getLongitude1(),
 								 riInput.getLandmark1(),
@@ -26,7 +27,7 @@ public class RideInfoService {
 								 ));
 		
 		//add location 2
-		 int locationId2 = locationService.addLocation(new Location(
+		long locationId2 = locationService.addLocation(new Location(
 				 riInput.getLattitude2(),
 				 riInput.getLongitude2(),
 				 riInput.getLandmark2(),

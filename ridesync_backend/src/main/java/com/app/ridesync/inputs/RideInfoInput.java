@@ -1,5 +1,8 @@
 package com.app.ridesync.inputs;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Date;
 
 import lombok.AllArgsConstructor;
@@ -13,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RideInfoInput {
 	
-	private int userId;
+	private String userId;
 	
 	//Location - 1 start
 //	private int locationId1; //--------------------generated
@@ -31,7 +34,7 @@ public class RideInfoInput {
 	
 	//RideInfo
 //	private int rideInfoId; //--------------------generated
-	private int rideId; //--------------------generated (extract from ride Insertion)
+	private long rideId; //--------------------generated (extract from ride Insertion)
 //	private String isActive;
 //	private int startLocationId; //--------------------generated(extract from locationInsertion1)
 //	private int endLocationId; //--------------------generated(extract from locationInsertion2)
@@ -39,13 +42,13 @@ public class RideInfoInput {
 	private int fare;
 //	private int rating;
 	private String comments;
-	private Date waitTime;
-	private Date estimatedTripStartTime;
-	private Date estimatedTripEndTime;
+	private LocalTime waitTime;
+	private LocalDateTime estimatedTripStartTime;
+	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfoInput(int userId, int lattitude1, int longitude1, String landmark1, String address1, int lattitude2,
-			int longitude2, String landmark2, String address2, int rideId, int fare, String comments,
-			Date estimatedTripStartTime, Date estimatedTripEndTime) {
+	public RideInfoInput(String userId, int lattitude1, int longitude1, String landmark1, String address1, int lattitude2,
+			int longitude2, String landmark2, String address2, long rideId2, int fare, String comments,
+			LocalDateTime localDate, LocalDateTime localDate2) {
 		super();
 		this.userId = userId;
 		this.lattitude1 = lattitude1;
@@ -56,11 +59,11 @@ public class RideInfoInput {
 		this.longitude2 = longitude2;
 		this.landmark2 = landmark2;
 		this.address2 = address2;
-		this.rideId = rideId;
+		this.rideId = rideId2;
 		this.fare = fare;
 		this.comments = comments;
-		this.estimatedTripStartTime = estimatedTripStartTime;
-		this.estimatedTripEndTime = estimatedTripEndTime;
+		this.estimatedTripStartTime = localDate;
+		this.estimatedTripEndTime = localDate2;
 	}	
 	
 	

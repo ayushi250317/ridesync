@@ -1,5 +1,8 @@
 package com.app.ridesync.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.Ride;
 import com.app.ridesync.entities.Vehicle;
@@ -7,12 +10,16 @@ import com.app.ridesync.inputs.RideInfoInput;
 import com.app.ridesync.inputs.RideInput;
 import com.app.ridesync.repositories.RideRepository;
 
+@Service
 public class RideService {
 	
-	private AuthenticationService service;
+	@Autowired
 	private RideRepository rideRepository;
+	@Autowired
 	private RideInfoService rideInfoService;
+	@Autowired
 	private VehicleService vehicleService;
+	@Autowired
 	private DocumentService documentService;
 
 	
@@ -20,7 +27,7 @@ public class RideService {
 		
 		//Save Insurance Document
 		//String documentName, int userId, String documentType, Date expiryDate
-		int documentId = documentService.addDocument(new Document(
+		long documentId = documentService.addDocument(new Document(
 				input.getDocumentName(), 
 				input.getUserId(), 
 				input.getDocumentType(),
@@ -29,7 +36,7 @@ public class RideService {
 		
 		//Save first Vehicle 
 		//String regNo, int documentId, String model, String make, String type, int userId
-		int vehicleId = vehicleService.addVehicle(new Vehicle(
+		long vehicleId = vehicleService.addVehicle(new Vehicle(
 				input.getRegNo(),
 				documentId,
 				input.getModel(),
@@ -50,7 +57,7 @@ public class RideService {
 				vehicleId
 				));
 		
-		int rideId = ride.getRideId();
+		long rideId = ride.getRideId();
 		 
 		//Save in RideInfo
 		rideInfoService.addRideInfo(new RideInfoInput(

@@ -20,15 +20,15 @@ public class Vehicle {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int vehicleId;
+	private long vehicleId;
 	private String regNo;
-	private int documentId; //Insurance Document. must link to the document table.
+	private long documentId; //Insurance Document. must link to the document table.
 	private String model;
 	private String make;
 	private String type;
-	private int userId;
+	private String userId;
 	
-	public Vehicle(String regNo, int documentId, String model, String make, String type, int userId) {
+	public Vehicle(String regNo, long documentId, String model, String make, String type, String userId) {
 		this.regNo = regNo;
 		this.documentId = documentId;
 		this.model = model;
@@ -37,10 +37,10 @@ public class Vehicle {
 		this.userId = userId;
 	}
 	
-	public int getVehicleId() {
+	public long getVehicleId() {
 		return vehicleId;
 	}
-	public void setVehicleId(int vehicleId) {
+	public void setVehicleId(long vehicleId) {
 		this.vehicleId = vehicleId;
 	}
 	public String getRegNo() {
@@ -49,10 +49,10 @@ public class Vehicle {
 	public void setRegNo(String regNo) {
 		this.regNo = regNo;
 	}
-	public int getDocumentId() {
+	public long getDocumentId() {
 		return documentId;
 	}
-	public void setDocumentId(int documentId) {
+	public void setDocumentId(long documentId) {
 		this.documentId = documentId;
 	}
 	public String getModel() {
@@ -73,10 +73,10 @@ public class Vehicle {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public int getUserrId() {
+	public String getUserrId() {
 		return userId;
 	}
-	public void setUserId(int driverId) {
+	public void setUserId(String driverId) {
 		this.userId = driverId;
 	}
 	

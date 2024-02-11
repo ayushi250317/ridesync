@@ -1,5 +1,7 @@
 package com.app.ridesync.entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -22,18 +24,18 @@ public class Ride {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int rideId;
+	private long rideId;
 	
-	private Date startTime;
-	private Date createdTime;
+	private LocalDateTime startTime;
+	private LocalDateTime createdTime;
 	private int oneTimePassword;
 	private String status;
 	private String description;
 	private int seatsAvailable;
-	private int vehicleId;
+	private long vehicleId;
 	
-	public Ride(Date startTime, Date createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, int vehicleId) {
+	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
+			int seatsAvailable, long vehicleId) {
 		super();
 		this.startTime = startTime;
 		this.createdTime = createdTime;
@@ -44,22 +46,22 @@ public class Ride {
 		this.vehicleId = vehicleId;
 	}
 	
-	public int getRideId() {
+	public long getRideId() {
 		return rideId;
 	}
-	public void setRideId(int rideid) {
+	public void setRideId(long rideid) {
 		rideId = rideid;
 	}
-	public Date getStartTime() {
+	public LocalDateTime getStartTime() {
 		return startTime;
 	}
-	public void setStartTime(Date StartTime) {
+	public void setStartTime(LocalDateTime StartTime) {
 		startTime = StartTime;
 	}
-	public Date getCreatedTime() {
+	public LocalDateTime getCreatedTime() {
 		return createdTime;
 	}
-	public void setCreatedTime(Date CreatedTime) {
+	public void setCreatedTime(LocalDateTime CreatedTime) {
 		createdTime = CreatedTime;
 	}
 	public int getOneTimePassword() {
@@ -86,10 +88,10 @@ public class Ride {
 	public void setSeatsAvailable(int seatsAvailable) {
 		this.seatsAvailable = seatsAvailable;
 	}
-	public int getVehicleId() {
+	public long getVehicleId() {
 		return vehicleId;
 	}
-	public void setVehicleId(int vehicleId) {
+	public void setVehicleId(long vehicleId) {
 		this.vehicleId = vehicleId;
 	}
 	

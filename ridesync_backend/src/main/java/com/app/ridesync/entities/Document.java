@@ -1,5 +1,6 @@
 package com.app.ridesync.entities;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -22,13 +23,13 @@ public class Document{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int documentId;
+	private long documentId;
 	private String documentName;
-	private int userId;
+	private String userId;
 	private String documentType;
-	private Date expiryDate;
+	private LocalDate expiryDate;
 	
-	public Document(String documentName, int userId, String documentType, Date expiryDate) {
+	public Document(String documentName, String userId, String documentType, LocalDate expiryDate) {
 		super();
 		this.documentName = documentName;
 		this.userId = userId;
@@ -36,10 +37,10 @@ public class Document{
 		this.expiryDate = expiryDate;
 	}
 	
-	public int getDocumentId() {
+	public long getDocumentId() {
 		return documentId;
 	}
-	public void setDocumentId(int documentId) {
+	public void setDocumentId(long documentId) {
 		this.documentId = documentId;
 	}
 	public String getDocumentName() {
@@ -48,10 +49,10 @@ public class Document{
 	public void setDocumentName(String documentName) {
 		this.documentName = documentName;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 	public String getDocumentType() {
@@ -60,10 +61,10 @@ public class Document{
 	public void setDocumentType(String documentType) {
 		this.documentType = documentType;
 	}
-	public Date getExpiryDate() {
+	public LocalDate getExpiryDate() {
 		return expiryDate;
 	}
-	public void setExpiryDate(Date expiryDate) {
+	public void setExpiryDate(LocalDate expiryDate) {
 		this.expiryDate = expiryDate;
 	}
 	

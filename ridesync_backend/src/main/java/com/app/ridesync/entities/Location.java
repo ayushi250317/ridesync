@@ -20,7 +20,7 @@ public class Location {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int locationId;
+	private long locationId;
 	private int lattitude;
 	private int longitude;
 	private String landmark;
@@ -34,10 +34,10 @@ public class Location {
 		this.address = address;
 	}
 	
-	public int getLocationId() {
+	public long getLocationId() {
 		return locationId;
 	}
-	public void setLocationId(int locationId) {
+	public void setLocationId(long locationId) {
 		this.locationId = locationId;
 	}
 	public int getLattitude() {

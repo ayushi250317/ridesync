@@ -1,5 +1,7 @@
 package com.app.ridesync.entities;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import jakarta.persistence.Entity;
@@ -22,27 +24,27 @@ public class RideInfo {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private int rideInfoId;
-	private int rideId;
+	private long rideInfoId;
+	private long rideId;
 	private boolean isActive;
-	private int userId;
-	private int startLocationId;
-	private int endLocationId;
+	private String userId;
+	private long startLocationId;
+	private long endLocationId;
 	private boolean isDriver;
 	private int fare;
 	private int rating;
 	private String comments;
-	private Date waitTime;
-	private Date estimatedTripStartTime;
-	private Date estimatedTripEndTime;
+	private LocalDate waitTime;
+	private LocalDateTime estimatedTripStartTime;
+	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfo(int rideId, int userId, int startLocationId, int endLocationId, boolean isDriver, int fare,
-			String comments, Date estimatedTripStartTime, Date estimatedTripEndTime) {
+	public RideInfo(long rideId, String userId, long locationId1, long locationId2, boolean isDriver, int fare,
+			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();
 		this.rideId = rideId;
 		this.userId = userId;
-		this.startLocationId = startLocationId;
-		this.endLocationId = endLocationId;
+		this.startLocationId = locationId1;
+		this.endLocationId = locationId2;
 		this.isDriver = isDriver;
 		this.fare = fare;
 		this.comments = comments;
@@ -51,16 +53,16 @@ public class RideInfo {
 	}
 	
 	
-	public int getRideInfoId() {
+	public long getRideInfoId() {
 		return rideInfoId;
 	}
-	public void setRideInfoId(int rideInfoId) {
+	public void setRideInfoId(long rideInfoId) {
 		this.rideInfoId = rideInfoId;
 	}
-	public int getRideId() {
+	public long getRideId() {
 		return rideId;
 	}
-	public void setRideId(int rideId) {
+	public void setRideId(long rideId) {
 		this.rideId = rideId;
 	}
 	public boolean getIsActive() {
@@ -69,22 +71,22 @@ public class RideInfo {
 	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
-	public int getUserId() {
+	public String getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public int getStartLocationId() {
+	public long getStartLocationId() {
 		return startLocationId;
 	}
-	public void setStartLocationId(int startLocationId) {
+	public void setStartLocationId(long startLocationId) {
 		this.startLocationId = startLocationId;
 	}
-	public int getEndLocationId() {
+	public long getEndLocationId() {
 		return endLocationId;
 	}
-	public void setEndLocationId(int endLocationId) {
+	public void setEndLocationId(long endLocationId) {
 		this.endLocationId = endLocationId;
 	}
 	public boolean getIsDriver() {
@@ -111,22 +113,22 @@ public class RideInfo {
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
-	public Date getWaitTime() {
+	public LocalDate getWaitTime() {
 		return waitTime;
 	}
-	public void setWaitTime(Date waitTime) {
+	public void setWaitTime(LocalDate waitTime) {
 		this.waitTime = waitTime;
 	}
-	public Date getEstimatedTripStartTime() {
+	public LocalDateTime getEstimatedTripStartTime() {
 		return estimatedTripStartTime;
 	}
-	public void setEstimatedTripStartTime(Date estimatedTripStartTime) {
+	public void setEstimatedTripStartTime(LocalDateTime estimatedTripStartTime) {
 		this.estimatedTripStartTime = estimatedTripStartTime;
 	}
-	public Date getEstimatedTripEndTime() {
+	public LocalDateTime getEstimatedTripEndTime() {
 		return estimatedTripEndTime;
 	}
-	public void setEstimatedTripEndTime(Date estimatedTripEndTime) {
+	public void setEstimatedTripEndTime(LocalDateTime estimatedTripEndTime) {
 		this.estimatedTripEndTime = estimatedTripEndTime;
 	}
 	

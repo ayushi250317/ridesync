@@ -14,7 +14,7 @@ public class LocationService {
 	@Autowired
 	private LocationRepository locationRepository;
 	
-	public int addLocation(Location location) {
+	public long addLocation(Location location) {
 		Location result = locationRepository.save(location);
 		return result.getLocationId();
 	}

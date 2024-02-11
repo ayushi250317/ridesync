@@ -6,6 +6,7 @@ import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.repositories.UserRepository;
 import com.app.ridesync.entities.User;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,10 +18,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
+	
+	@Autowired
     private final UserRepository repository;
+	@Autowired
     private final PasswordEncoder passwordEncoder;
+	@Autowired
     private final JwtService jwtService;
+	@Autowired
     private final AuthenticationManager manager;
 
     public AuthenticationResponse register(RegisterRequest request) {

@@ -1,8 +1,9 @@
 package com.app.ridesync.inputs;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-import com.app.ridesync.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,14 +15,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RideInput{
 	
-	private int userId; //-----------------common userId
+	private String userId; //-----------------common userId
 	
 	//Document
 	
 //	private int documentId; //--------------------generated
 	private String documentName;
 	private String documentType;
-	private Date expiryDate;
+	private LocalDate expiryDate;
 	
 	
 	//vehicle
@@ -34,8 +35,8 @@ public class RideInput{
 	
 	//Ride
 //	private int rideId; //--------------------generated
-	private Date startTime;
-	private Date createdTime;
+	private LocalDateTime startTime;
+	private LocalDateTime createdTime;
 //	private int oneTimePassword; //--------------------generated
 	private String status;
 	private String description;
@@ -66,9 +67,9 @@ public class RideInput{
 	private int fare;
 	private int rating;
 	private String comments;
-	private Date waitTime;
-	private Date estimatedTripStartTime;
-	private Date estimatedTripEndTime;	
+	private LocalTime waitTime;
+	private LocalDateTime estimatedTripStartTime;
+	private LocalDateTime estimatedTripEndTime;	
 	
 		
 }
