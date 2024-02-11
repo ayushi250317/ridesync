@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "6559428d-7e75-4e35-acf3-80718de9837f",
+		"_postman_id": "2f83af81-a30b-4a7b-8121-08467e4524dd",
 		"name": "RideSync",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32619004"
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "17418806"
 	},
 	"item": [
 		{
@@ -16,27 +16,14 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra99@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"08-09-2003\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra99@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8073/api/v1/auth/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"register"
-							]
-						}
+						"url": "http://localhost:8073/api/v1/auth/register"
 					},
 					"response": []
 				},
@@ -54,20 +41,37 @@
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8073/api/v1/auth/authenticate",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"authenticate"
-							]
-						}
+						"url": "http://localhost:8073/api/v1/auth/authenticate"
+					},
+					"response": []
+				},
+				{
+					"name": "Post ride",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userId\":\"test\",\r\n    \"documentName\":\"Insurance\",\r\n    \"documentType\":\"Insurance\",\r\n    \"expiryDate\":\"2024-12-01\",\r\n    \"regNo\":\"12345\",\r\n    \"model\":\"volvo\",\r\n    \"make\":\"bailgadi\",\r\n    \"type\":\"cruiser\",\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"status\":\"tempStatus\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345,\r\n    \"longitude1\":12345,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"isActive\":\"false\",\r\n    \"isDriver\":\"true\",\r\n    \"fare\":\"20\",\r\n    \"rating\":4,\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/ride/addRide"
 					},
 					"response": []
 				}
