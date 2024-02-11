@@ -23,15 +23,14 @@ const Signup = () => {
         console.log(userDetails)
         axios.post(`${API}/auth/register`, userDetails)
             .then(response => {
-
                 console.log('Response:', response);
                 if (response.data.success) {
-                    toast({
-                        title: 'Account created Successfully.',
-                        status: 'success',
-                        duration: 5000,
-                        isClosable: true,
-                    })
+                    // toast({
+                    //     title: 'Account created Successfully.',
+                    //     status: 'success',
+                    //     duration: 5000,
+                    //     isClosable: true,
+                    // })
                     navigate('/account_email_verification', { state: { email: response.data.user.email } });
                 }
             })
