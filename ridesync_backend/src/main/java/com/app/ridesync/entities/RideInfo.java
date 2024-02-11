@@ -31,14 +31,14 @@ public class RideInfo {
 	private long startLocationId;
 	private long endLocationId;
 	private boolean isDriver;
-	private int fare;
+	private double fare;
 	private int rating;
 	private String comments;
 	private LocalDate waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfo(long rideId, String userId, long locationId1, long locationId2, boolean isDriver, int fare,
+	public RideInfo(long rideId, String userId, long locationId1, long locationId2, boolean isDriver, double d,
 			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();
 		this.rideId = rideId;
@@ -46,7 +46,7 @@ public class RideInfo {
 		this.startLocationId = locationId1;
 		this.endLocationId = locationId2;
 		this.isDriver = isDriver;
-		this.fare = fare;
+		this.fare = d;
 		this.comments = comments;
 		this.estimatedTripStartTime = estimatedTripStartTime;
 		this.estimatedTripEndTime = estimatedTripEndTime;
@@ -95,10 +95,10 @@ public class RideInfo {
 	public void setIsDriver(boolean isDriver) {
 		this.isDriver = isDriver;
 	}
-	public int getFare() {
+	public double getFare() {
 		return fare;
 	}
-	public void setFare(int fare) {
+	public void setFare(double fare) {
 		this.fare = fare;
 	}
 	public int getRating() {

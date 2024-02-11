@@ -21,15 +21,15 @@ public class Location {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long locationId;
-	private int lattitude;
-	private int longitude;
+	private double lattitude;
+	private double longitude;
 	private String landmark;
 	private String address;
 	
-	public Location(int lattitude, int longitude, String landmark, String address) {
+	public Location(double d, double e, String landmark, String address) {
 		super();
-		this.lattitude = lattitude;
-		this.longitude = longitude;
+		this.lattitude = d;
+		this.longitude = e;
 		this.landmark = landmark;
 		this.address = address;
 	}
@@ -40,16 +40,16 @@ public class Location {
 	public void setLocationId(long locationId) {
 		this.locationId = locationId;
 	}
-	public int getLattitude() {
+	public double getLattitude() {
 		return lattitude;
 	}
-	public void setLattitude(int lattitude) {
+	public void setLattitude(double lattitude) {
 		this.lattitude = lattitude;
 	}
-	public int getLongitude() {
+	public double getLongitude() {
 		return longitude;
 	}
-	public void setLongitude(int longitude) {
+	public void setLongitude(double longitude) {
 		this.longitude = longitude;
 	}
 	public String getLandmark() {

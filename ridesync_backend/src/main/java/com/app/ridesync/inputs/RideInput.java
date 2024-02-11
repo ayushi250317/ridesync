@@ -45,15 +45,15 @@ public class RideInput{
 	
 	//Location - 1 start
 //	private int locationId1; //--------------------generated
-	private int lattitude1;
-	private int longitude1;
+	private double lattitude1;
+	private double longitude1;
 	private String landmark1;
 	private String address1;
 	
 	//Location - 2 end
 //	private int locationId2;//--------------------generated
-	private int lattitude2;
-	private int longitude2;
+	private double lattitude2;
+	private double longitude2;
 	private String landmark2;
 	private String address2;
 	
@@ -64,7 +64,7 @@ public class RideInput{
 //	private int startLocationId; //--------------------generated(extract from locationInsertion1)
 //	private int endLocationId; //--------------------generated(extract from locationInsertion2)
 	private String isDriver;
-	private int fare;
+	private double fare;
 	private int rating;
 	private String comments;
 	private LocalTime waitTime;
