@@ -74,6 +74,100 @@
 						"url": "http://localhost:8073/api/v1/ride/addRide"
 					},
 					"response": []
+				},
+				{
+					"name": "ForgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/forgotPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/resetPassword?token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTE5OTlAZ21haWwuY29tIn0.jCGu-xnZu8Ug8aCq18Rvjdvlms0uwfoIUCWYmE5i1IQ&id=153",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resetPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTE5OTlAZ21haWwuY29tIn0.jCGu-xnZu8Ug8aCq18Rvjdvlms0uwfoIUCWYmE5i1IQ"
+								},
+								{
+									"key": "id",
+									"value": "153"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\" : \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk3OTlAZ21haWwuY29tIn0.HzcMHIVOlqFnuPQRzP6RMYAWU8OyfdraEyT2-j7v4Sg\",\r\n    \"id\" : 302,\r\n    \"newPassword\" : \"12345\",\r\n    \"reNewPassword\" : \"1235\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/newPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"newPassword"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
