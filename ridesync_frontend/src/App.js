@@ -9,6 +9,7 @@ import ForgotPasswordEmail from './Components/Login/ForgotPasswordEmail';
 import ConfirmPassword from './Components/Login/ConfirmPassword';
 import AccountEmailVerification from './Components/Signup/AccountEmailVerification';
 import RedirectAfterAccVerify from './Components/Signup/RedirectAfterAccVerify';
+import RiderRegistration from './Components/RiderRegistration/RiderRegistration';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route element={<RedirectAfterAccVerify />} path="/confirm_registration/:id/:email" />
           <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
           <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
+          <Route element={<RiderRegistration />} path="/rider_registration" />
         </Routes>
       </Router>
     </Box>

@@ -28,7 +28,7 @@ const Home = () => {
                 >
                     <Box
                         m="3"
-                        onClick={() => naviagate("/createdrive")}
+                        onClick={() => naviagate("/rider_registration")}
                         className="transition-all hover:scale-105"
                         border="1px solid lightgray"
                         px={["2", "10", "12", "16"]}
