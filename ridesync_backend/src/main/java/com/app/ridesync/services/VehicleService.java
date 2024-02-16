@@ -25,7 +25,7 @@ public class VehicleService {
 		
 		res.setVehicle(response);
 		}catch(Exception e){
-			res.setSuccess(true);
+			res.setSuccess(false);
 			res.setMessage(e.toString());
 			return res;
 		}

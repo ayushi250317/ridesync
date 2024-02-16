@@ -1,9 +1,7 @@
 package com.app.ridesync.dto.requests;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,28 +17,20 @@ public class RideInfoInput {
 	private String userId;
 	
 	//Location - 1 start
-//	private int locationId1; //--------------------generated
 	private double lattitude1;
 	private double longitude1;
 	private String landmark1;
 	private String address1;
 	
 	//Location - 2 end
-//	private int locationId2;//--------------------generated
 	private double lattitude2;
 	private double longitude2;
 	private String landmark2;
 	private String address2;
 	
 	//RideInfo
-//	private int rideInfoId; //--------------------generated
 	private long rideId; //--------------------generated (extract from ride Insertion)
-//	private String isActive;
-//	private int startLocationId; //--------------------generated(extract from locationInsertion1)
-//	private int endLocationId; //--------------------generated(extract from locationInsertion2)
-//	private String isDriver;
 	private double fare;
-//	private int rating;
 	private String comments;
 	private LocalTime waitTime;
 	private LocalDateTime estimatedTripStartTime;

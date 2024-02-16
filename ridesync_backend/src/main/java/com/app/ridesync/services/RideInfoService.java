@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ridesync.dto.requests.RideInfoInput;
+import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.entities.Location;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.repositories.RideInfoRepository;
@@ -16,38 +17,47 @@ public class RideInfoService {
 	@Autowired
 	private LocationService locationService;
 	
-	public String addRideInfo(RideInfoInput riInput) { // format for data that includes location.
-		
+	public RideInfoResponse addRideInfo(RideInfoInput riInput) { // format for data that includes location.
+		RideInfoResponse res = new RideInfoResponse();
+		try {
 		//add location 1
-		long locationId1 = locationService.addLocation(new Location(
+		res.setLocation1(locationService.addLocation(new Location(
 								 riInput.getLattitude1(),
 								 riInput.getLongitude1(),
 								 riInput.getLandmark1(),
 								 riInput.getAddress1()
-								 ));
+								 )));
 		
+				
 		//add location 2
-		long locationId2 = locationService.addLocation(new Location(
+		res.setLocation2(locationService.addLocation(new Location(
 				 riInput.getLattitude2(),
 				 riInput.getLongitude2(),
 				 riInput.getLandmark2(),
 				 riInput.getAddress2()
-				 ));
-		 
-		 
+				 )));
+		
+		
 		//get their Ids and then save RideInfo entry.
-		rideInfoRepository.save(new RideInfo(
+		res.setRideInfo(rideInfoRepository.save(new RideInfo(
 				riInput.getRideId(),
 				riInput.getUserId(),
-				locationId1,
-				locationId2,
-				true,
+				res.getLocation1().getLocationId(),
+				res.getLocation2().getLocationId(),
+				true,                               //isDriver is set to be true, here the driver only can post the ride. 
 				riInput.getFare(),
 				riInput.getComments(),
 				riInput.getEstimatedTripStartTime(),
 				riInput.getEstimatedTripEndTime()				
-				));
-		return "Saved Successfully";
+				)));
+		}catch(Exception e) {
+			res.setSuccess(false);
+			res.setMessage(e.toString());
+			return res;
+		}
+		res.setSuccess(true);
+		res.setMessage("Details added in RideInfo Table!");
+		return res;
 	}
 	
 }

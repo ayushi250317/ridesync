@@ -23,7 +23,7 @@ public class DocumentService {
 		
 		res.setDocument(response);
 		}catch(Exception e){
-			res.setSuccess(true);
+			res.setSuccess(false);
 			res.setMessage(e.toString());
 			return res;
 		}

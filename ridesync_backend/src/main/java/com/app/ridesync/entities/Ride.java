@@ -1,9 +1,6 @@
 package com.app.ridesync.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,9 +30,10 @@ public class Ride {
 	private String description;
 	private int seatsAvailable;
 	private long vehicleId;
+	private String userId;
 	
 	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, long vehicleId) {
+			int seatsAvailable, long vehicleId, String userId) {
 		super();
 		this.startTime = startTime;
 		this.createdTime = createdTime;
@@ -44,6 +42,7 @@ public class Ride {
 		this.description = description;
 		this.seatsAvailable = seatsAvailable;
 		this.vehicleId = vehicleId;
+		this.userId = userId;
 	}
 	
 	public long getRideId() {
