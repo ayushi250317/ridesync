@@ -1,6 +1,10 @@
 package com.app.ridesync.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ridesync.dto.requests.VehicleInput;
 import com.app.ridesync.dto.responses.VehicleResponse;
+import com.app.ridesync.entities.Vehicle;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.VehicleService;
 
@@ -32,5 +37,10 @@ public class VehicleController {
 		VehicleResponse res =vehicleService.addVehicle(input); // add(Ride details)
 		return res;
 	}
-
+	
+	@GetMapping("/getVehiclesByUserId/{id}")
+	public List<Vehicle> getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
+		String userId = jwtService.extractUserEmail(jwtToken);
+		return vehicleService.getVehiclesByUserId(userId);
+	}
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "2f83af81-a30b-4a7b-8121-08467e4524dd",
+		"_postman_id": "b7399618-70f1-4f9d-9acc-a9f1469551af",
 		"name": "RideSync",
 		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		"_exporter_id": "17418806"
@@ -132,6 +132,48 @@
 							}
 						},
 						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "getDocumentsByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:8073/api/v1/document/getDocumentsByUserId/ayushimalhotra99@gmail.com"
+					},
+					"response": []
+				},
+				{
+					"name": "getVehiclesByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/ayushimalhotra99@gmail.com"
 					},
 					"response": []
 				}

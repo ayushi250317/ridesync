@@ -1,5 +1,7 @@
 package com.app.ridesync.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +30,13 @@ public class DocumentService {
 			return res;
 		}
 		res.setSuccess(true);
-		res.setMessage("Vehicle inserted Successfully");
+		res.setMessage("Document inserted Successfully");
 		return res;
+	}
+	
+	
+	public List<Document> getDocumentsByUserId(String userId) {
+		return documentRepository.findByUserId(userId);
+		
 	}
 }

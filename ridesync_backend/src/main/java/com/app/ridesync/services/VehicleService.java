@@ -1,6 +1,8 @@
 package com.app.ridesync.services;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -32,5 +34,10 @@ public class VehicleService {
 		res.setSuccess(true);
 		res.setMessage("Vehicle inserted Successfully");
 		return res;
+	}
+	
+	public List<Vehicle> getVehiclesByUserId(String userId) {
+		return vehicleRepository.findByUserId(userId);
+		
 	}
 }
