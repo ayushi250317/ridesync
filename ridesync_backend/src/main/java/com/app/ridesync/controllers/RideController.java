@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ridesync.dto.requests.RegisterRequest;
+import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.entities.Ride;
-import com.app.ridesync.inputs.RideInput;
 import com.app.ridesync.services.AuthenticationService;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideInfoService;

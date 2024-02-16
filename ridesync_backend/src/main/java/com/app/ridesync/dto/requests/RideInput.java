@@ -1,4 +1,4 @@
-package com.app.ridesync.inputs;
+package com.app.ridesync.dto.requests;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

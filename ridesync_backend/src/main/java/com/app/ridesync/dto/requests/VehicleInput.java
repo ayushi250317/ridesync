@@ -1,4 +1,4 @@
-package com.app.ridesync.inputs;
+package com.app.ridesync.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,19 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VehicleInput {
-	private long vehicleId;
 	private String regNo;
 	private long documentId; //Insurance Document. must link to the document table.
 	private String model;
 	private String make;
 	private String type;
 	private String userId;
-	public long getVehicleId() {
-		return vehicleId;
-	}
-	public void setVehicleId(long vehicleId) {
-		this.vehicleId = vehicleId;
-	}
+	
+	
 	public String getRegNo() {
 		return regNo;
 	}

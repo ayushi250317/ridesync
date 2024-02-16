@@ -3,9 +3,9 @@ package com.app.ridesync.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.app.ridesync.dto.requests.RideInfoInput;
 import com.app.ridesync.entities.Location;
 import com.app.ridesync.entities.RideInfo;
-import com.app.ridesync.inputs.RideInfoInput;
 import com.app.ridesync.repositories.RideInfoRepository;
 
 @Service

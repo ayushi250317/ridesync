@@ -76,96 +76,62 @@
 					"response": []
 				},
 				{
-					"name": "ForgotPassword",
+					"name": "Add document",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\"\r\n    \r\n}",
+							"raw": "{\r\n\t\"documentName\":\"Driving Licence\",\r\n\t\"userId\":\"\",\r\n\t\"documentType\":\"Testtype\",\r\n\t\"expiryDate\":\"2024-12-01\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8073/api/v1/auth/forgotPassword",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"forgotPassword"
-							]
-						}
+						"url": "http://localhost:8073/api/v1/document/addDocument"
 					},
 					"response": []
 				},
 				{
-					"name": "ResetPassword",
+					"name": "add Vehicle",
 					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8073/api/v1/auth/resetPassword?token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTE5OTlAZ21haWwuY29tIn0.jCGu-xnZu8Ug8aCq18Rvjdvlms0uwfoIUCWYmE5i1IQ&id=153",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"resetPassword"
-							],
-							"query": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTE5OTlAZ21haWwuY29tIn0.jCGu-xnZu8Ug8aCq18Rvjdvlms0uwfoIUCWYmE5i1IQ"
-								},
-								{
-									"key": "id",
-									"value": "153"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "newPassword",
-					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"token\" : \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk3OTlAZ21haWwuY29tIn0.HzcMHIVOlqFnuPQRzP6RMYAWU8OyfdraEyT2-j7v4Sg\",\r\n    \"id\" : 302,\r\n    \"newPassword\" : \"12345\",\r\n    \"reNewPassword\" : \"1235\"\r\n}",
+							"raw": "{\r\n\t\"regNo\":\"NS-54321\",\r\n\t\"documentId\":203,\r\n\t\"model\":\"Passenger Train\",\r\n\t\"make\":\"Diesel\",\r\n    \"type\":\"train\",\r\n    \"userId\":\"\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": {
-							"raw": "http://localhost:8073/api/v1/auth/newPassword",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"newPassword"
-							]
-						}
+						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
 					},
 					"response": []
 				}
