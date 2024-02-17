@@ -34,35 +34,4 @@ public class Location {
 		this.address = address;
 	}
 	
-	public long getLocationId() {
-		return locationId;
-	}
-	public void setLocationId(long locationId) {
-		this.locationId = locationId;
-	}
-	public double getLattitude() {
-		return lattitude;
-	}
-	public void setLattitude(double lattitude) {
-		this.lattitude = lattitude;
-	}
-	public double getLongitude() {
-		return longitude;
-	}
-	public void setLongitude(double longitude) {
-		this.longitude = longitude;
-	}
-	public String getLandmark() {
-		return landmark;
-	}
-	public void setLandmark(String landmark) {
-		this.landmark = landmark;
-	}
-	public String getAddress() {
-		return address;
-	}
-	public void setAddress(String address) {
-		this.address = address;
-	}
-	
 }

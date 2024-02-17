@@ -44,55 +44,5 @@ public class Ride {
 		this.vehicleId = vehicleId;
 		this.userId = userId;
 	}
-	
-	public long getRideId() {
-		return rideId;
-	}
-	public void setRideId(long rideid) {
-		rideId = rideid;
-	}
-	public LocalDateTime getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(LocalDateTime StartTime) {
-		startTime = StartTime;
-	}
-	public LocalDateTime getCreatedTime() {
-		return createdTime;
-	}
-	public void setCreatedTime(LocalDateTime CreatedTime) {
-		createdTime = CreatedTime;
-	}
-	public int getOneTimePassword() {
-		return oneTimePassword;
-	}
-	public void setOneTimePassword(int oneTimePassword) {
-		this.oneTimePassword = oneTimePassword;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getSeatsAvailable() {
-		return seatsAvailable;
-	}
-	public void setSeatsAvailable(int seatsAvailable) {
-		this.seatsAvailable = seatsAvailable;
-	}
-	public long getVehicleId() {
-		return vehicleId;
-	}
-	public void setVehicleId(long vehicleId) {
-		this.vehicleId = vehicleId;
-	}
-	
-	
+
 }

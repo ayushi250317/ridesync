@@ -1,7 +1,6 @@
 package com.app.ridesync.entities;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,38 +35,5 @@ public class Document{
 		this.documentType = documentType;
 		this.expiryDate = expiryDate;
 	}
-	
-	public long getDocumentId() {
-		return documentId;
-	}
-	public void setDocumentId(long documentId) {
-		this.documentId = documentId;
-	}
-	public String getDocumentName() {
-		return documentName;
-	}
-	public void setDocumentName(String documentName) {
-		this.documentName = documentName;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public String getDocumentType() {
-		return documentType;
-	}
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
-	public LocalDate getExpiryDate() {
-		return expiryDate;
-	}
-	public void setExpiryDate(LocalDate expiryDate) {
-		this.expiryDate = expiryDate;
-	}
-	
-	
-	
+
 }
