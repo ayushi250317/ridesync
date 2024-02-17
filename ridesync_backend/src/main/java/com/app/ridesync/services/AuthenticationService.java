@@ -25,10 +25,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
+	
+	@Autowired
     private final UserRepository repository;
+	@Autowired
     private final PasswordEncoder passwordEncoder;
+	@Autowired
     private final JwtService jwtService;
+	@Autowired
     private final AuthenticationManager manager;
     @Autowired
     private final JavaMailSender javaMailSender;
