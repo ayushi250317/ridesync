@@ -2,8 +2,9 @@ package com.app.ridesync.services;
 
 import java.security.Key;
 
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.app.ridesync.entities.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,20 +21,20 @@ public class JwtService {
 
     private static final String SECRET_KEY="e6cbbccd3c26a59bba8ee0f77e560f6be857b1093d734f4627ede0b367c1f8c1";
 
-    public String extractUserEmail(String token) {
-        return extractClaim(token, Claims::getSubject);
+    public Integer extractUserId(String token) {
+        return Integer.parseInt(extractClaim(token, Claims::getSubject));
     }
 
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(User user) {
+        return generateToken(new HashMap<>(), user);
     }
 
     public String generateToken
             (Map<String, Object> extraClaims,
-             UserDetails userDetails) {
+             User user) {
         return Jwts
                 .builder().setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
+                .setSubject(user.getUserId().toString())
                 .signWith(getSignInKey(),SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -51,9 +52,9 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public boolean isTokenValid(String token,UserDetails userDetails) {
-        final String username=extractUserEmail(token);
-        return (username.equals(userDetails.getUsername()));
+    public boolean isTokenValid(String token,User user) {
+        final Integer userId=extractUserId(token);
+        return userId.equals(user.getUserId());
     }
     private Key getSignInKey() {
         byte[] keyBytes=Decoders.BASE64.decode(SECRET_KEY);
