@@ -1,6 +1,5 @@
 package com.app.ridesync.controllers;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.responses.DocumentResponse;
-import com.app.ridesync.entities.Document;
+import com.app.ridesync.dto.responses.GetDocumentResponse;
 import com.app.ridesync.services.DocumentService;
 import com.app.ridesync.services.JwtService;
 
@@ -38,9 +37,9 @@ public class DocumentController {
 	}
 	
 	@GetMapping("/getDocumentsByUserId/{id}")
-	public List<Document> getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
+	public GetDocumentResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
 		String userId = jwtService.extractUserEmail(jwtToken);
+		
 		return documentService.getDocumentsByUserId(userId);
 	}
-
 }

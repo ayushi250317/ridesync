@@ -1,5 +1,6 @@
 package com.app.ridesync.entities;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,7 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name = "vehicle")
-public class Vehicle {
+public class Vehicle{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)

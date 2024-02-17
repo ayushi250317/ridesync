@@ -1,13 +1,12 @@
 package com.app.ridesync.services;
 
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ridesync.dto.requests.VehicleInput;
 import com.app.ridesync.dto.responses.VehicleResponse;
+import com.app.ridesync.dto.responses.getVehicleResponse;
 import com.app.ridesync.entities.Vehicle;
 import com.app.ridesync.repositories.VehicleRepository;
 
@@ -22,8 +21,7 @@ public class VehicleService {
 		
 		try {
 		Vehicle vehicle = new Vehicle(input.getRegNo(), input.getDocumentId(), input.getModel(), input.getMake(), input.getType(), input.getUserId());
-		Vehicle response = vehicleRepository.save(vehicle); //add the insurance number ID.
-		
+		Vehicle response = vehicleRepository.save(vehicle); 
 		
 		res.setVehicle(response);
 		}catch(Exception e){
@@ -31,13 +29,25 @@ public class VehicleService {
 			res.setMessage(e.toString());
 			return res;
 		}
+		
 		res.setSuccess(true);
 		res.setMessage("Vehicle inserted Successfully");
 		return res;
 	}
 	
-	public List<Vehicle> getVehiclesByUserId(String userId) {
-		return vehicleRepository.findByUserId(userId);
+	public getVehicleResponse getVehiclesByUserId(String userId) {
+		getVehicleResponse res = new getVehicleResponse();
+		try {
 		
+		res.setTemp(vehicleRepository.findByUserId(userId));
+		
+		}catch(Exception e) {
+			res.setMessage(e.toString());
+			res.setSuccess(true);
+			return res;
+		}
+		res.setMessage("Vehicles Fetched Successfully");
+		res.setSuccess(true);
+		return res;
 	}
 }

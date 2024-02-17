@@ -1,12 +1,11 @@
 package com.app.ridesync.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.responses.DocumentResponse;
+import com.app.ridesync.dto.responses.GetDocumentResponse;
 import com.app.ridesync.entities.Document;
 import com.app.ridesync.repositories.DocumentRepository;
 
@@ -35,8 +34,20 @@ public class DocumentService {
 	}
 	
 	
-	public List<Document> getDocumentsByUserId(String userId) {
-		return documentRepository.findByUserId(userId);
+	public GetDocumentResponse getDocumentsByUserId(String userId) {
+		GetDocumentResponse res = new GetDocumentResponse();
+		
+		try {
+		res.setTemp(documentRepository.findByUserId(userId));
+		
+		}catch(Exception e){
+			res.setMessage(e.toString());
+			res.setSuccess(false);
+			return res;
+		}
+		res.setMessage("Documents Fetched Successfully");
+		res.setSuccess(true);
+		return res;
 		
 	}
 }
