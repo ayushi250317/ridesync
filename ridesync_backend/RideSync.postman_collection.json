@@ -44,9 +44,14 @@
 						"url": "http://localhost:8073/api/v1/auth/authenticate"
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
 				{
-					"name": "Post ride",
+					"name": "getVehiclesByUserId",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -54,7 +59,7 @@
 								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
 							}
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [
 							{
 								"key": "Authentication",
@@ -62,46 +67,7 @@
 								"type": "text"
 							}
 						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8073/api/v1/ride/addRide"
-					},
-					"response": []
-				},
-				{
-					"name": "Add document",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
-							}
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"documentName\":\"Driving Licence\",\r\n\t\"userId\":\"\",\r\n\t\"documentType\":\"Testtype\",\r\n\t\"expiryDate\":\"2024-12-01\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8073/api/v1/document/addDocument"
+						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/ayushimalhotra99@gmail.com"
 					},
 					"response": []
 				},
@@ -134,6 +100,41 @@
 						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
 					},
 					"response": []
+				}
+			]
+		},
+		{
+			"name": "Document",
+			"item": [
+				{
+					"name": "Add document",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"documentName\":\"Driving Licence\",\r\n\t\"userId\":\"\",\r\n\t\"documentType\":\"Testtype\",\r\n\t\"expiryDate\":\"2024-12-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/document/addDocument"
+					},
+					"response": []
 				},
 				{
 					"name": "getDocumentsByUserId",
@@ -155,9 +156,14 @@
 						"url": "http://localhost:8073/api/v1/document/getDocumentsByUserId/ayushimalhotra99@gmail.com"
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Ride",
+			"item": [
 				{
-					"name": "getVehiclesByUserId",
+					"name": "Post ride",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -165,7 +171,7 @@
 								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
 							}
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authentication",
@@ -173,7 +179,16 @@
 								"type": "text"
 							}
 						],
-						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/ayushimalhotra99@gmail.com"
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/ride/addRide"
 					},
 					"response": []
 				}
