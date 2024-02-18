@@ -52,7 +52,7 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
         MimeMessage message = javaMailSender.createMimeMessage();
-        message.setFrom("ridesync24@gmail.com");
+        message.setFrom("ayushimalhotra9799@gmail.com");
         message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
         message.setSubject("Verify Ridesync Account");
         String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
@@ -105,7 +105,7 @@ public class AuthenticationService {
       }
       String resetToken=jwtService.generateToken(user);
       MimeMessage message = javaMailSender.createMimeMessage();
-      message.setFrom("ridesync24@gmail.com");
+      message.setFrom("ayushimalhotra9799@gmail.com");
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
       String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
