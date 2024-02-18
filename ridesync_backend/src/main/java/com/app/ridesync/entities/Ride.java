@@ -30,10 +30,10 @@ public class Ride {
 	private String description;
 	private int seatsAvailable;
 	private long vehicleId;
-	private String userId;
+	private Integer userId;
 	
 	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, long vehicleId, String userId) {
+			int seatsAvailable, long vehicleId, Integer userId) {
 		super();
 		this.startTime = startTime;
 		this.createdTime = createdTime;

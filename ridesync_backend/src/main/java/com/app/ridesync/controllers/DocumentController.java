@@ -30,7 +30,7 @@ public class DocumentController {
 	@PostMapping("/addDocument")
 	public DocumentResponse addDocument(@RequestHeader("Authentication") String jwtToken, @RequestBody DocumentInput input) {
 		
-		String userId = jwtService.extractUserEmail(jwtToken);
+		Integer userId = 52;//jwtService.extractUserEmail(jwtToken);
 		input.setUserId(userId);
 		DocumentResponse res =documentService.addDocument(input); // add(Ride details)
 		return res;
@@ -38,7 +38,7 @@ public class DocumentController {
 	
 	@GetMapping("/getDocumentsByUserId/{id}")
 	public GetDocumentResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
-		String userId = jwtService.extractUserEmail(jwtToken);
+		Integer userId = 52;//jwtService.extractUserEmail(jwtToken);
 		
 		return documentService.getDocumentsByUserId(userId);
 	}

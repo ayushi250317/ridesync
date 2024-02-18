@@ -11,5 +11,5 @@ import com.app.ridesync.entities.Document;
 public interface DocumentRepository extends JpaRepository<Document, Integer> {
     Optional<Document> findByDocumentId(Integer documentId);
     
-    List<Document> findByUserId(String userId);
+    List<Document> findByUserId(Integer userId);
 }

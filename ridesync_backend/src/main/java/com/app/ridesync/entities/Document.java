@@ -24,11 +24,11 @@ public class Document{
     @GeneratedValue(strategy = GenerationType.AUTO)
 	private long documentId;
 	private String documentName;
-	private String userId;
+	private Integer userId;
 	private String documentType;
 	private LocalDate expiryDate;
 	
-	public Document(String documentName, String userId, String documentType, LocalDate expiryDate) {
+	public Document(String documentName, Integer userId, String documentType, LocalDate expiryDate) {
 		super();
 		this.documentName = documentName;
 		this.userId = userId;

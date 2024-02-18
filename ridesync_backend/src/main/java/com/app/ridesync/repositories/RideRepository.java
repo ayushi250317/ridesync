@@ -12,6 +12,6 @@ import com.app.ridesync.entities.User;
 @Repository
 public interface RideRepository extends JpaRepository<Ride, Integer> {
 	
-	List<User> findByUserId(String userId);
+	List<User> findByUserId(Integer userId);
 	
 }

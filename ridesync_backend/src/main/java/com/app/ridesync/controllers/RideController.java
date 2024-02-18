@@ -28,7 +28,7 @@ public class RideController {
 	@PostMapping("/addRide")
 	public RideResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody RideInput input) {
 		
-		String userId = jwtService.extractUserEmail(jwtToken);
+		Integer userId = jwtService.extractUserEmail(jwtToken);
 		input.setUserId(userId);
 		RideResponse res = rideService.addRide(input); // add(Ride details)
 		return res;

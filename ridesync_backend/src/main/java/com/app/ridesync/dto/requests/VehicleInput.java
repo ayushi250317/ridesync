@@ -15,5 +15,5 @@ public class VehicleInput {
 	private String model;
 	private String make;
 	private String type;
-	private String userId;
+	private Integer userId;
 }

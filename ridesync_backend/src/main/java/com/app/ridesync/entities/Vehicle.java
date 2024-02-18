@@ -27,9 +27,9 @@ public class Vehicle{
 	private String model;
 	private String make;
 	private String type;
-	private String userId;
+	private Integer userId;
 	
-	public Vehicle(String regNo, long documentId, String model, String make, String type, String userId) {
+	public Vehicle(String regNo, long documentId, String model, String make, String type, Integer userId) {
 		this.regNo = regNo;
 		this.documentId = documentId;
 		this.model = model;

@@ -34,7 +34,7 @@ public class DocumentService {
 	}
 	
 	
-	public GetDocumentResponse getDocumentsByUserId(String userId) {
+	public GetDocumentResponse getDocumentsByUserId(Integer userId) {
 		GetDocumentResponse res = new GetDocumentResponse();
 		
 		try {

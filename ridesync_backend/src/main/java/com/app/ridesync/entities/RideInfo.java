@@ -26,7 +26,7 @@ public class RideInfo {
 	private long rideInfoId;
 	private long rideId;
 	private boolean isActive;
-	private String userId;
+	private Integer userId;
 	private long startLocationId;
 	private long endLocationId;
 	private boolean isDriver;
@@ -37,7 +37,7 @@ public class RideInfo {
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfo(long rideId, String userId, long locationId1, long locationId2, boolean isDriver, double d,
+	public RideInfo(long rideId, Integer userId, long locationId1, long locationId2, boolean isDriver, double d,
 			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();
 		this.rideId = rideId;

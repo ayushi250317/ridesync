@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RideInfoInput {
 	
-	private String userId;
+	private Integer userId;
 	
 	//Location - 1 start
 	private double lattitude1;
@@ -36,7 +36,7 @@ public class RideInfoInput {
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfoInput(String userId, double d, double e, String landmark1, String address1, double f,
+	public RideInfoInput(Integer userId, double d, double e, String landmark1, String address1, double f,
 			double g, String landmark2, String address2, long rideId2, double h, String comments,
 			LocalDateTime localDate, LocalDateTime localDate2) {
 		super();

@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RideInput{
 	
-	private String userId; //-----------------common userId
+	private Integer userId; //-----------------common userId
 	
 	//Ride
 	private LocalDateTime startTime;

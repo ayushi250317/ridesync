@@ -31,7 +31,7 @@ public class VehicleController {
 	@PostMapping("/addVehicle")
 	public VehicleResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
 		
-		String userId = jwtService.extractUserEmail(jwtToken);
+		Integer userId = 52;//jwtService.extractUserEmail(jwtToken);
 		input.setUserId(userId);
 		VehicleResponse res =vehicleService.addVehicle(input); // add(Ride details)
 		return res;
@@ -39,7 +39,7 @@ public class VehicleController {
 	
 	@GetMapping("/getVehiclesByUserId/{id}")
 	public getVehicleResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
-		String userId = jwtService.extractUserEmail(jwtToken);
+		Integer userId = 52;//jwtService.extractUserEmail(jwtToken);
 		return vehicleService.getVehiclesByUserId(userId);
 	}
 }
