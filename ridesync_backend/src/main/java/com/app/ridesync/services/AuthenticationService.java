@@ -25,10 +25,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
+	
+	@Autowired
     private final UserRepository repository;
+	@Autowired
     private final PasswordEncoder passwordEncoder;
+	@Autowired
     private final JwtService jwtService;
+	@Autowired
     private final AuthenticationManager manager;
     @Autowired
     private final JavaMailSender javaMailSender;
@@ -52,7 +56,7 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
         MimeMessage message = javaMailSender.createMimeMessage();
-        message.setFrom("ayushimalhotra9799@gmail.com");
+        message.setFrom("ridesync24@gmail.com");
         message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
         message.setSubject("Verify Ridesync Account");
         String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
@@ -105,7 +109,7 @@ public class AuthenticationService {
       }
       String resetToken=jwtService.generateToken(user);
       MimeMessage message = javaMailSender.createMimeMessage();
-      message.setFrom("ayushimalhotra9799@gmail.com");
+      message.setFrom("ridesync24@gmail.com");
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
       String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
@@ -117,9 +121,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse resetPassword(Integer id, String token) {
         User user=repository.findByUserId(id);
-        String userEmail=user.getEmail();
-        String tokenEmail=jwtService.extractUserEmail(token);
-        if(userEmail.equals(tokenEmail)){
+        Integer tokenId=jwtService.extractUserId(token);
+        if(user.getUserId().equals(tokenId)){
             return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();    
         }
         return AuthenticationResponse.builder().message("Email did not match").build();
