@@ -27,19 +27,19 @@ public class DocumentController {
 	@Autowired
 	private JwtService jwtService;
 	
-	@PostMapping("/addDocument")
-	public DocumentResponse addDocument(@RequestHeader("Authentication") String jwtToken, @RequestBody DocumentInput input) {
-		
-		String userId = jwtService.extractUserEmail(jwtToken);
-		input.setUserId(userId);
-		DocumentResponse res =documentService.addDocument(input); // add(Ride details)
-		return res;
-	}
+//	@PostMapping("/addDocument")
+//	public DocumentResponse addDocument(@RequestHeader("Authentication") String jwtToken, @RequestBody DocumentInput input) {
+//
+//		String userId = jwtService.extractUserEmail(jwtToken);
+//		input.setUserId(userId);
+//		DocumentResponse res =documentService.addDocument(input); // add(Ride details)
+//		return res;
+//	}
 	
-	@GetMapping("/getDocumentsByUserId/{id}")
-	public GetDocumentResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
-		String userId = jwtService.extractUserEmail(jwtToken);
-		
-		return documentService.getDocumentsByUserId(userId);
-	}
+//	@GetMapping("/getDocumentsByUserId/{id}")
+//	public GetDocumentResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
+//		String userId = jwtService.extractUserEmail(jwtToken);
+//
+//		return documentService.getDocumentsByUserId(userId);
+//	}
 }

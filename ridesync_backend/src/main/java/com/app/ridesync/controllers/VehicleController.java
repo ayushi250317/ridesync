@@ -28,18 +28,18 @@ public class VehicleController {
 	@Autowired
 	private JwtService jwtService;
 	
-	@PostMapping("/addVehicle")
-	public VehicleResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
-		
-		String userId = jwtService.extractUserEmail(jwtToken);
-		input.setUserId(userId);
-		VehicleResponse res =vehicleService.addVehicle(input); // add(Ride details)
-		return res;
-	}
-	
-	@GetMapping("/getVehiclesByUserId/{id}")
-	public getVehicleResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
-		String userId = jwtService.extractUserEmail(jwtToken);
-		return vehicleService.getVehiclesByUserId(userId);
-	}
+//	@PostMapping("/addVehicle")
+//	public VehicleResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
+//
+//		String userId = jwtService.extractUserEmail(jwtToken);
+//		input.setUserId(userId);
+//		VehicleResponse res =vehicleService.addVehicle(input); // add(Ride details)
+//		return res;
+//	}
+//
+//	@GetMapping("/getVehiclesByUserId/{id}")
+//	public getVehicleResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
+//		String userId = jwtService.extractUserEmail(jwtToken);
+//		return vehicleService.getVehiclesByUserId(userId);
+//	}
 }
