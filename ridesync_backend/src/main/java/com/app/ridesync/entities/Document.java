@@ -22,15 +22,15 @@ public class Document{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long documentId;
-	private String documentName;
+	private Integer documentId;
+	private String userDocumentID;
 	private Integer userId;
 	private String documentType;
 	private LocalDate expiryDate;
 	
 	public Document(String documentName, Integer userId, String documentType, LocalDate expiryDate) {
 		super();
-		this.documentName = documentName;
+		this.userDocumentID = documentName;
 		this.userId = userId;
 		this.documentType = documentType;
 		this.expiryDate = expiryDate;

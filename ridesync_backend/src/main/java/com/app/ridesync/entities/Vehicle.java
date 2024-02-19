@@ -21,15 +21,15 @@ public class Vehicle{
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long vehicleId;
+	private Integer vehicleId;
 	private String regNo;
-	private long documentId; //Insurance Document. must link to the document table.
+	private Integer documentId; //Insurance Document. must link to the document table.
 	private String model;
 	private String make;
 	private String type;
 	private Integer userId;
 	
-	public Vehicle(String regNo, long documentId, String model, String make, String type, Integer userId) {
+	public Vehicle(String regNo, Integer documentId, String model, String make, String type, Integer userId) {
 		this.regNo = regNo;
 		this.documentId = documentId;
 		this.model = model;

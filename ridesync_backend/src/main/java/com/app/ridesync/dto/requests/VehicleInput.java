@@ -11,9 +11,10 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class VehicleInput {
 	private String regNo;
-	private long documentId; //Insurance Document. must link to the document table.
+	private Integer documentId; //Insurance Document. must link to the document table.
 	private String model;
 	private String make;
 	private String type;
 	private Integer userId;
+	private Integer vehicleId;
 }

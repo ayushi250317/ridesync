@@ -12,9 +12,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DocumentInput {
-	private String documentName;
+	private String userDocumentID;
 	private Integer userId;
 	private String documentType;
 	private LocalDate expiryDate;
-
+	private Integer documentId;
 }

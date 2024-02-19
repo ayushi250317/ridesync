@@ -30,7 +30,7 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ) throws MessagingException{
-        return ResponseEntity.ok(service.register(request));
+        return ResponseEntity.ok(service.validateRequest(request));
     }
 
     @PostMapping("/authenticate")

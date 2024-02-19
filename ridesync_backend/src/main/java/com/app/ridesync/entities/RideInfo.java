@@ -23,21 +23,21 @@ public class RideInfo {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long rideInfoId;
-	private long rideId;
+	private Integer rideInfoId;
+	private Integer rideId;
 	private boolean isActive;
 	private Integer userId;
-	private long startLocationId;
-	private long endLocationId;
+	private Integer startLocationId;
+	private Integer endLocationId;
 	private boolean isDriver;
 	private double fare;
-	private int rating;
+	private Integer rating;
 	private String comments;
 	private LocalDate waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfo(long rideId, Integer userId, long locationId1, long locationId2, boolean isDriver, double d,
+	public RideInfo(Integer rideId, Integer userId, Integer locationId1, Integer locationId2, boolean isDriver, double d,
 			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();
 		this.rideId = rideId;

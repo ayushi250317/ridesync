@@ -18,7 +18,7 @@ public class DocumentService {
 		DocumentResponse res = new DocumentResponse();
 				
 		try {
-		Document document = new Document(input.getDocumentName(), input.getUserId(), input.getDocumentType(), input.getExpiryDate());
+		Document document = new Document(input.getUserDocumentID(), input.getUserId(), input.getDocumentType(), input.getExpiryDate());
 		Document response = documentRepository.save(document); //add the insurance number ID.
 		
 		
@@ -38,7 +38,7 @@ public class DocumentService {
 		GetDocumentResponse res = new GetDocumentResponse();
 		
 		try {
-		res.setTemp(documentRepository.findByUserId(userId));
+		res.setDocuments(documentRepository.findByUserId(userId));
 		
 		}catch(Exception e){
 			res.setMessage(e.toString());
@@ -49,5 +49,43 @@ public class DocumentService {
 		res.setSuccess(true);
 		return res;
 		
+	}
+
+
+	public DocumentResponse updateDocumentByDocId(DocumentInput input) {
+		DocumentResponse res = new DocumentResponse();
+		try {
+		Document document = documentRepository.findByDocumentId(input.getDocumentId());
+        
+        document.setUserDocumentID(input.getUserDocumentID());
+        document.setDocumentType(input.getDocumentType());
+        document.setExpiryDate(input.getExpiryDate());
+        res.setDocument(documentRepository.save(document));
+		}catch(Exception e) {
+			res.setMessage(e.toString());
+			res.setSuccess(false);
+			return res;
+		}
+		res.setMessage("Updated Selected Document Successfully");
+		res.setSuccess(true);
+        return res;
+	}
+
+
+	public DocumentResponse deleteDocument(Integer documentId) {
+		DocumentResponse res = new DocumentResponse();
+		try {
+		Document document = documentRepository.findByDocumentId(documentId);
+       
+        res.setDocument(document);
+        documentRepository.delete(document);
+		}catch(Exception e) {
+			res.setMessage(e.toString());
+			res.setSuccess(false);
+			return res;
+		}
+		res.setMessage("Deleted Selected Document Successfully");
+		res.setSuccess(true);
+		return res;
 	}
 }

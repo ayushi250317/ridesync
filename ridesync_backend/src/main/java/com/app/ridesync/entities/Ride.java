@@ -21,19 +21,19 @@ public class Ride {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long rideId;
+	private int rideId;
 	
 	private LocalDateTime startTime;
 	private LocalDateTime createdTime;
-	private int oneTimePassword;
+	private Integer oneTimePassword;
 	private String status;
 	private String description;
-	private int seatsAvailable;
-	private long vehicleId;
+	private Integer seatsAvailable;
+	private Integer vehicleId;
 	private Integer userId;
 	
 	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, long vehicleId, Integer userId) {
+			int seatsAvailable, Integer vehicleId, Integer userId) {
 		super();
 		this.startTime = startTime;
 		this.createdTime = createdTime;
