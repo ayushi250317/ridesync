@@ -25,10 +25,14 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-
+	
+	@Autowired
     private final UserRepository repository;
+	@Autowired
     private final PasswordEncoder passwordEncoder;
+	@Autowired
     private final JwtService jwtService;
+	@Autowired
     private final AuthenticationManager manager;
     @Autowired
     private final JavaMailSender javaMailSender;
@@ -117,9 +121,8 @@ public class AuthenticationService {
 
     public AuthenticationResponse resetPassword(Integer id, String token) {
         User user=repository.findByUserId(id);
-        String userEmail=user.getEmail();
-        String tokenEmail=jwtService.extractUserEmail(token);
-        if(userEmail.equals(tokenEmail)){
+        Integer tokenId=jwtService.extractUserId(token);
+        if(user.getUserId().equals(tokenId)){
             return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();    
         }
         return AuthenticationResponse.builder().message("Email did not match").build();
