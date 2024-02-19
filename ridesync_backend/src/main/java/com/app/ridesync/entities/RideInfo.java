@@ -23,21 +23,21 @@ public class RideInfo {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long rideInfoId;
-	private long rideId;
+	private Integer rideInfoId;
+	private Integer rideId;
 	private boolean isActive;
-	private String userId;
-	private long startLocationId;
-	private long endLocationId;
+	private Integer userId;
+	private Integer startLocationId;
+	private Integer endLocationId;
 	private boolean isDriver;
 	private double fare;
-	private int rating;
+	private Integer rating;
 	private String comments;
 	private LocalDate waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
 	
-	public RideInfo(long rideId, String userId, long locationId1, long locationId2, boolean isDriver, double d,
+	public RideInfo(Integer rideId, Integer userId, Integer locationId1, Integer locationId2, boolean isDriver, double d,
 			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();
 		this.rideId = rideId;
@@ -52,85 +52,5 @@ public class RideInfo {
 		this.isActive = false;                             // the ride is initially to be false every time a new one is created.
 		this.rating = 0;                                   // the ride must have a 0 rating initially unless the user changes it.
 	}
-	
-	
-	public long getRideInfoId() {
-		return rideInfoId;
-	}
-	public void setRideInfoId(long rideInfoId) {
-		this.rideInfoId = rideInfoId;
-	}
-	public long getRideId() {
-		return rideId;
-	}
-	public void setRideId(long rideId) {
-		this.rideId = rideId;
-	}
-	public boolean getIsActive() {
-		return isActive;
-	}
-	public void setIsActive(boolean isActive) {
-		this.isActive = isActive;
-	}
-	public String getUserId() {
-		return userId;
-	}
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-	public long getStartLocationId() {
-		return startLocationId;
-	}
-	public void setStartLocationId(long startLocationId) {
-		this.startLocationId = startLocationId;
-	}
-	public long getEndLocationId() {
-		return endLocationId;
-	}
-	public void setEndLocationId(long endLocationId) {
-		this.endLocationId = endLocationId;
-	}
-	public boolean getIsDriver() {
-		return isDriver;
-	}
-	public void setIsDriver(boolean isDriver) {
-		this.isDriver = isDriver;
-	}
-	public double getFare() {
-		return fare;
-	}
-	public void setFare(double fare) {
-		this.fare = fare;
-	}
-	public int getRating() {
-		return rating;
-	}
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-	public String getComments() {
-		return comments;
-	}
-	public void setComments(String comments) {
-		this.comments = comments;
-	}
-	public LocalDate getWaitTime() {
-		return waitTime;
-	}
-	public void setWaitTime(LocalDate waitTime) {
-		this.waitTime = waitTime;
-	}
-	public LocalDateTime getEstimatedTripStartTime() {
-		return estimatedTripStartTime;
-	}
-	public void setEstimatedTripStartTime(LocalDateTime estimatedTripStartTime) {
-		this.estimatedTripStartTime = estimatedTripStartTime;
-	}
-	public LocalDateTime getEstimatedTripEndTime() {
-		return estimatedTripEndTime;
-	}
-	public void setEstimatedTripEndTime(LocalDateTime estimatedTripEndTime) {
-		this.estimatedTripEndTime = estimatedTripEndTime;
-	}
-	
+
 }

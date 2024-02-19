@@ -12,9 +12,25 @@ public class LocationService {
 	@Autowired
 	private LocationRepository locationRepository;
 	
-	public Location addLocation(Location location) {
-		Location result = locationRepository.save(location);
-		return result;
+	public Location addLocation(Location location) { 
+		return locationRepository.save(location);
+	}
+	
+	public Location updateLocation(Location location) {
+		Location oldLoc = locationRepository.findByLocationId(location.getLocationId());
+		
+		oldLoc.setAddress(location.getAddress());
+		oldLoc.setLandmark(location.getLandmark());
+		oldLoc.setLattitude(location.getLattitude());
+		oldLoc.setLongitude(location.getLongitude());
+		
+		locationRepository.save(oldLoc);
+		
+		return oldLoc;
+	}
+	
+	public Location findLocationById(Integer Id) {
+		return locationRepository.findByLocationId(Id);
 	}
 
 }
