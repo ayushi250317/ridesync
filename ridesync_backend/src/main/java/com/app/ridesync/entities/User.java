@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import jakarta.persistence.*;
-
-import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,20 +18,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@DynamicUpdate
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer userId;
     private String fullName;
-    @Column(unique = true,nullable = false)
     private String email;
     private String address;
     private LocalDate dateOfBirth;
     private String password;
     private String phoneNumber;
-    private boolean isVerified;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority("user"));
@@ -41,10 +36,6 @@ public class User implements UserDetails {
     @Override
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password=password;
     }
     @Override
     public String getUsername() {
