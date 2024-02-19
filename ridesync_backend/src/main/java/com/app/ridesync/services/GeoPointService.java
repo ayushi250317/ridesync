@@ -8,14 +8,14 @@ import com.app.ridesync.repositories.GeoPointRepository;
 
 @Service
 public class GeoPointService {
-	private GeoPointRepository geoPointRepository;
+	private final GeoPointRepository geoPointRepository;
 	
 	@Autowired
 	public GeoPointService(GeoPointRepository geoPointRepository) {
 		this.geoPointRepository = geoPointRepository;
 	}
 	
-	public void saveGeoPoints(GeoPoint geoPoints) {
-		geoPointRepository.save(geoPoints);
+	public GeoPoint saveGeoPoints(GeoPoint geoPoints) {
+			return geoPointRepository.save(geoPoints);			
 	}
 }
