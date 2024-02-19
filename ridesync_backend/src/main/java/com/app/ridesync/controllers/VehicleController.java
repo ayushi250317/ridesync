@@ -32,7 +32,7 @@ public class VehicleController {
 	private JwtService jwtService;
 	
 	@PostMapping("/addVehicle")
-	public VehicleResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
+	public VehicleResponse addVehicle(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
 		
 		Integer userId = jwtService.extractUserId(jwtToken);
 		input.setUserId(userId);
@@ -41,13 +41,13 @@ public class VehicleController {
 	}
 	
 	@GetMapping("/getVehiclesByUserId/{id}")
-	public GetVehicleResponse getDocumentsById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
+	public GetVehicleResponse getVehiclesById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
 		Integer userId = jwtService.extractUserId(jwtToken);
 		return vehicleService.getVehiclesByUserId(userId);
 	}
 	
 	@PostMapping("/updateVehicle")
-	public VehicleResponse updateDocument(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
+	public VehicleResponse updateVehicle(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
 		
 		return vehicleService.updateVehicleById(input);
 	}

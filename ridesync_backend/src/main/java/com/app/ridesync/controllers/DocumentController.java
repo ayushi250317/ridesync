@@ -46,14 +46,12 @@ public class DocumentController {
 	
 	@PostMapping("/updateDocument")
 	public DocumentResponse updateDocument(@RequestHeader("Authentication") String jwtToken, @RequestBody DocumentInput input) {
-//		Integer userId = jwtService.extractUserId(jwtToken);
 		
 		return documentService.updateDocumentByDocId(input);
 	}
 	
 	@DeleteMapping("/deleteDocument/{documentId}")
-    public DocumentResponse deleteVehicle(@PathVariable Integer documentId) {
-        System.out.println("Enteredd");
+    public DocumentResponse deleteDocument(@PathVariable Integer documentId) {
         return documentService.deleteDocument(documentId);
     }
 }
