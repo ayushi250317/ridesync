@@ -1,4 +1,3 @@
-
 package com.app.ridesync;
 
 import org.springframework.boot.SpringApplication;
