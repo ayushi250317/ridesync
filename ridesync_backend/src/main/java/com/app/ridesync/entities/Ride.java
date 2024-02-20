@@ -21,19 +21,19 @@ public class Ride {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private long rideId;
+	private int rideId;
 	
 	private LocalDateTime startTime;
 	private LocalDateTime createdTime;
-	private int oneTimePassword;
+	private Integer oneTimePassword;
 	private String status;
 	private String description;
-	private int seatsAvailable;
-	private long vehicleId;
-	private String userId;
+	private Integer seatsAvailable;
+	private Integer vehicleId;
+	private Integer userId;
 	
 	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, long vehicleId, String userId) {
+			int seatsAvailable, Integer vehicleId, Integer userId) {
 		super();
 		this.startTime = startTime;
 		this.createdTime = createdTime;
@@ -44,55 +44,5 @@ public class Ride {
 		this.vehicleId = vehicleId;
 		this.userId = userId;
 	}
-	
-	public long getRideId() {
-		return rideId;
-	}
-	public void setRideId(long rideid) {
-		rideId = rideid;
-	}
-	public LocalDateTime getStartTime() {
-		return startTime;
-	}
-	public void setStartTime(LocalDateTime StartTime) {
-		startTime = StartTime;
-	}
-	public LocalDateTime getCreatedTime() {
-		return createdTime;
-	}
-	public void setCreatedTime(LocalDateTime CreatedTime) {
-		createdTime = CreatedTime;
-	}
-	public int getOneTimePassword() {
-		return oneTimePassword;
-	}
-	public void setOneTimePassword(int oneTimePassword) {
-		this.oneTimePassword = oneTimePassword;
-	}
-	public String getStatus() {
-		return status;
-	}
-	public void setStatus(String status) {
-		this.status = status;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public int getSeatsAvailable() {
-		return seatsAvailable;
-	}
-	public void setSeatsAvailable(int seatsAvailable) {
-		this.seatsAvailable = seatsAvailable;
-	}
-	public long getVehicleId() {
-		return vehicleId;
-	}
-	public void setVehicleId(long vehicleId) {
-		this.vehicleId = vehicleId;
-	}
-	
-	
+
 }

@@ -14,7 +14,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RideInput{
 	
-	private String userId; //-----------------common userId
+	private Integer userId; //-----------------common userId
+	private Integer RideId;
 	
 	//Ride
 	private LocalDateTime startTime;
@@ -23,7 +24,7 @@ public class RideInput{
 	private String status; // status posted (posted/ active/ completed)
 	private String description;
 	private int seatsAvailable;
-	private int vehicleId;
+	private Integer vehicleId;
 	
 	//Location - 1 start
 	private double lattitude1;
@@ -41,7 +42,7 @@ public class RideInput{
 	private String isActive;
 	private String isDriver;
 	private double fare;
-	private int rating;
+	private Integer rating;
 	private String comments;
 	private LocalTime waitTime;
 	private LocalDateTime estimatedTripStartTime;

@@ -10,5 +10,7 @@ import com.app.ridesync.entities.Vehicle;
 @Repository
 public interface VehicleRepository extends JpaRepository<Vehicle, Integer> {
     
-    List<Vehicle> findByUserId(String userId);
+    List<Vehicle> findByUserId(Integer userId);
+    
+    Vehicle findByVehicleId(Integer vehicleId);
 }

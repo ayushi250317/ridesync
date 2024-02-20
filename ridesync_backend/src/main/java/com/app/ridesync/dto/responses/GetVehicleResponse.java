@@ -1,8 +1,7 @@
 package com.app.ridesync.dto.responses;
 
 import java.util.List;
-
-import com.app.ridesync.entities.Document;
+import com.app.ridesync.entities.Vehicle;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,8 +12,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class GetDocumentResponse {
-	private List<Document> documents;
+public class GetVehicleResponse {
+	private List<Vehicle> vehicles;
 	private String message;
     private boolean success;
+
 }

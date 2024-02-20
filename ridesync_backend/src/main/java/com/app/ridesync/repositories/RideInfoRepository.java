@@ -8,9 +8,11 @@ import com.app.ridesync.entities.RideInfo;
 
 @Repository
 public interface RideInfoRepository extends JpaRepository<RideInfo, Integer> {
-	Optional<RideInfo> findByRideId(Integer rideId);
+	RideInfo findByRideId(Integer rideId);
 	
 	Optional<RideInfo> findByRideInfoId(Integer rideInfoId);
     
-    Optional<RideInfo> findByUserId(String userId);
+    Optional<RideInfo> findByUserId(Integer userId);
+
+	RideInfo findByRideIdAndUserId(Integer userId, Integer rideId);
 }

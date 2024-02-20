@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra99@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"fullName\" : \"Purushotham Parthy\",\r\n    \"email\" : \"pramodparthy@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 4002\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -34,7 +34,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"ayushimalhotra9799@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"pramodparthy@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -44,21 +44,261 @@
 						"url": "http://localhost:8073/api/v1/auth/authenticate"
 					},
 					"response": []
-				},
+				}
+			]
+		},
+		{
+			"name": "Vehicles",
+			"item": [
 				{
-					"name": "Post ride",
+					"name": "getVehiclesByUserId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/2"
+					},
+					"response": []
+				},
+				{
+					"name": "add Vehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
 							}
 						},
 						"method": "POST",
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"regNo\":\"NS-54321\",\r\n\t\"documentId\":203,\r\n\t\"model\":\"Passenger Train\",\r\n\t\"make\":\"Diesel\",\r\n    \"type\":\"flight\",\r\n    \"userId\":2\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "updateVehicle",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"vehicleId\": 1,\r\n            \"regNo\": \"NS-54321\",\r\n            \"documentId\": 203,\r\n            \"model\": \"Passenger Train2\",\r\n            \"make\": \"Diesel\",\r\n            \"type\": \"train\",\r\n            \"userId\": 2\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/vehicle/updateVehicle"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteVehicleByVehidleId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/vehicle/deleteVehicle/1"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Document",
+			"item": [
+				{
+					"name": "Add document",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"userDocumentID\":\"ABC!!@#$123\",\r\n\t\"userId\":2,\r\n\t\"documentType\":\"Testtype\",\r\n\t\"expiryDate\":\"2024-12-01\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/document/addDocument"
+					},
+					"response": []
+				},
+				{
+					"name": "getDocumentsByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:8073/api/v1/document/getDocumentsByUserId/2"
+					},
+					"response": []
+				},
+				{
+					"name": "updateDocument",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n            \"documentId\": 1,\r\n            \"documentName\": \"Driving Licence1123\",\r\n            \"userId\": 2,\r\n            \"documentType\": \"Testtype\",\r\n            \"expiryDate\": \"2024-12-01\"\r\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/document/updateDocument"
+					},
+					"response": []
+				},
+				{
+					"name": "deleteDocumentByDocumentId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text"
+							}
+						],
+						"url": "http://localhost:8073/api/v1/document/deleteDocument/2"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Ride",
+			"item": [
+				{
+					"name": "Post ride",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+							}
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authentication",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
 								"type": "text"
 							}
 						],
@@ -76,104 +316,53 @@
 					"response": []
 				},
 				{
-					"name": "Add document",
+					"name": "getRideByUserId",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
-							}
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"documentName\":\"Driving Licence\",\r\n\t\"userId\":\"\",\r\n\t\"documentType\":\"Testtype\",\r\n\t\"expiryDate\":\"2024-12-01\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8073/api/v1/document/addDocument"
-					},
-					"response": []
-				},
-				{
-					"name": "add Vehicle",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
-							}
-						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n\t\"regNo\":\"NS-54321\",\r\n\t\"documentId\":203,\r\n\t\"model\":\"Passenger Train\",\r\n\t\"make\":\"Diesel\",\r\n    \"type\":\"train\",\r\n    \"userId\":\"\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
-					},
-					"response": []
-				},
-				{
-					"name": "getDocumentsByUserId",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
 							}
 						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
 								"type": "text"
 							}
 						],
-						"url": "http://localhost:8073/api/v1/document/getDocumentsByUserId/ayushimalhotra99@gmail.com"
+						"url": "http://localhost:8073/api/v1/ride/getRide/2"
 					},
 					"response": []
 				},
 				{
-					"name": "getVehiclesByUserId",
+					"name": "updateRide",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA"
+								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
 							}
 						},
-						"method": "GET",
+						"method": "POST",
 						"header": [
 							{
 								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJheXVzaGltYWxob3RyYTk5QGdtYWlsLmNvbSJ9.uKBpuh0i3cy0CUw0uUw3Ol68UoIfCfQkV-_tUWVyVAA",
+								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
 								"type": "text"
 							}
 						],
-						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/ayushimalhotra99@gmail.com"
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"rideId\":53,\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval-------------------\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:8073/api/v1/ride/updateRide"
 					},
 					"response": []
 				}
