@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.app.ridesync.dto.requests.VehicleInput;
 import com.app.ridesync.dto.responses.VehicleResponse;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/v1/vehicle")
 @RestController
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class VehicleController {
 	

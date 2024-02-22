@@ -46,7 +46,7 @@ const RiderRegistration = () => {
     const onSubmitDriverDetails = (licenseNo, expiryDate) => {
         setLoading(true);
         const config = {
-            headers: { Authentication: `${loggedInUserDetails.token}`, Authorization: `Bearer ${loggedInUserDetails.token}` }
+            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
         };
         let requestObj = {
             "userDocumentID": licenseNo,
@@ -79,7 +79,7 @@ const RiderRegistration = () => {
     const onSubmitVehicleDetails = ({ regNo, type, make, model, insuranceNo, insuranceExpiry }) => {
         setLoading(true);
         const config = {
-            headers: { Authentication: `${loggedInUserDetails.token}`, Authorization: `Bearer ${loggedInUserDetails.token}` }
+            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
         };
         let insuranceReqObj = {
             "userDocumentID": insuranceNo,

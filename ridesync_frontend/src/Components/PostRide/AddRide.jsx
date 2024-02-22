@@ -62,7 +62,7 @@ const AddRide = () => {
     const onSubmitAddRide = () => {
         setLoading(true);
         const config = {
-            headers: { Authentication: `${loggedInUserDetails.token}`, Authorization: `Bearer ${loggedInUserDetails.token}` }
+            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
         };
         const dateTime = moment(depatureDate + ' ' + depatureTime, "YYYY/MM/DD HH:mm");
 

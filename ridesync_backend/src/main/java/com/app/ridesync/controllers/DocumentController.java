@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.responses.DocumentResponse;
@@ -20,6 +21,7 @@ import com.app.ridesync.services.JwtService;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/v1/document")
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class DocumentController {

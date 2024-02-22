@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.GetRidesResponse;
@@ -18,6 +19,7 @@ import com.app.ridesync.services.RideService;
 import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/v1/ride")
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class RideController {
