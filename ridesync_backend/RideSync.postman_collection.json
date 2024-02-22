@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "b7399618-70f1-4f9d-9acc-a9f1469551af",
-		"name": "RideSync",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "17418806"
+		"_postman_id": "17361f42-90b6-47b3-8578-9ef35c803120",
+		"name": "RideSync Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "32619004"
 	},
 	"item": [
 		{
@@ -16,14 +16,27 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\" : \"Purushotham Parthy\",\r\n    \"email\" : \"pramodparthy@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 4002\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/auth/register"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"register"
+							]
+						}
 					},
 					"response": []
 				},
@@ -34,14 +47,121 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"pramodparthy@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/auth/authenticate"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/authenticate",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ForgotPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\"\r\n    \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/forgotPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ResetPassword",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/resetPassword?token=eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8&id=2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"resetPassword"
+							],
+							"query": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
+								},
+								{
+									"key": "id",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "newPassword",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"token\" : \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8\",\r\n    \"id\" : 2,\r\n    \"newPassword\" : \"123456\",\r\n    \"reNewPassword\" : \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/auth/newPassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"auth",
+								"newPassword"
+							]
+						}
 					},
 					"response": []
 				}
@@ -58,18 +178,16 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -79,7 +197,21 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/2"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/vehicle/getVehiclesByUserId/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"getVehiclesByUserId",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -88,18 +220,16 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n\t\"regNo\":\"NS-54321\",\r\n\t\"documentId\":203,\r\n\t\"model\":\"Passenger Train\",\r\n\t\"make\":\"Diesel\",\r\n    \"type\":\"flight\",\r\n    \"userId\":2\r\n}",
@@ -109,7 +239,20 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/vehicle/addVehicle"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/vehicle/addVehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"addVehicle"
+							]
+						}
 					},
 					"response": []
 				},
@@ -118,18 +261,16 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n            \"vehicleId\": 1,\r\n            \"regNo\": \"NS-54321\",\r\n            \"documentId\": 203,\r\n            \"model\": \"Passenger Train2\",\r\n            \"make\": \"Diesel\",\r\n            \"type\": \"train\",\r\n            \"userId\": 2\r\n        }",
@@ -139,27 +280,38 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/vehicle/updateVehicle"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/vehicle/updateVehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"updateVehicle"
+							]
+						}
 					},
 					"response": []
 				},
 				{
-					"name": "deleteVehicleByVehidleId",
+					"name": "deleteVehicleByVehicleId",
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "",
@@ -169,7 +321,21 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/vehicle/deleteVehicle/1"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/vehicle/deleteVehicle/103",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"deleteVehicle",
+								"103"
+							]
+						}
 					},
 					"response": []
 				}
@@ -183,16 +349,21 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+								"type": "text",
+								"disabled": true
 							}
 						],
 						"body": {
@@ -204,7 +375,20 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/document/addDocument"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/document/addDocument",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"addDocument"
+							]
+						}
 					},
 					"response": []
 				},
@@ -213,19 +397,31 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
-						"url": "http://localhost:8073/api/v1/document/getDocumentsByUserId/2"
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/document/getDocumentsByUserId/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"getDocumentsByUserId",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -234,28 +430,39 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n            \"documentId\": 1,\r\n            \"documentName\": \"Driving Licence1123\",\r\n            \"userId\": 2,\r\n            \"documentType\": \"Testtype\",\r\n            \"expiryDate\": \"2024-12-01\"\r\n        }",
+							"raw": "{\r\n            \"documentId\": 3,\r\n            \"userDocumentID\": \"Driving Licence1123\",\r\n            \"userId\": 1,\r\n            \"documentType\": \"Testtype\",\r\n            \"expiryDate\": \"2024-12-01\"\r\n        }",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/document/updateDocument"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/document/updateDocument",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"updateDocument"
+							]
+						}
 					},
 					"response": []
 				},
@@ -264,19 +471,31 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
-						"url": "http://localhost:8073/api/v1/document/deleteDocument/2"
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/document/deleteDocument/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"document",
+								"deleteDocument",
+								"3"
+							]
+						}
 					},
 					"response": []
 				}
@@ -290,18 +509,16 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
@@ -311,7 +528,20 @@
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/ride/addRide"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/addRide",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"addRide"
+							]
+						}
 					},
 					"response": []
 				},
@@ -320,19 +550,31 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
-						"url": "http://localhost:8073/api/v1/ride/getRide/2"
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getRide/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getRide",
+								"2"
+							]
+						}
 					},
 					"response": []
 				},
@@ -341,28 +583,39 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": {
-								"token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8"
-							}
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
 						},
 						"method": "POST",
-						"header": [
-							{
-								"key": "Authentication",
-								"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-								"type": "text"
-							}
-						],
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{   \r\n    \"rideId\":53,\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval-------------------\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
+							"raw": "{   \r\n    \"rideId\":4,\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval-------------------\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
 								}
 							}
 						},
-						"url": "http://localhost:8073/api/v1/ride/updateRide"
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/updateRide",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"updateRide"
+							]
+						}
 					},
 					"response": []
 				}

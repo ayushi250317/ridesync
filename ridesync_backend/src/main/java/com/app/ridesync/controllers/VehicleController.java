@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.requests.VehicleInput;
-import com.app.ridesync.dto.responses.DocumentResponse;
 import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.dto.responses.GetVehicleResponse;
 import com.app.ridesync.services.JwtService;
@@ -32,29 +30,26 @@ public class VehicleController {
 	private JwtService jwtService;
 	
 	@PostMapping("/addVehicle")
-	public VehicleResponse addVehicle(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
-		
-		Integer userId = jwtService.extractUserId(jwtToken);
+	public VehicleResponse addVehicle(@RequestHeader("Authorization") String jwtToken, @RequestBody VehicleInput input) {
+		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		input.setUserId(userId);
 		VehicleResponse res =vehicleService.addVehicle(input); // add(Ride details)
 		return res;
 	}
 	
 	@GetMapping("/getVehiclesByUserId/{id}")
-	public GetVehicleResponse getVehiclesById(@PathVariable String id, @RequestHeader("Authentication") String jwtToken){
-		Integer userId = jwtService.extractUserId(jwtToken);
+	public GetVehicleResponse getVehiclesById(@PathVariable String id, @RequestHeader("Authorization") String jwtToken){
+		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		return vehicleService.getVehiclesByUserId(userId);
 	}
 	
 	@PostMapping("/updateVehicle")
-	public VehicleResponse updateVehicle(@RequestHeader("Authentication") String jwtToken, @RequestBody VehicleInput input) {
-		
+	public VehicleResponse updateVehicle(@RequestBody VehicleInput input) {
 		return vehicleService.updateVehicleById(input);
 	}
 	
 	@DeleteMapping("/deleteVehicle/{vehicleId}")
     public VehicleResponse deleteVehicle(@PathVariable Integer vehicleId) {
-        
         return vehicleService.deleteVehicle(vehicleId);
     }
 }
