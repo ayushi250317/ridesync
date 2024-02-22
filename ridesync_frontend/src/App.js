@@ -9,7 +9,8 @@ import ForgotPasswordEmail from './Components/Login/ForgotPasswordEmail';
 import ConfirmPassword from './Components/Login/ConfirmPassword';
 import AccountEmailVerification from './Components/Signup/AccountEmailVerification';
 import RedirectAfterAccVerify from './Components/Signup/RedirectAfterAccVerify';
-import RiderRegistration from './Components/RiderRegistration/RiderRegistration';
+import RiderRegistration from './Components/PostRide/RiderRegistration';
+import AddRide from './Components/PostRide/AddRide';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
           <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
           <Route element={<RiderRegistration />} path="/rider_registration" />
+          <Route element={<AddRide />} path="/add_ride" />
         </Routes>
       </Router>
     </Box>
