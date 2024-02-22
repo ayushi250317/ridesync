@@ -29,25 +29,22 @@ public class RideController {
 	
 	
 	@PostMapping("/addRide")
-	public RideResponse addRide(@RequestHeader("Authentication") String jwtToken, @RequestBody RideInput input) {
-		
-		Integer userId = jwtService.extractUserId(jwtToken);
+	public RideResponse addRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {	
+		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		input.setUserId(userId);
 		return rideService.addRide(input);
 	}
 	
 	//only updates start time, description, seats available,vehicle Id
 	@PostMapping("/updateRide")
-	public RideResponse updateRide(@RequestHeader("Authentication") String jwtToken, @RequestBody RideInput input) {
-		Integer userId = jwtService.extractUserId(jwtToken);
-		input.setUserId(userId);
-		
+	public RideResponse updateRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
+		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+		input.setUserId(userId);	
 		return rideService.updateRide(input);
 	}
 	
 	@GetMapping("/getRide/{userId}")
-	public GetRidesResponse getRide(@PathVariable Integer userId){
-		
+	public GetRidesResponse getRide(@PathVariable Integer userId){	
 		return rideService.getRides(userId);
 	}
 }
