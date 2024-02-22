@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { Box, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex, InputRightElement, InputGroup } from '@chakra-ui/react';
 import { GoogleMap, MarkerF, useJsApiLoader, Autocomplete } from '@react-google-maps/api';
+import { IoLocation } from 'react-icons/io5';
 
 const libraries = ['places'];
 
@@ -79,9 +80,9 @@ const AddressInput = ({ label, setAddressInfo, addressInfo }) => {
             onChange={(e) => { setAddressInfo((prevState) => { return { ...prevState, address: e.target.value } }) }}
             w={["90vw", "90vw", "70vw", "70vw"]}
           />
-          <InputRightElement width='5rem' marginRight={"8px"}>
-            <Button h='1.75rem' size='sm' onClick={onOpen}>
-              Set on map
+          <InputRightElement >
+            <Button size='large' boxShadow="xl" backgroundColor="transparent" onClick={onOpen}>
+              <IoLocation />
             </Button>
           </InputRightElement>
         </InputGroup>

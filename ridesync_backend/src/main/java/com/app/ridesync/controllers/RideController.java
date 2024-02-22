@@ -1,13 +1,7 @@
 package com.app.ridesync.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.GetRidesResponse;
@@ -16,6 +10,9 @@ import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideService;
 
 import lombok.RequiredArgsConstructor;
+
+
+@CrossOrigin(origins = "*")
 
 @RequestMapping("/api/v1/ride")
 @RestController

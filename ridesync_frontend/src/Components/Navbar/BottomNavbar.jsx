@@ -68,7 +68,7 @@ const BottomNavbar = () => {
 
                 </DrawerContent>
             </Drawer>
-            <Flex w="92%" m="auto" justifyContent="space-between" alignItems="center" p="1">
+            <Flex w="90%" m="auto" justifyContent="space-between" alignItems="center" p="2">
                 <Box><FaHistory size="33px" /></Box>
                 <Box><FaHome size="33px" /></Box>
                 <Box position="relative"> <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" /></Box>
