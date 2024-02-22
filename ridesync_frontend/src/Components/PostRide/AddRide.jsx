@@ -120,19 +120,19 @@ const AddRide = () => {
             {isLargerThan1280 ? <Navbar /> : <BottomNavbar />}
             <br />
             <Box p="10px" zIndex="-10">
-                <Flex w={["100%", "100%", "70%", "70%"]}
-                    h={["115vh", "100h", "80vh", "110vh"]}
+                <Flex w={["95%", "100%", "70%", "70%"]}
+                    // h={["115vh", "100h", "80vh", "110vh"]}
                     m="auto"
                     justifyContent="flex-start"
                     align="flex-start"
                     flexDir="column"
                 >
-                    <Heading mb={6}>Post Ride</Heading>
+                    <Heading pl={["", "", "5", "5"]} mb="5" >Post Ride</Heading>
                     <Flex direction="column" w="100%" align="start" paddingLeft={isLargerThan1280 ? "20px" : "0px"}>
                         <Heading size="md">Route Details</Heading>
                         <Text mb={4}>Set your source and destination of your ride</Text>
                         <Locations fromAddress={fromAddress} toAddress={toAddress} setFromAddress={setFromAddress} setToAddress={setToAddress} />
-                        <Flex align="center" w="100%" gap={3}>
+                        <Flex align="center" w="100%" gap={3} flexDir={["column", "column", "row", "row"]}>
                             <FormControl>
                                 <FormLabel mb="0" >Landmark near source</FormLabel>
                                 <Input w="100%" value={sourceLandmark} onChange={(e) => setSourceLandmark(e.target.value)} />
@@ -218,8 +218,10 @@ const AddRide = () => {
                             mb={4}
                         />
                     </Flex>
-                    <Button w="25%" h={"5vh"} colorScheme='blue' onClick={onSubmitAddRide} isLoading={loading} alignSelf={"flex-end"}>Submit</Button>
-                </Flex></Box >
+                    <Button ml={["", "", "5", "5"]} mb="50px" w={["100%", "100%", "35%", "25%"]} colorScheme='blue' onClick={onSubmitAddRide} isLoading={loading} alignSelf="flex-start">Submit</Button>
+                </Flex>
+                <br />
+            </Box >
         </>
     )
 }
