@@ -4,12 +4,18 @@ import com.app.ridesync.dto.requests.AuthenticationRequest;
 import com.app.ridesync.dto.requests.PasswordResetRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
+import com.app.ridesync.repositories.DocumentRepository;
 import com.app.ridesync.repositories.UserRepository;
+import com.app.ridesync.repositories.VehicleRepository;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
+import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.User;
+import com.app.ridesync.entities.Vehicle;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,6 +34,10 @@ public class AuthenticationService {
 	
 	@Autowired
     private final UserRepository repository;
+    @Autowired
+    private final DocumentRepository documentRepository;
+    @Autowired
+    private final VehicleRepository vehicleRepository;
 	@Autowired
     private final PasswordEncoder passwordEncoder;
 	@Autowired
@@ -93,12 +103,16 @@ public class AuthenticationService {
         catch(AuthenticationException e){
             return AuthenticationResponse.builder().message("Incorrect Password").build();
         }
+        List<Document> documents=documentRepository.findByUserId(user.getUserId());
+        List<Vehicle> vehicles=vehicleRepository.findByUserId(user.getUserId());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .message("Login Successful")
                 .success(true)
                 .user(user)
                 .token(jwtToken)
+                .documents(documents)
+                .vehicles(vehicles)
                 .build();
     }
 
