@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "17361f42-90b6-47b3-8578-9ef35c803120",
+		"_postman_id": "ba60c77d-e249-49f8-b620-eff227b734cc",
 		"name": "RideSync Copy",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "32619004"
+		"_exporter_id": "16764820"
 	},
 	"item": [
 		{
@@ -616,6 +616,14 @@
 								"updateRide"
 							]
 						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRideHistoryByUserId",
+					"request": {
+						"method": "GET",
+						"header": []
 					},
 					"response": []
 				}
