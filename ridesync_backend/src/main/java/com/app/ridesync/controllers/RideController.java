@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "*")
 
 @RequestMapping("/api/v1/ride")
-@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class RideController {
