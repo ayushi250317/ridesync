@@ -22,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 
 @RequestMapping("/api/v1/vehicle")
 @RestController
-@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 public class VehicleController {
 	
