@@ -1,32 +1,27 @@
 package com.app.ridesync.projections;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+public record RideHistoryProjection(
+	String userName,
 
-@AllArgsConstructor
-@Data
-public class RideHistoryProjection {
-	private String userName;
+	String description,
+	LocalDateTime originalTripStartTime,
 
-	private String description;
-	private LocalDateTime originalTripStartTime;
+	String status,
+	String rideVehicle,
+	String startLocationAddress,
+	String startLocationLandmark,
+	String endLocationAddress,
+	String endLocationLandmark,
 
-	private String status;
-	private String rideVehicle;
-	private String startLocationAddress;
-	private String startLocationLandmark;
-	private String endLocationAddress;
-	private String endLocationLandmark;
-
-	private double fare;
-	private String comments;
-	private Integer rating;
+	double fare,
+	String comments,
+	Integer rating,
 
 	//TODO: 
-	private LocalDate waitTime;   //has to be computed based on riderTripStartTime & datatype has to be changed.
-	private LocalDateTime riderTripStartTime;   //has to be changed at the database level to store this info rather than estimated trip start time
-	private LocalDateTime riderTripEndTime; // same change as rider trip start time
-}
+	LocalTime waitTime,  //has to be computed based on riderTripStartTime
+	LocalDateTime riderTripStartTime,   //has to be changed at the database level to store this info rather than estimated trip start time
+	LocalDateTime riderTripEndTime // same change as rider trip start time
+) {}
