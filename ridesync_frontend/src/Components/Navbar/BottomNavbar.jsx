@@ -60,7 +60,7 @@ const BottomNavbar = () => {
                                 <RiLogoutCircleRFill size="25px" />
                                 <Box mx="2">
 
-                                    <Link>Log out</Link>
+                                    <Link onClick={() => localStorage.removeItem("loggedInUserDetails")}>Log out</Link>
                                 </Box>
                             </Flex>
                         </Flex>
@@ -69,9 +69,20 @@ const BottomNavbar = () => {
                 </DrawerContent>
             </Drawer>
             <Flex w="90%" m="auto" justifyContent="space-between" alignItems="center" p="2">
-                <Box><FaHistory size="33px" /></Box>
-                <Box><FaHome size="33px" /></Box>
-                <Box position="relative"> <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" /></Box>
+                <Box>
+                    <Link to="/history">
+                        <FaHistory size="33px" />
+                    </Link>
+                </Box>
+                <Box>
+                    <Link>
+                        <FaHome size="33px" to="/" />
+                    </Link>
+                </Box>
+                <Box position="relative"><Link to="/notifications">
+                    <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" />
+                </Link>
+                </Box>
                 <Box><IoSettingsSharp size="33px" onClick={onOpen} /></Box>
             </Flex>
         </Box >
