@@ -20,6 +20,7 @@ build-frontend:
   image: node:alpine
   script:
     - cd ridesync_frontend
+    - npm install
     - npm run build
 
 publish-backend:
