@@ -80,11 +80,13 @@ deploy-backend:
   tags:
     - test-runner
   script:
-    - apk update && apk add openssh-client sshpass
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
+   - apk update && apk add openssh-client sshpass
+    # - sshpass -p "$PASSWORD" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
+   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
+   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
+   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
+   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
+  # environment:
   # environment:
   #   name: production
   #   url: http://172.17.1.211:8073
