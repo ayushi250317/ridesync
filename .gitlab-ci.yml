@@ -41,7 +41,7 @@ publish-backend:
     - pwd
     - echo $SERVER_IP
     - docker --version
-    - docker login -u meer2838 -p KSP135246@m docker.io
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io
     - cd ridesync_backend
     - docker build -t docker.io/meer2838/cicdtest:midbackend .
     - docker push docker.io/meer2838/cicdtest:midbackend
@@ -67,7 +67,7 @@ publish-frontend:
     - pwd
     - echo $SERVER_IP
     - docker --version
-    - docker login -u meer2838 -p KSP135246@m docker.io
+    - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io
     - cd ridesync_frontend
     - docker build -t docker.io/meer2838/cicdtest:midfrontend .
     - docker push docker.io/meer2838/cicdtest:midfrontend
@@ -79,21 +79,12 @@ deploy-backend:
   stage: deploy-backend
   tags:
     - test-runner
-  before_script:
-    - apk update && apk add openssh-client
-    - eval $(ssh-agent -s)
-    - chmod 600 $ID_RSA
-    - ssh-add $ID_RSA
   script:
-    - chmod og= $ID_RSA
-    - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midbackend"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-backend-app || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
-  # environment:
-  #   name: production
-  #   url: http://172.17.1.211:8073
+    - apk update && apk add openssh-client sshpass
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midbackend"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-backend-app || true"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
   only:
     - CICD_Test
 
@@ -102,20 +93,11 @@ deploy-frontend:
   stage: deploy-frontend
   tags:
     - test-runner
-  before_script:
-    - apk update && apk add openssh-client
-    - eval $(ssh-agent -s)
-    - chmod 600 $ID_RSA
-    - ssh-add $ID_RSA
   script:
-    - chmod og= $ID_RSA
-    - apk update && apk add openssh-client
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midfrontend"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
-    - ssh -i $ID_RSA -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
-  # environment:
-  #   name: production
-  #   url: http://172.17.1.211:8073
+    - apk update && apk add openssh-client sshpass
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midfrontend"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 3000:3000 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
   only:
     - CICD_Test
