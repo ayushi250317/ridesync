@@ -39,7 +39,7 @@ public class RideService {
 		try {
 			Random rand = new Random();
 
-			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(1001, 9999),"posted",                         
+			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(),"posted",                         
 					input.getDescription(),input.getSeatsAvailable(),input.getVehicleId(),input.getUserId());
 
 			res.setRide(rideRepository.save(ride));
