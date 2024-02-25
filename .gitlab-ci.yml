@@ -79,11 +79,6 @@ deploy-backend:
   stage: deploy-backend
   tags:
     - test-runner
-  before_script:
-    - apk update && apk add openssh-client
-    - eval $(ssh-agent -s)
-    - chmod 600 $ID_RSA
-    - ssh-add $ID_RSA
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
@@ -102,11 +97,6 @@ deploy-frontend:
   stage: deploy-frontend
   tags:
     - test-runner
-  before_script:
-    - apk update && apk add openssh-client
-    - eval $(ssh-agent -s)
-    - chmod 600 $ID_RSA
-    - ssh-add $ID_RSA
   script:
     - chmod og= $ID_RSA
     - apk update && apk add openssh-client
