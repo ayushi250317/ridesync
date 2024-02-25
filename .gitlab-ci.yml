@@ -17,10 +17,10 @@ build-backend:
 
 build-frontend:
   stage: build-frontend
-  image: maven:latest
+  image: node:alpine
   script:
-    - cd ridesync_backend
-    - mvn clean package
+    - cd ridesync_frontend
+    - npm run build
 
 publish-backend:
   image: docker:latest
