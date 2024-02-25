@@ -26,10 +26,6 @@ function App() {
         <Routes>
           <Route element={<ProtectedRoutes />}>
             <Route element={<Home />} path="/" />
-            <Route element={<AccountEmailVerification />} path="/account_email_verification" />
-            <Route element={<RedirectAfterAccVerify />} path="/confirm_registration/:id/:email" />
-            <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
-            <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
             <Route element={<RiderRegistration />} path="/rider_registration" />
             <Route element={<AddRide />} path="/add_ride" />
             <Route element={<HistoryPage />} path="/history" />
@@ -37,6 +33,10 @@ function App() {
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
             <Route element={<FindRidePage />} path="/find_ride" />
           </Route>
+          <Route element={<RedirectAfterAccVerify />} path="/confirm_registration/:id/:email" />
+          <Route element={<AccountEmailVerification />} path="/account_email_verification" />
+          <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
+          <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
           <Route element={<Login />} path="/login" />
           <Route element={<Signup />} path="/signup" />
           <Route path="*" element={<NotFound />} />

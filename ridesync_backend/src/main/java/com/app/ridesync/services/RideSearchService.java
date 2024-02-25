@@ -21,7 +21,7 @@ public class RideSearchService {
 	private final GeoPointRepository geoPointRepo;
 	private final SearchResultBuilderService searchResultBuilder;
 
-	private static final float WITHIN_LIMIT = 0.5f;
+	private static final float WITHIN_LIMIT = 1.5f;
 	private List<Integer>filteredRides; 
 
 	@Autowired

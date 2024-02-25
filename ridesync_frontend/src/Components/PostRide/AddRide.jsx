@@ -6,20 +6,18 @@ import {
     FormControl,
     FormLabel,
     Heading,
-    Image,
     Input,
     InputGroup,
     InputLeftAddon,
     Select,
     Text,
     Textarea,
-    useControllableState,
     useMediaQuery,
     useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import moment from "moment";
 
 import Locations from "../../sharedComponent/Maps/Locations";
@@ -31,6 +29,7 @@ import { getPolyLineCoordinates } from "../../sharedComponent/PolylineApi";
 const AddRide = () => {
     const [isLargerThan1280] = useMediaQuery("(min-width: 700px)");
     const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [fromAddress, setFromAddress] = useState({
         address: "",
@@ -67,72 +66,76 @@ const AddRide = () => {
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
-        const pathCordiantes = getPolyLineCoordinates(fromAddress, toAddress)
-        pathCordiantes.then(resp => {
+        getPolyLineCoordinates(fromAddress, toAddress).then(resp => {
             return resp.map((elem) => {
                 return { lat: elem[0], lng: elem[1] }
             })
         }).then((cordinates => {
-            axios.post(`${API}/geo/create`, { geoPointRecord: { geoPoints: cordinates } }, config).then((resp) => {
-                console.log("resp", resp.data);
-            })
+            console.log("coooooo", cordinates);
+            // setGeoCoordinates({ geoPointRecord: { geoPoints: cordinates } })
+            const dateTime = moment(
+                depatureDate + " " + depatureTime,
+                "YYYY/MM/DD HH:mm"
+            );
+            // console.log("geooooccoor", geoCoordinates);
+            // Format the date and time into the desired format
+            const formattedDateTime = dateTime.format("YYYY-MM-DDTHH:mm:ss");
+            let requestObj = {
+                lattitude1: fromAddress.lat,
+                longitude1: fromAddress.lng,
+                address1: fromAddress.address,
+                lattitude2: toAddress.lat,
+                longitude2: toAddress.lng,
+                address2: toAddress.address,
+                landmark1: sourceLandmark,
+                landmark2: destinationLandmark,
+                startTime: formattedDateTime,
+                seatsAvailable: availableSeats,
+                description,
+                fare,
+                // fields to be removed in later point of time
+                createdTime: "2024-02-11T14:30:00",
+                comments: "Test comments",
+                waitTime: "14:30:00",
+                estimatedTripStartTime: "2024-02-11T14:30:00",
+                estimatedTripEndTime: "2024-02-11T14:30:00",
+                routeCoordinates: { geoPointRecord: { geoPoints: cordinates } }
+            };
+
+            console.log("newoo", requestObj)
+
+            axios
+                .post(`${API}/ride/addRide`, requestObj, config)
+                .then((response) => {
+                    console.log("qwer", response.data);
+                    if (response.data.success) {
+                        toast({
+                            title: "Ride Created",
+                            status: "success",
+                            duration: 5000,
+                            isClosable: true,
+                        });
+                        navigate("/notifications")
+                    } else {
+                        toast({
+                            title: response.data.message,
+                            status: "error",
+                            duration: 5000,
+                            isClosable: true,
+                        });
+                        console.log("Response:", response);
+                    }
+                })
+                .catch((error) => {
+                    console.error("Error:", error);
+                });
         })).catch(err => {
             console.log("err", err)
+        }).finally(() => {
+            setLoading(false)
         })
 
-        const dateTime = moment(
-            depatureDate + " " + depatureTime,
-            "YYYY/MM/DD HH:mm"
-        );
 
-        // Format the date and time into the desired format
-        const formattedDateTime = dateTime.format("YYYY-MM-DDTHH:mm:ss");
-        let requestObj = {
-            lattitude1: fromAddress.lat,
-            longitude1: fromAddress.lng,
-            address1: fromAddress.address,
-            lattitude2: toAddress.lat,
-            longitude2: toAddress.lng,
-            address2: toAddress.address,
-            landmark1: sourceLandmark,
-            landmark2: destinationLandmark,
-            startTime: formattedDateTime,
-            seatsAvailable: availableSeats,
-            description,
-            fare,
-            // fields to be removed in later point of time
-            createdTime: "2024-02-11T14:30:00",
-            comments: "Test comments",
-            waitTime: "14:30:00",
-            estimatedTripStartTime: "2024-02-11T14:30:00",
-            estimatedTripEndTime: "2024-02-11T14:30:00",
-        };
-
-        axios
-            .post(`${API}/ride/addRide`, requestObj, config)
-            .then((response) => {
-                if (response.data.success) {
-                    setLoading(false);
-                    toast({
-                        title: "Ride Created",
-                        status: "success",
-                        duration: 5000,
-                        isClosable: true,
-                    });
-                } else {
-                    toast({
-                        title: response.data.message,
-                        status: "error",
-                        duration: 5000,
-                        isClosable: true,
-                    });
-                    setLoading(false);
-                    console.log("Response:", response);
-                }
-            })
-            .catch((error) => {
-                console.error("Error:", error);
-            });
     };
     return (
         <>

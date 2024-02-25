@@ -75,8 +75,8 @@ const BottomNavbar = () => {
                     </Link>
                 </Box>
                 <Box>
-                    <Link>
-                        <FaHome size="33px" to="/" />
+                    <Link to="/">
+                        <FaHome size="33px" />
                     </Link>
                 </Box>
                 <Box position="relative"><Link to="/notifications">
