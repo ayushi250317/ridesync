@@ -73,40 +73,38 @@ stages: # List of stages for jobs, and their order of execution
 #     - docker push docker.io/meer2838/cicdtest:midfrontend
 #   only:
 #     - CICD_Test
-
 deploy-backend:
   image: alpine:latest
   stage: deploy-backend
   tags:
     - test-runner
   script:
-   - apk update && apk add openssh-client sshpass
+    - apk update && apk add openssh-client sshpass
     # - sshpass -p "$PASSWORD" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
-   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
-   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
-   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
-   - sshpass -p "aeCh4ahChu" ssh -o StrictHostKeyChecking=no student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
-  # environment:
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midbackend"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-backend-app || true"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
   # environment:
   #   name: production
   #   url: http://172.17.1.211:8073
   only:
     - CICD_Test
 
-# deploy-frontend:
-#   image: alpine:latest
-#   stage: deploy-frontend
-#   tags:
-#     - test-runner
-#   script:
-#     - chmod og= $ID_RSA
-#     - apk update && apk add openssh-client
-#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
-#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
-#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
-#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
-#   # environment:
-#   #   name: production
-#   #   url: http://172.17.1.211:8073
-#   only:
-#     - CICD_Test
+  
+deploy-frontend:
+  image: alpine:latest
+  stage: deploy-frontend
+  tags:
+    - test-runner
+  script:
+    - apk update && apk add openssh-client sshpass
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midfrontend"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
+  # environment:
+  #   name: production
+  #   url: http://172.17.1.211:8073
+  only:
+    - CICD_Test
