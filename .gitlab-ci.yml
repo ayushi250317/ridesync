@@ -1,6 +1,6 @@
 stages: # List of stages for jobs, and their order of execution
   - build-backend
-  - build-frontend
+  # - build-frontend
   # - test
   # - quality
   - publish-backend
@@ -15,13 +15,13 @@ build-backend:
     - cd ridesync_backend
     - mvn clean package
 
-build-frontend:
-  stage: build-frontend
-  image: node:alpine
-  script:
-    - cd ridesync_frontend
-    - npm install
-    - npm run build
+# build-frontend:
+#   stage: build-frontend
+#   image: node:alpine
+#   script:
+#     - cd ridesync_frontend
+#     - npm install
+#     - npm run build
 
 publish-backend:
   image: docker:latest
