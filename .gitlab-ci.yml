@@ -80,7 +80,7 @@ deploy-backend:
   tags:
     - test-runner
   script:
-    - apk update && apk add openssh-client && apk add sshpass
+    - apk update && apk add openssh-client sshpass
     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
@@ -91,20 +91,20 @@ deploy-backend:
   only:
     - CICD_Test
 
-deploy-frontend:
-  image: alpine:latest
-  stage: deploy-frontend
-  tags:
-    - test-runner
-  script:
-    - chmod og= $ID_RSA
-    - apk update && apk add openssh-client
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
-    - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
-  # environment:
-  #   name: production
-  #   url: http://172.17.1.211:8073
-  only:
-    - CICD_Test
+# deploy-frontend:
+#   image: alpine:latest
+#   stage: deploy-frontend
+#   tags:
+#     - test-runner
+#   script:
+#     - chmod og= $ID_RSA
+#     - apk update && apk add openssh-client
+#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker login -u meer2838 -p KSP135246@m docker.io"
+#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker pull docker.io/meer2838/cicdtest:midbackend"
+#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker container rm -f my-backend-app || true"
+#     - sshpass -p "aeCh4ahChu" ssh student@csci5308vm8.research.cs.dal.ca "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
+#   # environment:
+#   #   name: production
+#   #   url: http://172.17.1.211:8073
+#   only:
+#     - CICD_Test
