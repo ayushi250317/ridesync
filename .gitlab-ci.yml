@@ -102,7 +102,7 @@ deploy-frontend:
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PWD docker.io"
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker pull docker.io/meer2838/cicdtest:midfrontend"
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
-    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
+    - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 3000:3000 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
   # environment:
   #   name: production
   #   url: http://172.17.1.211:8073
