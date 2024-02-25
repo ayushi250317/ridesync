@@ -57,20 +57,26 @@ const AddRide = () => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
         );
+        console.log("loggedInUserInfo", loggedInUserInfo);
         if (loggedInUserInfo) {
             setLoggedInUserDetails(loggedInUserInfo);
-        }
-        const config = {
-            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
-        };
-        axios.get(`${API}/vehicle/getVehiclesByUserId/${loggedInUserInfo.user.userId}`, config).then((res) => {
-            if (res.data.success) {
-                setSelectedVehicleArr(res.data.vehicles)
-            }
+            const authConfig = {
+                headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
+            };
 
-        }).catch(err => {
-            console.log("err in fetch vehicle", err);
-        })
+            // console.log("config ", authConfig);
+            axios.get(`${API}/vehicle/getVehiclesByUserId/${loggedInUserInfo.user.userId}`, authConfig).then((res) => {
+                console.log("qqq", res.data);
+                if (res.data.success) {
+
+                    setSelectedVehicleArr(res.data.vehicles)
+                }
+
+            }).catch(err => {
+                console.log("err in fetch vehicle", err);
+            })
+        }
+
     }, []);
 
     const onSubmitAddRide = () => {
@@ -315,7 +321,7 @@ const AddRide = () => {
                                     }}
                                 >
                                     {vehiclesArr.map(vehicle => {
-                                        return <option value={vehicle.vehicleId} >{vehicle.model}</option>
+                                        return <option key={vehicle.vehicleId} value={vehicle.vehicleId} >{vehicle.model}</option>
                                     })}
 
                                 </Select>
