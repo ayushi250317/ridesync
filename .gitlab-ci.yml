@@ -14,6 +14,8 @@ build-backend:
   script:
     - cd ridesync_backend
     - mvn clean package
+  only:
+    - CICD_Test
 
 # build-frontend:
 #   stage: build-frontend
