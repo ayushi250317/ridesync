@@ -37,36 +37,33 @@ public class RideService {
 		RideResponse res = new RideResponse();
 
 		try {
-		Random rand = new Random();
-		
-		res.setRide(rideRepository.save(new Ride(
-				input.getStartTime(),
-				input.getCreatedTime(),
-				rand.nextInt(),
-				"posted",                         // can be posted/ active/ completed.
-				input.getDescription(),
-				input.getSeatsAvailable(),
-				input.getVehicleId(),
-				input.getUserId()
-				)));
-				 
-		//Save in RideInfo
-		res.setRideInfo(rideInfoService.addRideInfo(new RideInfoInput(
-				input.getUserId(),
-				input.getLattitude1(),
-				input.getLongitude1(),
-				input.getLandmark1(),
-				input.getAddress1(),
-				input.getLattitude2(),
-				input.getLongitude2(),
-				input.getLandmark2(),
-				input.getAddress2(),
-				res.getRide().getRideId(),  		//Extract the rideID from the res object.
-				input.getFare(),
-				input.getComments(),
-				input.getEstimatedTripStartTime(),
-				input.getEstimatedTripEndTime()
-				)));
+			Random rand = new Random();
+
+			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(),"posted",                         
+					input.getDescription(),input.getSeatsAvailable(),input.getVehicleId(),input.getUserId());
+
+			res.setRide(rideRepository.save(ride));
+			input.getRouteCoordinates().setRide(ride);
+
+			geoPointservice.saveGeoPoints(input.getRouteCoordinates());
+
+			//Save in RideInfo
+			res.setRideInfo(rideInfoService.addRideInfo(new RideInfoInput(
+					input.getUserId(),
+					input.getLattitude1(),
+					input.getLongitude1(),
+					input.getLandmark1(),
+					input.getAddress1(),
+					input.getLattitude2(),
+					input.getLongitude2(),
+					input.getLandmark2(),
+					input.getAddress2(),
+					res.getRide().getRideId(),  		//Extract the rideID from the res object.
+					input.getFare(),
+					input.getComments(),
+					input.getEstimatedTripStartTime(),
+					input.getEstimatedTripEndTime()
+					)));
 		}catch(Exception e) {
 			res.setSuccess(false);
 			res.setMessage(e.toString());

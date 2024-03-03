@@ -79,7 +79,7 @@ const FindRideLocation = () => {
             <Box>
                 {findRidesResult.length ? <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text> : <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text>}
                 {findRidesResult.map(rides => {
-                    return <Box border="1px solid lightgray" borderRadius="xl" m="10" p="5" boxShadow="xl">
+                    return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
                         <Flex justifyContent="space-between">
                             <Box>
 
