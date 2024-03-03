@@ -49,7 +49,7 @@ const Home = () => {
                     </Box>
                     <Box
                         m="3"
-                        onClick={() => naviagate("/joinride")}
+                        onClick={() => naviagate("/find_ride")}
                         className="transition-all hover:scale-105"
                         border="1px solid lightgray"
                         p={["4", "4", "6", "10"]}

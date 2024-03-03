@@ -38,7 +38,7 @@ const Login = () => {
     }
     return (
         <Box  >
-            <Flex w={["100%", "95%", "90%", "80%"]} h={["", "", "100vh", "100vh"]} m="auto" justifyContent="center" align="center" flexDir={["column", "column", "row", "row"]}>
+            <Flex w={["100%", "95%", "90%", "80%"]} h={["", "", "100vh", "100vh"]} m={["", "", "auto", "auto"]} mt={["20", "20", "", ""]} justifyContent="center" align="center" flexDir={["column", "column", "row", "row"]}>
                 <Flex w="50%" borderRight={["", "", "1px solid lightgray", "1px solid lightgray"]}>
                     <Image src='/try2.png' w={["100%", "100%", "85%", "80%"]}></Image>
                 </Flex>
