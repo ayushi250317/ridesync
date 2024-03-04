@@ -661,6 +661,12 @@
 					"response": []
 				},
 				{
+
+					"name": "GetRideHistoryByUserId",
+					"request": {
+						"method": "GET",
+						"header": []
+
 					"name": "Search Ride",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -788,6 +794,7 @@
 								"create"
 							]
 						}
+
 					},
 					"response": []
 				}
