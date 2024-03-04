@@ -22,8 +22,17 @@ public class RideService {
 	@Autowired
 	private RideRepository rideRepository;
 	@Autowired
-	private RideInfoService rideInfoService;
+	private RideInfoService rideInfoService;	
 
+
+	private final GeoPointService geoPointservice;
+
+	@Autowired
+	public RideService(GeoPointService geoPointservice, RideRepository rideRepository, RideInfoService rideInfoService) {
+		this.geoPointservice = geoPointservice;
+		this.rideRepository = rideRepository;
+		this.rideInfoService = rideInfoService;
+	}
 
 	public RideResponse addRide(RideInput input){
 
@@ -42,6 +51,15 @@ public class RideService {
 					input.getVehicleId(),
 					input.getUserId()
 					)));
+
+			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(),"posted",                         
+					input.getDescription(),input.getSeatsAvailable(),input.getVehicleId(),input.getUserId());
+
+			res.setRide(rideRepository.save(ride));
+			input.getRouteCoordinates().setRide(ride);
+
+			geoPointservice.saveGeoPoints(input.getRouteCoordinates());
+
 
 			//Save in RideInfo
 			res.setRideInfo(rideInfoService.addRideInfo(new RideInfoInput(

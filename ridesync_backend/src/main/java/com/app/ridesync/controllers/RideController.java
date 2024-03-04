@@ -25,7 +25,7 @@ import com.app.ridesync.services.RideService;
 import lombok.RequiredArgsConstructor;
 
 
-@CrossOrigin(origins = "*")
+@CrossOrigin(origins="*")
 @RequestMapping("/api/v1/ride")
 @RestController
 @RequiredArgsConstructor
@@ -48,7 +48,7 @@ public class RideController {
 	@PostMapping("/updateRide")
 	public RideResponse updateRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
 		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-		input.setUserId(userId);	
+		input.setUserId(userId);
 		return rideService.updateRide(input);
 	}
 

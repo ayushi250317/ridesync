@@ -24,23 +24,23 @@ const Navbar = () => {
                 </Box>
                 <Flex fontSize="xl" >
                     <Box mx="5">
-                        <Link>
+                        <Link to="/">
                             Home
                         </Link>
                     </Box>
                     <Box mx="5">
-                        <Link>
+                        <Link to="/history">
                             History
                         </Link>
                     </Box>
                     <Box mx="5" position="relative">
                         {/* <Box className='notification-number-uppernav'><Text>5</Text> </Box> */}
-                        <Link>
+                        <Link to="/notifications">
                             Notifications
                         </Link>
                     </Box>
                     <Box mx="5" backgroundColor="black" color="white" px={["", "", "", "4"]} borderRadius="xl" pb={["", "", "", "1"]}>
-                        <Link>
+                        <Link to="/login" onClick={() => localStorage.removeItem("loggedInUserDetails")}>
                             Log out
                         </Link>
                     </Box>

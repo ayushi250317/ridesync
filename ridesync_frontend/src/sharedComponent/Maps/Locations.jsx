@@ -1,7 +1,9 @@
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex, InputRightElement, InputGroup } from '@chakra-ui/react';
+import { Box, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex, InputRightElement, InputGroup, Text } from '@chakra-ui/react';
 import { GoogleMap, MarkerF, useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import { IoLocation } from 'react-icons/io5';
+import { ImLocation2 } from 'react-icons/im';
+import { FaRegCircle } from 'react-icons/fa';
 
 const libraries = ['places'];
 
@@ -62,7 +64,8 @@ const AddressInput = ({ label, setAddressInfo, addressInfo }) => {
     setAutoComplete(autocomplete);
   }
   const handlePlaceChanged = () => {
-    const place = autocomplete.getPlace();
+    const place = autocomplete?.getPlace();
+    console.log("asdsa", autocomplete);
     if (place?.formatted_address) {
       var lat = place.geometry.location.lat();
       var lng = place.geometry.location.lng();
@@ -71,14 +74,14 @@ const AddressInput = ({ label, setAddressInfo, addressInfo }) => {
   };
 
   return (
-    <Flex w={"100%"} marginBottom={["10px", "10px", "15px", "15px"]}>
+    <Flex w={"100%"} marginBottom={["10px", "10px", "15px", "15px"]} >
       <Autocomplete onLoad={onLoad} onPlaceChanged={handlePlaceChanged}>
         <InputGroup size='md' w="100%">
           <Input
             placeholder={label}
             value={addressInfo.address}
             onChange={(e) => { setAddressInfo((prevState) => { return { ...prevState, address: e.target.value } }) }}
-            w={["90vw", "90vw", "70vw", "70vw"]}
+            w={["81vw", "87vw", "60vw", "64.7vw"]}
           />
           <InputRightElement >
             <Button size='large' boxShadow="xl" backgroundColor="transparent" onClick={onOpen}>
@@ -101,10 +104,20 @@ const Locations = ({ fromAddress, toAddress, setFromAddress, setToAddress }) => 
   if (!isLoaded) return <div>Loading...</div>;
 
   return (
-    <>
-      <AddressInput label="From" setAddressInfo={setFromAddress} addressInfo={fromAddress} />
-      <AddressInput label="To" setAddressInfo={setToAddress} addressInfo={toAddress} />
-    </>
+    <Box>
+      <Flex justifyContent="space-evenly" alignItems="center">
+        <Box>
+          <FaRegCircle size="20px" color='blue' className='mx-2 mb-3' />
+        </Box>
+        <AddressInput label="From" setAddressInfo={setFromAddress} addressInfo={fromAddress} />
+      </Flex>
+      <Flex justifyContent="space-evenly" alignItems="center">
+        <Box>
+          <ImLocation2 size="28px" color='green' className='mx-1 mb-3' />
+        </Box>
+        <AddressInput label="To" setAddressInfo={setToAddress} addressInfo={toAddress} />
+      </Flex>
+    </Box>
   );
 };
 
