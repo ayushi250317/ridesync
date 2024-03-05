@@ -3,6 +3,7 @@ package com.app.ridesync.projections;
 import java.time.LocalDateTime;
 
 public record SearchResultProjection (	
+	Integer rideId,
 	LocalDateTime startTime,
 	String startLocationAddress,
 	String startLocationLandmark,
