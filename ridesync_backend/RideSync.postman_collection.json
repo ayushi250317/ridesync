@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ba60c77d-e249-49f8-b620-eff227b734cc",
-		"name": "RideSync Copy",
+		"_postman_id": "a937cc31-e4f2-4cca-89c0-c9e2590d27e8",
+		"name": "RideSync",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16764820"
 	},
@@ -661,12 +661,17 @@
 					"response": []
 				},
 				{
-
 					"name": "GetRideHistoryByUserId",
 					"request": {
 						"method": "GET",
-						"header": []
-
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Search Ride",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -794,7 +799,6 @@
 								"create"
 							]
 						}
-
 					},
 					"response": []
 				}
