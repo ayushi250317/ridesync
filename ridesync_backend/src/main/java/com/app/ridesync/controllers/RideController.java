@@ -2,17 +2,13 @@ package com.app.ridesync.controllers;
 
 import java.util.List;
 
+import com.app.ridesync.dto.requests.PickupLocationRequest;
+import com.app.ridesync.dto.responses.RideInfoResponse;
+import com.app.ridesync.services.RideInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.ApiResponse;
@@ -33,6 +29,8 @@ public class RideController {
 
 	@Autowired
 	private RideService rideService;
+	@Autowired
+	private RideInfoService rideInfoService;
 	@Autowired
 	private JwtService jwtService;
 
@@ -69,4 +67,31 @@ public class RideController {
 								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
 		}
 	}
+
+	@PutMapping("/updatePickupLocation")
+	public ResponseEntity<ApiResponse<RideInfoResponse>> updatePickupLocation(@RequestHeader("Authorization") String jwtToken, @RequestBody PickupLocationRequest input) {
+		try {
+			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+			RideInfoResponse res = rideInfoService.updatePickupLocation(input.getRideId(), userId, input.getLocation());
+
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ApiResponse<>(res, true, "Update successful"));
+		}catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse<>(null, false, "Update Failed!"));
+		}
+		}
+
+	@GetMapping("/getAllTripMembers/{rideId}")
+	public ResponseEntity<ApiResponse<List<RideInfoResponse>>> getAllTripDetails(@PathVariable Integer rideId){
+	try {
+			List<RideInfoResponse> res = rideInfoService.getAllMembers(rideId);
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ApiResponse<>(res, true, "Update successful"));
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse<>(null, false, "Fetch Failed!"));
+		}
+    }
 }
+

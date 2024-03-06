@@ -19,4 +19,6 @@ public class RideInfoResponse {
 	private RideInfo rideInfo;
 	private String message;
     private boolean success;
+	private Location pickupLocation;
+
 }
