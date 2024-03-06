@@ -40,6 +40,10 @@ const RiderRegistration = () => {
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
         if (loggedInUserInfo) {
             setLoggedInUserDetails(loggedInUserInfo);
+            const hasDrivingLicense = loggedInUserInfo.documents.some(doc => doc.documentType === 'driving_license');
+            if (hasDrivingLicense) {
+                setActiveStep(1);
+            }
         }
     }, []);
 
@@ -51,7 +55,7 @@ const RiderRegistration = () => {
         let requestObj = {
             "userDocumentID": licenseNo,
             "userId": loggedInUserDetails.user.userId,
-            "documentType": "Driving Licence",
+            "documentType": "driving_license",
             "expiryDate": expiryDate
         }
 
@@ -60,6 +64,11 @@ const RiderRegistration = () => {
                 if (response.data.success) {
                     setLoading(false);
                     setActiveStep(1);
+                    setLoggedInUserDetails((currUserInfo) => {
+                        let modifiedLocalStorage = { ...currUserInfo, documents: [...currUserInfo.documents, requestObj] }
+                        localStorage.setItem('loggedInUserDetails', JSON.stringify(modifiedLocalStorage));
+                        return modifiedLocalStorage
+                    })
                 } else {
                     toast({
                         title: response.data.message,
@@ -90,7 +99,6 @@ const RiderRegistration = () => {
         axios.post(`${API}/document/addDocument`, insuranceReqObj, config)
             .then(response => {
                 if (response.data.success) {
-                    console.log(response.data)
                     let vehicleInfoReqObj = {
                         regNo,
                         model,
@@ -113,6 +121,11 @@ const RiderRegistration = () => {
                                     isClosable: true,
                                 });
                                 setLoading(false);
+                                setLoggedInUserDetails((currUserInfo) => {
+                                    let modifiedLocalStorage = { ...currUserInfo, vehicles: [...currUserInfo.vehicles, vehicleInfoReqObj] }
+                                    localStorage.setItem('loggedInUserDetails', JSON.stringify(modifiedLocalStorage));
+                                    return modifiedLocalStorage
+                                })
                                 console.log('Response:', response);
                             }
                         })
