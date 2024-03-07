@@ -27,13 +27,11 @@ public class RideRequestService {
         }
 
         public RideRequestResponse getRides(Integer rideId) {
-                RideRequestResponse rideRequestResponse = new RideRequestResponse();
-                rideRequestResponse.setMessage("Requests fetched successfully");
-                return rideRequestResponse;
+                return RideRequestResponse.builder().message("Requests fetched successfully").success(true).build();
         }
 
         public RideRequestResponse updateRide(Integer requestId, RideRequest request) {
-                return RideRequestResponse.builder().message("Request Update successfully").success(true).build();
+                return RideRequestResponse.builder().message("Request updated successfully").success(true).build();
         }
 
 }
