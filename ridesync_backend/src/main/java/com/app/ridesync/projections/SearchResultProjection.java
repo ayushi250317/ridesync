@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 public record SearchResultProjection (	
 	Integer rideId,
+	Integer driverId,
 	LocalDateTime startTime,
 	String startLocationAddress,
 	String startLocationLandmark,
