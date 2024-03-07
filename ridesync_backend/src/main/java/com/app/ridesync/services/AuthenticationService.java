@@ -153,13 +153,13 @@ public class AuthenticationService {
     }
 
     public User updateUserDetails(RegisterRequest request, Integer userId){
-        User old = repository.findByUserId(userId);
-        old.setFullName(request.getFullName());
-        old.setAddress(request.getAddress());
-        old.setDateOfBirth(request.getDateOfBirth());
-        old.setPhoneNumber(request.getPhoneNumber());
+        User user = repository.findByUserId(userId);
+        user.setFullName(request.getFullName());
+        user.setAddress(request.getAddress());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setPhoneNumber(request.getPhoneNumber());
 
-        return repository.save(old);
+        return repository.save(user);
     }
 
 }
