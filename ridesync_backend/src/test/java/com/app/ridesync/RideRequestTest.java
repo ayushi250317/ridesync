@@ -116,7 +116,7 @@ public class RideRequestTest {
     }
 
     @Test
-    public void testUpdateRequest() {
+    public void testUpdateRequest_Accepted() {
         RideRequest rideRequest = new RideRequest();
         rideRequest.setRequestStatus(RequestStatus.ACCEPTED);
         RideRequestInfo requestInfo = RideRequestInfo.builder()
@@ -132,8 +132,30 @@ public class RideRequestTest {
         when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
         RideRequestResponse rideRequestResponse = rideRequestService.updateRide(requestId, rideRequest);
         assertTrue(rideRequestResponse.isSuccess());
-        assertEquals("Request Update successfully", rideRequestResponse.getMessage());
+        assertEquals("Request updated successfully", rideRequestResponse.getMessage());
         assertEquals(RequestStatus.ACCEPTED, requestInfo.getRequestStatus());
+        verify(rideRequestRepository).save(requestInfo);
+    }
+
+    @Test
+    public void testUpdateRequest_Rejected() {
+        RideRequest rideRequest = new RideRequest();
+        rideRequest.setRequestStatus(RequestStatus.REJECTED);
+        RideRequestInfo requestInfo = RideRequestInfo.builder()
+                .rideId(1)
+                .driverId(1)
+                .riderId(2)
+                .requestStatus(RequestStatus.REQUESTED)
+                .startLocationId(1)
+                .endLocationId(2)
+                .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
+                .build();
+        Integer requestId = 1;
+        when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
+        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(requestId, rideRequest);
+        assertTrue(rideRequestResponse.isSuccess());
+        assertEquals("Request updated successfully", rideRequestResponse.getMessage());
+        assertEquals(RequestStatus.REJECTED, requestInfo.getRequestStatus());
         verify(rideRequestRepository).save(requestInfo);
     }
 }
