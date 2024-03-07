@@ -61,10 +61,6 @@ class AuthenticationServiceTest {
     @MockBean
     private VehicleRepository vehicleRepository;
 
-    /**
-     * Method under test:
-     * {@link AuthenticationService#updateUserDetails(RegisterRequest, Integer)}
-     */
     @Test
     void testUpdateUserDetails() {
         // Arrange
@@ -99,10 +95,7 @@ class AuthenticationServiceTest {
         assertSame(user2, actualUpdateUserDetailsResult);
     }
 
-    /**
-     * Method under test:
-     * {@link AuthenticationService#updateUserDetails(RegisterRequest, Integer)}
-     */
+
     @Test
     void testUpdateUserDetails2() {
         // Arrange
@@ -125,10 +118,7 @@ class AuthenticationServiceTest {
         verify(userRepository).save(Mockito.<User>any());
     }
 
-    /**
-     * Method under test:
-     * {@link AuthenticationService#updateUserDetails(RegisterRequest, Integer)}
-     */
+
     @Test
     void testUpdateUserDetails3() {
         // Arrange
