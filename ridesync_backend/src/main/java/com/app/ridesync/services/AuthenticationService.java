@@ -152,4 +152,14 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().message("Passwords do not match").build();
     }
 
+    public User updateUserDetails(RegisterRequest request, Integer userId){
+        User old = repository.findByUserId(userId);
+        old.setFullName(request.getFullName());
+        old.setAddress(request.getAddress());
+        old.setDateOfBirth(request.getDateOfBirth());
+        old.setPhoneNumber(request.getPhoneNumber());
+
+        return repository.save(old);
+    }
+
 }
