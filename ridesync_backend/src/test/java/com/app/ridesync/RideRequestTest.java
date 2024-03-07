@@ -23,7 +23,6 @@ import com.app.ridesync.repositories.RideRequestRepository;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.LocationService;
 import com.app.ridesync.services.RideRequestService;
-import com.app.ridesync.services.RideService;
 
 public class RideRequestTest {
 
@@ -86,7 +85,7 @@ public class RideRequestTest {
     }
 
     @Test
-    public void testGetRequests() {
+    public void testGetRequestByRideId() {
         List<RideRequestInfo> expectedRequests = new ArrayList<>();
         RideRequestInfo request1 = RideRequestInfo.builder()
                 .rideId(1)
