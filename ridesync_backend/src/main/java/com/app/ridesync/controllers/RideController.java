@@ -72,7 +72,6 @@ public class RideController {
 	public ResponseEntity<ApiResponse<RideInfoResponse>> updatePickupLocation(@RequestHeader("Authorization") String jwtToken, @RequestBody PickupLocationRequest input) {
 		try {
 			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-			System.out.println(userId);
 			RideInfoResponse res = rideInfoService.updatePickupLocation(input.getRideId(), userId, input.getLocation());
 
 			return ResponseEntity.status(HttpStatus.OK)

@@ -130,10 +130,7 @@ public class RideInfoService {
 	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup){
 		RideInfoResponse res = new RideInfoResponse();
 		try {
-//			System.out.println(rideId);
-//			System.out.println(userId);
 			res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
-//			System.out.println(res.getRideInfo());
 			res.setPickupLocation(locationService.updateLocation(new Location(
 					res.getRideInfo().getPickupLocationId(),
 					pickup.getLattitude(),
