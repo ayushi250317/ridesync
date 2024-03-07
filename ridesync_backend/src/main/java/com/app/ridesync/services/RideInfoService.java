@@ -114,7 +114,7 @@ public class RideInfoService {
 		List<RideInfoResponse> res = new ArrayList<>();
 		
 		for(Ride r:rides) {
-			RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(r.getRideId(), r.getUserId());
+			RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(r.getRideId(),r.getUserId());
 			
 			Location loc1 = locationService.findLocationById(rideInfo.getStartLocationId());
 			Location loc2 = locationService.findLocationById(rideInfo.getEndLocationId());
@@ -129,19 +129,24 @@ public class RideInfoService {
 
 	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup){
 		RideInfoResponse res = new RideInfoResponse();
+		try {
+//			System.out.println(rideId);
+//			System.out.println(userId);
+			res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
+//			System.out.println(res.getRideInfo());
+			res.setPickupLocation(locationService.updateLocation(new Location(
+					res.getRideInfo().getPickupLocationId(),
+					pickup.getLattitude(),
+					pickup.getLongitude(),
+					pickup.getLandmark(),
+					pickup.getAddress()
+			)));
 
-		res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
-		res.setPickupLocation(locationService.updateLocation( new Location(
-				res.getRideInfo().getPickupLocationId(),
-				pickup.getLattitude(),
-				pickup.getLongitude(),
-				pickup.getLandmark(),
-				pickup.getAddress()
-		)));
-
-		res.setLocation1(locationService.findLocationById(res.getRideInfo().getStartLocationId()));
-		res.setLocation2(locationService.findLocationById(res.getRideInfo().getEndLocationId()));
-
+			res.setLocation1(locationService.findLocationById(res.getRideInfo().getStartLocationId()));
+			res.setLocation2(locationService.findLocationById(res.getRideInfo().getEndLocationId()));
+		}catch(Exception e){
+			System.out.println(e);
+		}
 		return res;
 	}
 
