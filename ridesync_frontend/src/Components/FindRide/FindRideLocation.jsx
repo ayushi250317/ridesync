@@ -8,6 +8,7 @@ const FindRideLocation = () => {
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const [reqSent, setReqSent] = useState(false)
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
@@ -29,6 +30,10 @@ const FindRideLocation = () => {
     const [rideTime, setRideTime] = useState("")
     console.log({ fromAddress, toAddress, rideTime });
 
+    const handleRequestRide = (data) => {
+
+    }
+
     const handleSubmitFindRide = () => {
         const newObj = {
             source: {
@@ -43,6 +48,7 @@ const FindRideLocation = () => {
         }
         console.log("new obj", newObj);
         setLoading(true)
+        setReqSent(true)
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
@@ -57,7 +63,7 @@ const FindRideLocation = () => {
             setLoading(false)
         })
     }
-
+    console.log("setReqSent", reqSent);
     return (
         <Box w={["88%", "92%", "63%", "67%"]} m="auto">
 
@@ -77,34 +83,40 @@ const FindRideLocation = () => {
             </Center>
 
             <Box>
-                {findRidesResult.length ? <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text> : <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text>}
-                {findRidesResult.map(rides => {
-                    return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
-                        <Flex justifyContent="space-between">
-                            <Box>
+                {reqSent && findRidesResult.length === 0 ? <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text> :
+                    <>
+                        {reqSent && <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text>}
+                        {findRidesResult.map(rides => {
+                            return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
+                                <Flex justifyContent="space-between">
+                                    <Box>
 
-                                <Text>
+                                        <Text>
 
-                                    Start Location: {rides.startLocationAddress}
-                                </Text>
-                                <Text>
-                                    End Location: {rides.endLocationAddress}
-                                </Text>
-                                <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                            Start Location: {rides.startLocationAddress}
+                                        </Text>
+                                        <Text>
+                                            End Location: {rides.endLocationAddress}
+                                        </Text>
+                                        <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                    </Box>
+
+                                </Flex>
+
+                                <Center justifyContent="space-between">
+
+                                    <Text>
+                                        Seat available : {rides.seatsAvailable}
+                                    </Text>
+
+                                    <Button colorScheme='green' onClick={() => handleRequestRide({ address1: rides.startLocationAddress, address2: rides.endLocationAddress })}>Request Ride</Button>
+                                </Center>
                             </Box>
+                        }
 
-                        </Flex>
-
-                        <Center justifyContent="space-between">
-
-                            <Text>
-                                Seat available : {rides.seatsAvailable}
-                            </Text>
-
-                            <Button colorScheme='green'>Request Ride</Button>
-                        </Center>
-                    </Box>
-                })}
+                        )}
+                    </>
+                }
             </Box>
 
         </Box >

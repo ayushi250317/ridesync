@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Image, Input, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Image, Input, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,7 +6,7 @@ import { API } from '../../sharedComponent/API'
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import { useForm } from 'react-hook-form'
-
+import { FaUserEdit } from "react-icons/fa";
 const phoneRegExp = /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/
 const schema = yup
     .object({
@@ -23,7 +23,7 @@ const schema = yup
     .required()
 
 
-const Signup = () => {
+const PersonalInfoEdit = () => {
 
     const {
         register,
@@ -52,7 +52,8 @@ const Signup = () => {
         console.log("dada", data);
         setLoading(true)
         // userDetails is the request body
-        axios.post(`${API}/auth/register`, data)
+        console.log(userDetails)
+        axios.post(`${API}/auth/register`, userDetails)
             .then(response => {
                 console.log('Response:', response);
                 if (response.data.success) {
@@ -90,8 +91,11 @@ const Signup = () => {
             <Flex w={["100%", "95%", "90%", "80%"]} m="auto" justifyContent="center" align="center" flexDir={["column-reverse", "column-reverse", "row", "row"]}>
 
                 <Flex w={["90%", "95%", "60%", "55%"]} justifyContent="center" flexDir="column" >
+                    <Center>
 
-                    <Text fontWeight="medium" fontSize="3xl" textAlign="center" my={["5", "5", "2", "2"]}>Create Ridesync account</Text>
+                        <FaUserEdit size="55px" />
+                    </Center>
+                    <Text fontWeight="medium" fontSize="3xl" textAlign="center" >Edit personal details.</Text>
                     <form onSubmit={handleSubmit(onSubmit)}>
 
                         <Text mb="1">Name</Text>
@@ -103,24 +107,15 @@ const Signup = () => {
                         ></Input>
                         <Text color="red">{errors.fullName && errors.fullName?.message}</Text>
 
-                        <Text mt="3" mb="1">Email</Text>
 
+                        <Text mt="3" mb="1">Phone number</Text>
                         <Input w={["100%", "100%", "90%", "90%"]}
-                            placeholder='Enter your email'
-                            type='email'
-                            name="email"
-                            {...register("email")}
+                            placeholder='Enter your phone number'
+                            type='number'
+                            name="phoneNumber"
+                            {...register("phoneNumber")}
                         ></Input>
-                        <Text color="red">{errors.email && errors.email?.message}</Text>
-
-                        <Text mt="3" mb="1">Address</Text>
-                        <Input w={["100%", "100%", "90%", "90%"]}
-                            placeholder='Enter your address'
-                            type='text'
-                            name="address"
-                            {...register("address")}
-                        ></Input>
-                        <Text color="red">{errors.address && errors.address?.message}</Text>
+                        <Text color="red">{errors.phoneNumber && errors.phoneNumber?.message}</Text>
 
                         <Text mt="3" mb="1">Date of birth</Text>
 
@@ -132,39 +127,24 @@ const Signup = () => {
                         ></Input>
                         <Text color="red">{errors.dateOfBirth && errors.dateOfBirth?.message}</Text>
 
-                        <Text mt="3" mb="1">Phone number</Text>
-                        <Input w={["100%", "100%", "90%", "90%"]}
-                            placeholder='Enter your phone number'
-                            type='number'
-                            name="phoneNumber"
-                            {...register("phoneNumber")}
-                        ></Input>
-                        <Text color="red">{errors.phoneNumber && errors.phoneNumber?.message}</Text>
+                        <Text mt="3" mb="1">Address</Text>
+                        <Textarea w={["100%", "100%", "90%", "90%"]}
+                            placeholder='Enter your address'
+                            type='text'
+                            name="address"
+                            {...register("address")}
+                        ></Textarea>
+                        <Text color="red">{errors.address && errors.address?.message}</Text>
 
-                        <Text mt="3" mb="1">Password</Text>
-                        <Input w={["100%", "100%", "90%", "90%"]}
-                            placeholder='Enter your password'
-                            type='password'
-                            name="password"
-                            {...register("password")}
-                        ></Input>
-                        <Text color="red">{errors.password && errors.password?.message}</Text>
 
-                        <br />
-                        <Button w={["100%", "100%", "90%", "90%"]} type="submit" colorScheme='blue'
+                        <Button w={["100%", "100%", "90%", "90%"]} my="7" type="submit" colorScheme='blue'
                             isLoading={loading}
                         >Submit</Button>
                     </form>
-
-                    <br />
-                    <span style={{ marginBottom: "15px" }}>Already have an account? <span className='text-blue-700'><Link to="/login">Click here</Link></span></span>
-                </Flex>
-                <Flex w="45%" >
-                    <Image src='/images.png' w={["100%", "100%", "85%", "80%"]}></Image>
                 </Flex>
             </Flex>
         </Box>
     )
 }
 
-export default Signup
+export default PersonalInfoEdit
