@@ -7,7 +7,6 @@ import com.app.ridesync.dto.requests.RideRequest;
 import com.app.ridesync.dto.responses.RideRequestResponse;
 import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideRequestInfo;
-import com.app.ridesync.entities.Location;
 import com.app.ridesync.repositories.RideRequestRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,6 +24,16 @@ public class RideRequestService {
         public RideRequestResponse requestRide(String jwtToken, RideRequest rideRequest) {
                 return RideRequestResponse.builder().message("Ride requested successfully")
                                 .success(true).build();
+        }
+
+        public RideRequestResponse getRides(Integer rideId) {
+                RideRequestResponse rideRequestResponse = new RideRequestResponse();
+                rideRequestResponse.setMessage("Requests fetched successfully");
+                return rideRequestResponse;
+        }
+
+        public RideRequestResponse updateRide(Integer requestId, RideRequest request) {
+                return RideRequestResponse.builder().message("Request Update successfully").success(true).build();
         }
 
 }

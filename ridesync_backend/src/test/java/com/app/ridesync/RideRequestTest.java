@@ -4,6 +4,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ import com.app.ridesync.repositories.RideRequestRepository;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.LocationService;
 import com.app.ridesync.services.RideRequestService;
+import com.app.ridesync.services.RideService;
 
 public class RideRequestTest {
 
@@ -56,7 +59,7 @@ public class RideRequestTest {
         rideRequest.setDriverId(456);
         rideRequest.setEstimatedTripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"));
 
-        String jwtToken="eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY";
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY";
 
         Location startLocation = new Location(rideRequest.getLattitude1(), rideRequest.getLongitude1(),
                 rideRequest.getLandmark1(), rideRequest.getAddress1());
@@ -81,5 +84,56 @@ public class RideRequestTest {
         verify(locationService, times(2)).addLocation(any(Location.class));
         verify(rideRequestRepository, times(1)).save(any(RideRequestInfo.class));
     }
-}
 
+    @Test
+    public void testGetRequests() {
+        List<RideRequestInfo> expectedRequests = new ArrayList<>();
+        RideRequestInfo request1 = RideRequestInfo.builder()
+                .rideId(1)
+                .driverId(1)
+                .riderId(2)
+                .requestStatus(RequestStatus.REQUESTED)
+                .startLocationId(1)
+                .endLocationId(2)
+                .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
+                .build();
+        RideRequestInfo request2 = RideRequestInfo.builder()
+                .rideId(1)
+                .driverId(1)
+                .riderId(3)
+                .requestStatus(RequestStatus.REQUESTED)
+                .startLocationId(3)
+                .endLocationId(4)
+                .tripStartTime(LocalDateTime.parse("2024-03-06T12:30:00"))
+                .build();
+        expectedRequests.add(request1);
+        expectedRequests.add(request2);
+        Integer rideId = 1;
+        when(rideRequestRepository.findByRideId(rideId)).thenReturn(expectedRequests);
+        RideRequestResponse rideRequestResponse = rideRequestService.getRides(rideId);
+        assertEquals(rideRequestResponse.getRequests(), expectedRequests);
+        assertEquals("Requests fetched successfully", rideRequestResponse.getMessage());
+    }
+
+    @Test
+    public void testUpdateRequest() {
+        RideRequest rideRequest = new RideRequest();
+        rideRequest.setRequestStatus(RequestStatus.ACCEPTED);
+        RideRequestInfo requestInfo = RideRequestInfo.builder()
+                .rideId(1)
+                .driverId(1)
+                .riderId(2)
+                .requestStatus(RequestStatus.REQUESTED)
+                .startLocationId(1)
+                .endLocationId(2)
+                .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
+                .build();
+        Integer requestId = 1;
+        when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
+        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(requestId, rideRequest);
+        assertTrue(rideRequestResponse.isSuccess());
+        assertEquals("Request Update successfully", rideRequestResponse.getMessage());
+        assertEquals(RequestStatus.ACCEPTED, requestInfo.getRequestStatus());
+        verify(rideRequestRepository).save(requestInfo);
+    }
+}

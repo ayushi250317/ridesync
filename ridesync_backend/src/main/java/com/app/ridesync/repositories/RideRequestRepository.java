@@ -10,6 +10,7 @@ import com.app.ridesync.entities.RideRequestInfo;
 
 @Repository
 public interface RideRequestRepository extends JpaRepository<RideRequestInfo,Integer>{
-    List<RideRequestInfo> findByDriverId(Integer driverId);
+    List<RideRequestInfo> findByRideId(Integer rideId);
     RideRequestInfo findByRideRequestId(Integer rideRequestId);
+
 }

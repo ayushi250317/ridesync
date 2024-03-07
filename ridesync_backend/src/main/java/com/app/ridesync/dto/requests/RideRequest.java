@@ -2,6 +2,8 @@ package com.app.ridesync.dto.requests;
 
 import java.time.LocalDateTime;
 
+import com.app.ridesync.entities.RequestStatus;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -28,6 +30,6 @@ public class RideRequest {
 	private String address2;
 
     private LocalDateTime estimatedTripStartTime;
-	private String requestStatus;
+	private RequestStatus requestStatus;
 
 }
