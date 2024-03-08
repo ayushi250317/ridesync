@@ -661,22 +661,7 @@
 					"response": []
 				},
 				{
-
-					"name": "GetRidesByUserId",				
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Search Ride",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "GetRidesByUserId",
 					"request": {
 						"auth": {
 							"type": "bearer",
