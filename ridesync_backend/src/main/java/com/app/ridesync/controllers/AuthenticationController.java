@@ -79,7 +79,7 @@ public class AuthenticationController {
     return ResponseEntity.ok(service.setNewPassword(request));
     }
 
-    @PostMapping("/updateUser")
+    @PatchMapping("/updateUser")
     @CrossOrigin(origins = "*")
     public ResponseEntity<ApiResponse<User>> updateUserDetails(@RequestHeader("Authorization") String jwtToken, @RequestBody RegisterRequest request){
         Integer userId = jwtService.extractUserId(jwtToken.substring(7));
