@@ -13,6 +13,7 @@ import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.entities.Ride;
+import com.app.ridesync.projections.RideDetailProjection;
 import com.app.ridesync.projections.RideHistoryProjection;
 import com.app.ridesync.repositories.RideRepository;
 
@@ -157,7 +158,13 @@ public class RideService {
 	}
 
 	public List<RideHistoryProjection> getRideHistoryProjectionByUserId(Integer userId) {
-		return rideRepository.findByRideAndUserId(userId);
+		return rideRepository.findRidesByUserId(userId);	
+
+	}
+
+	public RideDetailProjection getRideDetailProjection(Integer rideId) {
+		return new RideDetailProjection(rideRepository.findRideHeaderInfoByRideId(rideId), rideRepository.findRideInfoByRideId(rideId));	
+
 	}
 
 }
