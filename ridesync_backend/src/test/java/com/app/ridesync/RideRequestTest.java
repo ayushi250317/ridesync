@@ -128,8 +128,9 @@ public class RideRequestTest {
                 .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
                 .build();
         Integer requestId = 1;
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY";
         when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
-        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(requestId, rideRequest);
+        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(jwtToken,requestId, rideRequest);
         assertTrue(rideRequestResponse.isSuccess());
         assertEquals("Request updated successfully", rideRequestResponse.getMessage());
         assertEquals(RequestStatus.ACCEPTED, requestInfo.getRequestStatus());
@@ -150,8 +151,9 @@ public class RideRequestTest {
                 .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
                 .build();
         Integer requestId = 1;
+        String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY";
         when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
-        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(requestId, rideRequest);
+        RideRequestResponse rideRequestResponse = rideRequestService.updateRide(jwtToken,requestId, rideRequest);
         assertTrue(rideRequestResponse.isSuccess());
         assertEquals("Request updated successfully", rideRequestResponse.getMessage());
         assertEquals(RequestStatus.REJECTED, requestInfo.getRequestStatus());

@@ -9,6 +9,7 @@ import com.app.ridesync.entities.Location;
 import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.entities.RideRequestInfo;
+import com.app.ridesync.repositories.RideInfoRepository;
 import com.app.ridesync.repositories.RideRequestRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ public class RideRequestService {
         private final LocationService locationService;
         @Autowired
         private final JwtService jwtService;
+        @Autowired
+        private final RideInfoRepository rideInfoRepository;
 
         public RideRequestResponse requestRide(String jwtToken, RideRequest rideRequest) {
                 jwtToken = jwtToken.substring(7);
@@ -55,14 +58,13 @@ public class RideRequestService {
         }
 
         public RideRequestResponse updateRide(String jwtToken, Integer requestId, RideRequest request) {
-
                 String requestStatus=request.getRequestStatus().toString();
                 RideRequestInfo rideRequestInfo = rideRequestRepository.findByRideRequestId(requestId);
                 if(requestStatus.equals("ACCEPTED")){
                         rideRequestInfo.setRequestStatus(RequestStatus.ACCEPTED);
                 }
                 else if(requestStatus.equals("REJECTED")){
-                        rideRequestInfo.setRequestStatus(RequestStatus.REJECTED);        
+                        rideRequestInfo.setRequestStatus(RequestStatus.REJECTED);       
                 } 
                 rideRequestRepository.save(rideRequestInfo);
                 return RideRequestResponse.builder().message("Request updated successfully").success(true).build();

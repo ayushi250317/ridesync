@@ -37,7 +37,7 @@ public class RideRequestController {
     }
 
     @PatchMapping("/updateRideRequest/{id}")
-    public ResponseEntity<RideRequestResponse> updateRideRequest(@PathVariable Integer id, @RequestBody RideRequest request){
-        return ResponseEntity.ok(rideRequestService.updateRide(id,request));
+    public ResponseEntity<RideRequestResponse> updateRideRequest(@RequestHeader("Authorization") String jwtToken,@PathVariable Integer id, @RequestBody RideRequest request){
+        return ResponseEntity.ok(rideRequestService.updateRide(jwtToken,id,request));
     }
 }
