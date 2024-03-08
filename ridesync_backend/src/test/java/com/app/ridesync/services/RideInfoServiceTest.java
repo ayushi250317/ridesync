@@ -50,7 +50,7 @@ class RideInfoServiceTest {
     @Autowired
     private RideInfoService rideInfoService;
 
-    
+
     @Test
     void testAddRideInfo() {
         // Arrange
