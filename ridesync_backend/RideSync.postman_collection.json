@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "a937cc31-e4f2-4cca-89c0-c9e2590d27e8",
-		"name": "RideSync",
+		"_postman_id": "5bb778de-feb5-435d-b6de-fbacba34c2bf",
+		"name": "RideSync Copy 2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16764820"
+		"_exporter_id": "32619004"
 	},
 	"item": [
 		{
@@ -223,7 +223,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
 									"type": "string"
 								}
 							]
@@ -352,7 +352,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
 									"type": "string"
 								}
 							]
@@ -512,7 +512,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
 									"type": "string"
 								}
 							]
@@ -521,7 +521,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\",\r\n    \"routeCoordinates\":{\"geoPointRecord\": {\"geoPoints\":[{\"lat\":44.635580000000004,\"lng\":-63.595130000000005},{\"lat\":44.635850000000005,\"lng\":-63.595270000000006},{\"lat\":44.63591,\"lng\":-63.59536000000001},{\"lat\":44.63602,\"lng\":-63.59554000000001},{\"lat\":44.636010000000006,\"lng\":-63.59566},{\"lat\":44.636010000000006,\"lng\":-63.59602},{\"lat\":44.634640000000005,\"lng\":-63.595420000000004},{\"lat\":44.634130000000006,\"lng\":-63.595200000000006},{\"lat\":44.63423,\"lng\":-63.59483},{\"lat\":44.63465,\"lng\":-63.593140000000005},{\"lat\":44.634820000000005,\"lng\":-63.592420000000004},{\"lat\":44.635020000000004,\"lng\":-63.59151000000001},{\"lat\":44.63570000000001,\"lng\":-63.58841},{\"lat\":44.63618,\"lng\":-63.586220000000004},{\"lat\":44.636390000000006,\"lng\":-63.58543},{\"lat\":44.63694,\"lng\":-63.58305000000001},{\"lat\":44.63718,\"lng\":-63.58214},{\"lat\":44.63739,\"lng\":-63.58124000000001},{\"lat\":44.637660000000004,\"lng\":-63.580000000000005},{\"lat\":44.638400000000004,\"lng\":-63.5767},{\"lat\":44.63911,\"lng\":-63.57383000000001},{\"lat\":44.63969,\"lng\":-63.57170000000001},{\"lat\":44.640040000000006,\"lng\":-63.57043},{\"lat\":44.64076,\"lng\":-63.570800000000006},{\"lat\":44.64209,\"lng\":-63.57146},{\"lat\":44.643150000000006,\"lng\":-63.572010000000006},{\"lat\":44.644180000000006,\"lng\":-63.57253000000001},{\"lat\":44.644690000000004,\"lng\":-63.57276},{\"lat\":44.645300000000006,\"lng\":-63.57311000000001},{\"lat\":44.646150000000006,\"lng\":-63.57352},{\"lat\":44.64649000000001,\"lng\":-63.573690000000006},{\"lat\":44.64726,\"lng\":-63.57408},{\"lat\":44.64782,\"lng\":-63.57437},{\"lat\":44.6499,\"lng\":-63.5754},{\"lat\":44.65017,\"lng\":-63.575540000000004}]}}\r\n}",
+							"raw": "{\r\n    \"startTime\":\"2024-03-05T14:30:00\",\r\n    \"createdTime\":\"2024-03-04T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-03-05T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-03-05T14:30:00\",\r\n    \"routeCoordinates\":{\"geoPointRecord\": {\"geoPoints\":[{\"lat\":44.635580000000004,\"lng\":-63.595130000000005},{\"lat\":44.635850000000005,\"lng\":-63.595270000000006},{\"lat\":44.63591,\"lng\":-63.59536000000001},{\"lat\":44.63602,\"lng\":-63.59554000000001},{\"lat\":44.636010000000006,\"lng\":-63.59566},{\"lat\":44.636010000000006,\"lng\":-63.59602},{\"lat\":44.634640000000005,\"lng\":-63.595420000000004},{\"lat\":44.634130000000006,\"lng\":-63.595200000000006},{\"lat\":44.63423,\"lng\":-63.59483},{\"lat\":44.63465,\"lng\":-63.593140000000005},{\"lat\":44.634820000000005,\"lng\":-63.592420000000004},{\"lat\":44.635020000000004,\"lng\":-63.59151000000001},{\"lat\":44.63570000000001,\"lng\":-63.58841},{\"lat\":44.63618,\"lng\":-63.586220000000004},{\"lat\":44.636390000000006,\"lng\":-63.58543},{\"lat\":44.63694,\"lng\":-63.58305000000001},{\"lat\":44.63718,\"lng\":-63.58214},{\"lat\":44.63739,\"lng\":-63.58124000000001},{\"lat\":44.637660000000004,\"lng\":-63.580000000000005},{\"lat\":44.638400000000004,\"lng\":-63.5767},{\"lat\":44.63911,\"lng\":-63.57383000000001},{\"lat\":44.63969,\"lng\":-63.57170000000001},{\"lat\":44.640040000000006,\"lng\":-63.57043},{\"lat\":44.64076,\"lng\":-63.570800000000006},{\"lat\":44.64209,\"lng\":-63.57146},{\"lat\":44.643150000000006,\"lng\":-63.572010000000006},{\"lat\":44.644180000000006,\"lng\":-63.57253000000001},{\"lat\":44.644690000000004,\"lng\":-63.57276},{\"lat\":44.645300000000006,\"lng\":-63.57311000000001},{\"lat\":44.646150000000006,\"lng\":-63.57352},{\"lat\":44.64649000000001,\"lng\":-63.573690000000006},{\"lat\":44.64726,\"lng\":-63.57408},{\"lat\":44.64782,\"lng\":-63.57437},{\"lat\":44.6499,\"lng\":-63.5754},{\"lat\":44.65017,\"lng\":-63.575540000000004}]}}\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -661,17 +661,6 @@
 					"response": []
 				},
 				{
-					"name": "GetRideHistoryByUserId",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": ""
-						}
-					},
-					"response": []
-				},
-				{
 					"name": "Search Ride",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
@@ -682,7 +671,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
 									"type": "string"
 								}
 							]
@@ -691,7 +680,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{  \"source\" : {\n    \n        \"lat\": 44.635580000000004,\n        \"lng\": -63.595130000000005\n    },\n   \"destination\" : {\n        \"lat\": 44.635580000000004,\n        \"lng\": -63.595130000000005\n    },\n    \"rideTime\" : \"2024-02-13T14:30:00.000000\"\n}",
+							"raw": "{  \"source\" : {\n    \n        \"lat\": 44.635580000000004,\n        \"lng\": -63.595130000000005\n    },\n   \"destination\" : {\n        \"lat\": 44.635580000000004,\n        \"lng\": -63.595130000000005\n    },\n    \"rideTime\" : \"2024-03-05T14:30:00.000000\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -710,6 +699,139 @@
 								"v1",
 								"geo",
 								"search"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RequestRide",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"estimatedTripStartTime\":\"2024-03-05T14:30:00\",\r\n\"lattitude1\":12345.321,\r\n\"longitude1\":12345.321,\r\n\"landmark1\":\"emera oval\",\r\n\"address1\":\"ice rink\",\r\n\"lattitude2\":12345,\r\n\"longitude2\":12345,\r\n\"landmark2\":\"atlantic Superstore\",\r\n\"address2\":\"Barrington Street\",\r\n\"rideId\" : 1,\r\n\"driverId\" : 1,\r\n\"riderId\" :1 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/addRequest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"addRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRideRequestByRideId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/getRideRequest?rideId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"getRideRequest"
+							],
+							"query": [
+								{
+									"key": "rideId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRideRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestStatus\" : \"ACCEPTED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/updateRideRequest/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"updateRideRequest",
+								"1"
 							]
 						}
 					},

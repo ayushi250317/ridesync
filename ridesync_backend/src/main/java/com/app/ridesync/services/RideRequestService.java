@@ -62,6 +62,17 @@ public class RideRequestService {
                 RideRequestInfo rideRequestInfo = rideRequestRepository.findByRideRequestId(requestId);
                 if(requestStatus.equals("ACCEPTED")){
                         rideRequestInfo.setRequestStatus(RequestStatus.ACCEPTED);
+                        RideInfo driverRideInfo=rideInfoRepository.findByRideIdAndUserId(rideRequestInfo.getRideId(),rideRequestInfo.getDriverId());
+                        RideInfo rideInfo= RideInfo.builder()
+                        .rideId(rideRequestInfo.getRideId())
+                        .userId(rideRequestInfo.getRiderId())
+                        .startLocationId(rideRequestInfo.getStartLocationId())
+                        .endLocationId(rideRequestInfo.getEndLocationId())
+                        .isDriver(false)
+                        .estimatedTripStartTime(rideRequestInfo.getTripStartTime())
+                        .fare(driverRideInfo.getFare())
+                        .build(); 
+                        rideInfoRepository.save(rideInfo);
                 }
                 else if(requestStatus.equals("REJECTED")){
                         rideRequestInfo.setRequestStatus(RequestStatus.REJECTED);       
