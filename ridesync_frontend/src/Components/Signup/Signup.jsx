@@ -73,17 +73,17 @@ const Signup = () => {
             }).finally(() => setLoading(false));
     };
 
-    const registerUser = () => {
+    // const registerUser = () => {
 
-    }
-    const setUserDetail = (e) => {
-        // e is an event object, it would contain name of the input field and value of the input field
-        const { name, value } = e.target;
-        setUserDetails(prevDetails => ({
-            ...prevDetails,
-            [name]: value
-        }));
-    };
+    // }
+    // const setUserDetail = (e) => {
+    //     // e is an event object, it would contain name of the input field and value of the input field
+    //     const { name, value } = e.target;
+    //     setUserDetails(prevDetails => ({
+    //         ...prevDetails,
+    //         [name]: value
+    //     }));
+    // };
     return (
         <Box>
             <br />
