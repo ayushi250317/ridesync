@@ -39,7 +39,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 
 	List<RideHistoryProjection> findByRideAndUserId(@Param("userId") Integer userId);
 	
-	@Query("SELECT new com.app.ridesync.projections.SearchResultProjection(ride.startTime, startLocation.address startLocationAddress, startLocation.landmark startLocationLandmark, endLocation.address endLocationAddress, endLocation.landmark endLocationLandmark, ride.createdTime, ride.status, ride.description, ride.seatsAvailable, vehicle.model AS rideVehicle)"
+	@Query("SELECT new com.app.ridesync.projections.SearchResultProjection(ride.rideId as rideId,rideInfo.userId as driverId,ride.startTime, startLocation.address startLocationAddress, startLocation.landmark startLocationLandmark, endLocation.address endLocationAddress, endLocation.landmark endLocationLandmark, ride.createdTime, ride.status, ride.description, ride.seatsAvailable, vehicle.model AS rideVehicle)"
 			+ " FROM Ride ride "
 			+ " JOIN RideInfo rideInfo ON ride.rideId = rideInfo.rideId AND rideInfo.isDriver"
 			+ " JOIN Location startLocation ON startLocation.locationId = rideInfo.startLocationId"
