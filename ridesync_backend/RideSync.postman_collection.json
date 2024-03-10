@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"fullName\" : \"Nithin Bharathi\",\r\n    \"email\" : \"nithinbharathi38@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -47,7 +47,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"nithinbharathi38@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -223,7 +223,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
 									"type": "string"
 								}
 							]
@@ -553,7 +553,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
 									"type": "string"
 								}
 							]
@@ -661,22 +661,85 @@
 					"response": []
 				},
 				{
-					"name": "Search Ride",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "GetRidesByUserId",
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMDIifQ.mwhH_iggL1WZa6YlOmhXL4ahY3YskRcA-Jd-6dQ9ivQ",
 									"type": "string"
 								}
 							]
 						},
 						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getRides/202",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getRides",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRideDetailById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMDIifQ.mwhH_iggL1WZa6YlOmhXL4ahY3YskRcA-Jd-6dQ9ivQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getRideDetail/253",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getRideDetail",
+								"253"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Ride",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
