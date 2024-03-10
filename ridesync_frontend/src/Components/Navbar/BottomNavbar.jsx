@@ -70,7 +70,7 @@ const BottomNavbar = () => {
             </Drawer>
             <Flex w="90%" m="auto" justifyContent="space-between" alignItems="center" p="2">
                 <Box>
-                    <Link to="/history">
+                    <Link to="/activity">
                         <FaHistory size="33px" />
                     </Link>
                 </Box>

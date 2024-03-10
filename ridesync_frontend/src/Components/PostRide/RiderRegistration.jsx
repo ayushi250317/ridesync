@@ -161,7 +161,9 @@ const RiderRegistration = () => {
                             index={activeStep}
                             w={["100%", "100%", "100%", "100%"]}
                             h={["", "", "40vh", "40vh"]}
-                            marginBottom={["20px", "20px", "", ""]}>
+                            marginBottom={["20px", "20px", "", ""]}
+                            colorScheme='gray'
+                            >
                             {steps.map((step, index) => (
                                 <Step key={index}>
                                     <StepIndicator>
