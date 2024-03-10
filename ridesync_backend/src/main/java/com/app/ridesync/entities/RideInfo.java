@@ -1,7 +1,7 @@
 package com.app.ridesync.entities;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,9 +20,9 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "rideInfo")
 public class RideInfo {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer rideInfoId;
 	private Integer rideId;
 	private boolean isActive;
@@ -33,10 +33,10 @@ public class RideInfo {
 	private double fare;
 	private Integer rating;
 	private String comments;
-	private LocalDate waitTime;
+	private LocalTime waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
-	
+
 	public RideInfo(Integer rideId, Integer userId, Integer locationId1, Integer locationId2, boolean isDriver, double d,
 			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
 		super();

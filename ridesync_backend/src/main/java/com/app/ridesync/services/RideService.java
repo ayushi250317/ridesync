@@ -13,15 +13,18 @@ import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.entities.Ride;
+import com.app.ridesync.projections.RideDetailProjection;
+import com.app.ridesync.projections.RideHistoryProjection;
 import com.app.ridesync.repositories.RideRepository;
 
 @Service
 public class RideService {
 
 	@Autowired
-	private final RideRepository rideRepository;
+	private RideRepository rideRepository;
 	@Autowired
-	private final RideInfoService rideInfoService;
+	private RideInfoService rideInfoService;	
+
 
 	private final GeoPointService geoPointservice;
 
@@ -39,13 +42,25 @@ public class RideService {
 		try {
 			Random rand = new Random();
 
-			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(1001, 9999),"posted",                         
+			res.setRide(rideRepository.save(new Ride(
+					input.getStartTime(),
+					input.getCreatedTime(),
+					rand.nextInt(1001, 9999),
+					"posted",                         // can be posted/ active/ completed.
+					input.getDescription(),
+					input.getSeatsAvailable(),
+					input.getVehicleId(),
+					input.getUserId()
+					)));
+
+			Ride ride = new Ride(input.getStartTime(),input.getCreatedTime(),rand.nextInt(),"posted",                         
 					input.getDescription(),input.getSeatsAvailable(),input.getVehicleId(),input.getUserId());
 
 			res.setRide(rideRepository.save(ride));
 			input.getRouteCoordinates().setRide(ride);
 
 			geoPointservice.saveGeoPoints(input.getRouteCoordinates());
+
 
 			//Save in RideInfo
 			res.setRideInfo(rideInfoService.addRideInfo(new RideInfoInput(
@@ -140,6 +155,16 @@ public class RideService {
 		res.setMessage("Successfully fetched Rides");
 		res.setSuccess(true);
 		return res;
+	}
+
+	public List<RideHistoryProjection> getRideHistoryProjectionByUserId(Integer userId) {
+		return rideRepository.findRidesByUserId(userId);	
+
+	}
+
+	public RideDetailProjection getRideDetailProjection(Integer rideId) {
+		return new RideDetailProjection(rideRepository.findRideHeaderInfoByRideId(rideId), rideRepository.findRideInfoByRideId(rideId));	
+
 	}
 
 }

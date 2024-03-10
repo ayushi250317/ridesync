@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Box,
     Button,
@@ -48,6 +49,7 @@ const AddRide = () => {
     const [availableSeats, setAvailableSeats] = useState(2);
     const [fare, setFare] = useState("");
     const [selectedVehicle, setSelectedVehicle] = useState("");
+    const [vehiclesArr, setSelectedVehicleArr] = useState([]);
     const [description, setDescription] = useState("");
     const toast = useToast();
 
@@ -55,9 +57,26 @@ const AddRide = () => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
         );
+        console.log("loggedInUserInfo", loggedInUserInfo);
         if (loggedInUserInfo) {
             setLoggedInUserDetails(loggedInUserInfo);
+            const authConfig = {
+                headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
+            };
+
+            // console.log("config ", authConfig);
+            axios.get(`${API}/vehicle/getVehiclesByUserId/${loggedInUserInfo.user.userId}`, authConfig).then((res) => {
+                console.log("qqq", res.data);
+                if (res.data.success) {
+
+                    setSelectedVehicleArr(res.data.vehicles)
+                }
+
+            }).catch(err => {
+                console.log("err in fetch vehicle", err);
+            })
         }
+
     }, []);
 
     const onSubmitAddRide = () => {
@@ -93,6 +112,7 @@ const AddRide = () => {
                 seatsAvailable: availableSeats,
                 description,
                 fare,
+                vehicleId: selectedVehicle,
                 // fields to be removed in later point of time
                 createdTime: "2024-02-11T14:30:00",
                 comments: "Test comments",
@@ -300,9 +320,10 @@ const AddRide = () => {
                                         setSelectedVehicle(e.target.value);
                                     }}
                                 >
-                                    <option value="honda civic">Honda Civic</option>
-                                    <option value="mustang">Mustang</option>
-                                    <option value="mini_cooper">Mini Cooper</option>
+                                    {vehiclesArr.map(vehicle => {
+                                        return <option key={vehicle.vehicleId} value={vehicle.vehicleId} >{vehicle.model}</option>
+                                    })}
+
                                 </Select>
                             </Flex>
                         </Flex>
