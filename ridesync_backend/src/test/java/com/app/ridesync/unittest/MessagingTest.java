@@ -1,4 +1,4 @@
-package com.app.ridesync;
+package com.app.ridesync.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;

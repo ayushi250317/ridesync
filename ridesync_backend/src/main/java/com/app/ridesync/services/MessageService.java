@@ -29,6 +29,8 @@ public class MessageService {
 	private String createAndPersistChatIdentifier(ChatIdentifier chat) {
 		String createdChatIdentifier = UUID.randomUUID().toString();
 		chat.setChatIdentifier(createdChatIdentifier);
+		
+		chatIdentifierRepository.save(chat);
 				
 		return createdChatIdentifier;
 	}
