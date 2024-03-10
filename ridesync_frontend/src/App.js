@@ -14,10 +14,10 @@ import AddRide from './Components/PostRide/AddRide';
 import SelectLocation from './Components/FindRide/SelectLocation';
 import FindRideLocation from './Components/FindRide/FindRideLocation';
 import FindRidePage from './Pages/FindRidePage';
-import HistoryPage from './Pages/HistoryPage';
 import NotificationPage from './Pages/NotificationPage';
 import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 import NotFound from './Pages/NotFound';
+import Activity from './Components/Activity/Activity';
 
 function App() {
   return (
@@ -28,7 +28,7 @@ function App() {
             <Route element={<Home />} path="/" />
             <Route element={<RiderRegistration />} path="/rider_registration" />
             <Route element={<AddRide />} path="/add_ride" />
-            <Route element={<HistoryPage />} path="/history" />
+            <Route element={<Activity />} path="/activity" />
             <Route element={<NotificationPage />} path="/notifications" />
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
             <Route element={<FindRidePage />} path="/find_ride" />
