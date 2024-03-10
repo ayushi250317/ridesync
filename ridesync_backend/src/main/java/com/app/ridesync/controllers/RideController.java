@@ -14,6 +14,7 @@ import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.ApiResponse;
 import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideResponse;
+import com.app.ridesync.projections.RideDetailProjection;
 import com.app.ridesync.projections.RideHistoryProjection;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideService;
@@ -62,8 +63,8 @@ public class RideController {
 		return rideService.getRides(userId);
 	}
 
-	@GetMapping("/get/{userId}")
-	public ResponseEntity<ApiResponse<List<RideHistoryProjection>>> getRideHistory(@PathVariable Integer userId) {
+	@GetMapping("/getRides/{userId}")
+	public ResponseEntity<ApiResponse<List<RideHistoryProjection>>> getRidesForUser(@PathVariable Integer userId) {
 		try {
 			List<RideHistoryProjection> rideHistory = rideService.getRideHistoryProjectionByUserId(userId);
 			return ResponseEntity.status(HttpStatus.OK)
@@ -74,6 +75,7 @@ public class RideController {
 								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
 		}
 	}
+
 
 	@PutMapping("/updatePickupLocation")
 	public ResponseEntity<ApiResponse<RideInfoResponse>> updatePickupLocation(@RequestHeader("Authorization") String jwtToken, @RequestBody PickupLocationRequest input) {
@@ -100,5 +102,20 @@ public class RideController {
 					.body(new ApiResponse<>(null, false, "Fetch Failed with the following error:"+e.getMessage()));
 		}
     }
+
+	
+	@GetMapping("/getRideDetail/{rideId}")
+	public ResponseEntity<ApiResponse<RideDetailProjection>> getRideDetail(@PathVariable Integer rideId) {
+		try {
+			RideDetailProjection rideHistory = rideService.getRideDetailProjection(rideId);
+			return ResponseEntity.status(HttpStatus.OK)
+								 .body(new ApiResponse<>(rideHistory, true, "Result set was retrieved successfully"));
+
+		}catch (Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
+		}
+	}
+
 }
 
