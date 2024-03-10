@@ -23,7 +23,7 @@ public class RideInfoService {
 	
 	public RideInfoResponse addRideInfo(RideInfoInput riInput) { // format for data that includes location.
 		RideInfoResponse res = new RideInfoResponse();
-		try {
+
 		//add location 1
 		res.setLocation1(locationService.addLocation(new Location(
 								 riInput.getLattitude1(),
@@ -61,19 +61,13 @@ public class RideInfoService {
 				riInput.getEstimatedTripEndTime(),
 				pickupLatLong
 				)));
-		}catch(Exception e) {
-			res.setSuccess(false);
-			res.setMessage(e.toString());
+
 			return res;
-		}
-		res.setSuccess(true);
-		res.setMessage("Details added in RideInfo Table!");
-		return res;
+
 	}
 
 	public RideInfoResponse updateRideInfo(RideInfoInput riInput) {
 		RideInfoResponse res = new RideInfoResponse();
-		try {
 		RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(riInput.getRideId(),riInput.getUserId());
 		System.out.println(riInput.getUserId()+" "+ riInput.getRideId());
 		System.out.println(rideInfo);
@@ -98,15 +92,7 @@ public class RideInfoService {
 				riInput.getLandmark2(),
 				riInput.getAddress2()
 				)));
-		
-		
-		}catch(Exception e) {
-			res.setSuccess(false);
-			res.setMessage(e.toString());
-			return res;
-		}
-		res.setSuccess(true);
-		res.setMessage("Update successful!");
+
 		return res;		
 	}
 
@@ -120,7 +106,7 @@ public class RideInfoService {
 			Location loc2 = locationService.findLocationById(rideInfo.getEndLocationId());
 			Location pickupLocation = locationService.findLocationById(rideInfo.getPickupLocationId());
 
-			RideInfoResponse temp = new RideInfoResponse(loc1, loc2, rideInfo, "Fetched Successfully",true, pickupLocation);
+			RideInfoResponse temp = new RideInfoResponse(loc1, loc2, rideInfo, pickupLocation);
 			
 			res.add(temp);
 		}
@@ -129,7 +115,6 @@ public class RideInfoService {
 
 	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup){
 		RideInfoResponse res = new RideInfoResponse();
-		try {
 			res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
 			res.setPickupLocation(locationService.updateLocation(new Location(
 					res.getRideInfo().getPickupLocationId(),
@@ -141,9 +126,7 @@ public class RideInfoService {
 
 			res.setLocation1(locationService.findLocationById(res.getRideInfo().getStartLocationId()));
 			res.setLocation2(locationService.findLocationById(res.getRideInfo().getEndLocationId()));
-		}catch(Exception e){
-			System.out.println(e);
-		}
+
 		return res;
 	}
 
@@ -157,8 +140,6 @@ public class RideInfoService {
 					locationService.findLocationById(member.getStartLocationId()),
 					locationService.findLocationById(member.getEndLocationId()),
 					member,
-					"Fetched Successfully",
-					true,
 					locationService.findLocationById(member.getPickupLocationId())
 					);
 

@@ -36,7 +36,8 @@ public class RideController {
 
 
 	@PostMapping("/addRide")
-	public RideResponse addRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {	
+	public RideResponse addRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
+
 		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		input.setUserId(userId);
 		return rideService.addRide(input);
@@ -44,10 +45,16 @@ public class RideController {
 
 	//only updates start time, description, seats available,vehicle Id
 	@PostMapping("/updateRide")
-	public RideResponse updateRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
-		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-		input.setUserId(userId);
-		return rideService.updateRide(input);
+	public ResponseEntity<ApiResponse<RideResponse>> updateRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
+		try {
+			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+			input.setUserId(userId);
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse<>(null, false, "ERROR: "+e.getMessage()));
+		}
+		return ResponseEntity.status(HttpStatus.OK)
+				.body(new ApiResponse<>(rideService.updateRide(input), true, "Result set was retrieved successfully"));
 	}
 
 	@GetMapping("/getRide/{userId}")
@@ -87,10 +94,10 @@ public class RideController {
 	try {
 			List<RideInfoResponse> res = rideInfoService.getAllMembers(rideId);
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ApiResponse<>(res, true, "Update successful"));
+					.body(new ApiResponse<>(res, true, "Fetched successfully"));
 		} catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "Fetch Failed!"));
+					.body(new ApiResponse<>(null, false, "Fetch Failed with the following error:"+e.getMessage()));
 		}
     }
 }

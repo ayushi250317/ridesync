@@ -17,8 +17,8 @@ public class RideInfoResponse {
 	private Location location1;
 	private Location location2;
 	private RideInfo rideInfo;
-	private String message;
-    private boolean success;
+//	private String message;
+//    private boolean success;
 	private Location pickupLocation;
 
 }
