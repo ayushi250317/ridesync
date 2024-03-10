@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a937cc31-e4f2-4cca-89c0-c9e2590d27e8",
+		"_postman_id": "2d03a89b-d232-4d08-b1e4-dabd177f37b4",
 		"name": "RideSync",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16764820"
@@ -849,6 +849,55 @@
 								"v1",
 								"geo",
 								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messaging",
+			"item": [
+				{
+					"name": "GetChatIdentifier",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTIifQ.7KjwphRNd7qYUwpHonAaJ_QLmrOLax_t7r_ha2FIork",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senderId\": 2,\n    \"recipientId\":1,\n    \"chatIdentifier\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/message/chatIdentifier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"chatIdentifier"
 							]
 						}
 					},
