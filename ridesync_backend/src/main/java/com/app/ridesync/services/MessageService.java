@@ -3,18 +3,28 @@ package com.app.ridesync.services;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import com.app.ridesync.entities.ChatIdentifier;
+import com.app.ridesync.entities.Message;
 import com.app.ridesync.repositories.ChatIdentifierRepository;
 
 @Service
 public class MessageService {
 	private final ChatIdentifierRepository chatIdentifierRepository;
-	
+	private SimpMessagingTemplate simpMessagingTemplate;
+	private static final String DESTINATION = "/queue/messages/";
+
 	@Autowired
-	public MessageService(ChatIdentifierRepository chatIdentifierRepository) {
+	public MessageService(ChatIdentifierRepository chatIdentifierRepository, SimpMessagingTemplate simpMessagingTemplate) {
 		this.chatIdentifierRepository = chatIdentifierRepository;
+		this.simpMessagingTemplate = simpMessagingTemplate;
+
+	}
+	
+	public void persistAndSendMessageToBroker(String channel, Message message) {		
+		sendMessage(channel, message);
 	}
 	
 	public String getChatIdentifier(ChatIdentifier chat) {
@@ -34,4 +44,9 @@ public class MessageService {
 				
 		return createdChatIdentifier;
 	}
+	
+	private void sendMessage(String channel, Message message) {
+		simpMessagingTemplate.convertAndSend(DESTINATION+channel, message);
+	}
 }
+
