@@ -1,5 +1,7 @@
 package com.app.ridesync.entities;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,4 +19,5 @@ public class Message {
 	private Integer senderId;
 	private Integer recipientId;
 	private String message;
+	private LocalDateTime sentTime;
 }

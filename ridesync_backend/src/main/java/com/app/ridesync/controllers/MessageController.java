@@ -1,5 +1,7 @@
 package com.app.ridesync.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.app.ridesync.dto.requests.MessageHistoryRequest;
 import com.app.ridesync.dto.responses.ApiResponse;
 import com.app.ridesync.entities.ChatIdentifier;
 import com.app.ridesync.entities.Message;
+import com.app.ridesync.projections.MessageProjection;
 import com.app.ridesync.services.MessageService;
 
 @RestController
@@ -45,4 +49,32 @@ public class MessageController {
 					 .body(new ApiResponse<>(null, false, "Chat Identifier retrieval failed with the following error: " + e.getMessage()));	
 		}
 	}
+	
+	@GetMapping("/messages/{recipientId}")
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesByRecipient(@PathVariable int recipientId) {
+		try {
+			List<MessageProjection> messages = messageService.getChatMessagesByRecipientId(recipientId);
+			
+			return ResponseEntity.status(HttpStatus.OK)
+					 .body(new ApiResponse<>(messages, true, "Chat Messages were retrieved successfully"));
+			
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					 .body(new ApiResponse<>(null, false, "Chat Message retrieval failed with the following error: " + e.getMessage()));	
+		}
+	} 
+	
+	@GetMapping("/messageHistory")
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(MessageHistoryRequest messageHistoryRequest) {
+		try {
+			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(messageHistoryRequest.senderId(), messageHistoryRequest.recipientId());
+			
+			return ResponseEntity.status(HttpStatus.OK)
+					 .body(new ApiResponse<>(messages, true, "Chat Messages were retrieved successfully"));
+			
+		}catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					 .body(new ApiResponse<>(null, false, "Chat Message retrieval failed with the following error: " + e.getMessage()));	
+		}
+	} 
 }
