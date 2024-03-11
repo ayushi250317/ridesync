@@ -20,7 +20,7 @@ import com.app.ridesync.services.VehicleService;
 
 import lombok.RequiredArgsConstructor;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/vehicle")
 @RestController
 @RequiredArgsConstructor

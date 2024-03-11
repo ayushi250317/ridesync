@@ -38,8 +38,8 @@ const Login = () => {
         axios.post(`${API}/auth/authenticate`, data)
             .then(response => {
                 if (response.data.success) {
-                    let { token, user } = response.data;
-                    localStorage.setItem('loggedInUserDetails', JSON.stringify({ token, user }));
+                    let { token, user, documents, vehicles } = response.data;
+                    localStorage.setItem('loggedInUserDetails', JSON.stringify({ token, user, documents, vehicles }));
                     naviagate("/");
                 } else {
                     toast({

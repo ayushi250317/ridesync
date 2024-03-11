@@ -28,8 +28,8 @@ const Navbar = () => {
                         </Link>
                     </Box>
                     <Box mx="5">
-                        <Link to="/history">
-                            History
+                        <Link to="/activity">
+                            Activity
                         </Link>
                     </Box>
                     <Box mx="5" position="relative">

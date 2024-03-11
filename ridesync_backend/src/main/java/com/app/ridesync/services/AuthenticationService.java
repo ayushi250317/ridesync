@@ -69,6 +69,7 @@ public class AuthenticationService {
         message.setFrom("ayushimalhotra9799@gmail.com");
         message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
         message.setSubject("Verify Ridesync Account");
+//        String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
         String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
         message.setContent(htmlContent,"text/html;charset=utf-8");
         javaMailSender.send(message);
@@ -126,6 +127,7 @@ public class AuthenticationService {
       message.setFrom("ayushimalhotra9799@gmail.com");
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
+//      String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       message.setContent(htmlContent,"text/html;charset=utf-8");
       javaMailSender.send(message);
@@ -150,6 +152,16 @@ public class AuthenticationService {
             return AuthenticationResponse.builder().message("Password Reset Successful").success(true).build();
         }
         return AuthenticationResponse.builder().message("Passwords do not match").build();
+    }
+
+    public User updateUserDetails(RegisterRequest request, Integer userId){
+        User user = repository.findByUserId(userId);
+        user.setFullName(request.getFullName());
+        user.setAddress(request.getAddress());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setPhoneNumber(request.getPhoneNumber());
+
+        return repository.save(user);
     }
 
 }
