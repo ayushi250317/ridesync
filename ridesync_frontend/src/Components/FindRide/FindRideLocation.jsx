@@ -58,6 +58,36 @@ const FindRideLocation = () => {
         })
     }
 
+    const handleRequestRide = (rideId, driverId) => {
+        const newReqObj = {
+            estimatedTripStartTime: rideTime,
+            lattitude1: fromAddress.lat,
+            longitude1: fromAddress.lng,
+            landmark1: "",
+            address1: fromAddress.address,
+            lattitude2: toAddress.lat,
+            longitude2: toAddress.lng,
+            landmark2: "",
+            address2: toAddress.address,
+            rideId,
+            driverId
+        }
+        console.log({ newReqObj })
+        const config = {
+            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
+        };
+        axios.post(`${API}/request/addRequest`, newReqObj, config).then(resp => {
+            console.log("request ride", resp.data);
+            if (resp.data.success) {
+
+            }
+        }).catch(err => {
+            console.log("err in req ride", err);
+        }).finally(() => {
+        })
+
+    }
+
     return (
         <Box w={["88%", "92%", "63%", "67%"]} m="auto">
 
@@ -101,7 +131,7 @@ const FindRideLocation = () => {
                                 Seat available : {rides.seatsAvailable}
                             </Text>
 
-                            <Button colorScheme='green'>Request Ride</Button>
+                            <Button colorScheme='green' onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>Request Ride</Button>
                         </Center>
                     </Box>
                 })}
