@@ -15,22 +15,22 @@ public interface MessageRepository extends JpaRepository<Message,Integer>{
 	
 	
 	@Query("SELECT "
-			+ "NEW com.app.ridesync.projections.MessageProjection("
-			+ " sender.fullName as senderName, recipient.fullName as recipientName, message.message, message.sentTime) "
+			+ "NEW com.app.ridesync.projections.MessageProjection(" 
+			+ "sender.fullName as senderName, recipient.fullName as recipientName, message.message, message.sentTime) "
 			+ "FROM Message message "
-			+ "JOIN User sender ON message.senderId = sender.Id"
-			+ "JOIN user recipient ON message.recipientId = recipient.Id"
+			+ "JOIN User sender ON message.senderId = sender.Id "
+			+ "JOIN User recipient ON message.recipientId = recipient.Id "
 			+ "WHERE (senderId = :senderId AND recipientId = :recipientId) "
 			+ "OR (senderId = :recipientId AND recipientId = :senderId) "
-			+ " ORDER BY sentTime" )
+			+ "ORDER BY sentTime" )
 	List<MessageProjection> findBySenderAndRecipientId(@Param("senderId")Integer senderId, @Param("recipientId")Integer recipientId);
 	
 	@Query("SELECT "
-			+ "NEW com.app.ridesync.projections.MessageProjection("
-			+ " sender.fullName as senderName, recipient.fullName as recipientName, message.message, message.sentTime) "
+			+ "NEW com.app.ridesync.projections.MessageProjection(" 
+			+ "sender.fullName as senderName, recipient.fullName as recipientName, message.message, message.sentTime) "
 			+ "FROM Message message "
-			+ "JOIN User sender ON message.senderId = sender.Id"
-			+ "JOIN user recipient ON message.recipientId = recipient.Id"
+			+ "JOIN User sender ON message.senderId = sender.Id "
+			+ "JOIN User recipient ON message.recipientId = recipient.Id "
 			+ "WHERE recipientId = :recipientId "
 			+ "ORDER BY sentTime DESC")
 	List<MessageProjection> findByRecipientId(@Param("recipientId")Integer recipientId);
