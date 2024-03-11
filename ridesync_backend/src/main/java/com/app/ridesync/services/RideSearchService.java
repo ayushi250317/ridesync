@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.app.ridesync.entities.GeoPoint;
 import com.app.ridesync.projections.SearchResultProjection;
 import com.app.ridesync.repositories.GeoPointRepository;
+import com.app.ridesync.repositories.RideRepository;
 import com.google.maps.model.LatLng;
 import com.mapbox.geojson.Point;
 import com.mapbox.turf.TurfClassification;
@@ -19,15 +20,15 @@ import com.mapbox.turf.TurfMeasurement;
 @Service
 public class RideSearchService {	
 	private final GeoPointRepository geoPointRepo;
-	private final SearchResultBuilderService searchResultBuilder;
+	private final RideRepository rideRepository;
 
 	private static final float WITHIN_LIMIT = 1.5f;
 	private List<Integer>filteredRides; 
 
 	@Autowired
-	public RideSearchService(GeoPointRepository geoPointRepo, SearchResultBuilderService searchResultBuilder) {
+	public RideSearchService(GeoPointRepository geoPointRepo, RideRepository rideRepository) {
 		this.geoPointRepo = geoPointRepo;
-		this.searchResultBuilder = searchResultBuilder;
+		this.rideRepository = rideRepository;
 	}
 
 	public  List<SearchResultProjection> findRides(LatLng source, LatLng destination, LocalDateTime rideTime) {
@@ -56,7 +57,12 @@ public class RideSearchService {
 			
 		}
 
-		return searchResultBuilder.buildSearchResults(filteredRides, rideTime);
+		return findRideDetailsByFilteredRideIds(filteredRides, rideTime);
+	}
+	
+
+	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime) {
+		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12));		
 	}
 
 	private boolean isValid(Point foundSrc, Point foundDes, Point src, Point des) {
