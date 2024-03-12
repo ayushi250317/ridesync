@@ -27,11 +27,11 @@ function App() {
           <Route element={<ProtectedRoutes />}>
             <Route element={<Home />} path="/" />
             <Route element={<RiderRegistration />} path="/rider_registration" />
+            <Route element={<FindRidePage />} path="/find_ride" />
             <Route element={<AddRide />} path="/add_ride" />
             <Route element={<Activity />} path="/activity" />
             <Route element={<NotificationPage />} path="/notifications" />
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
-            <Route element={<FindRidePage />} path="/find_ride" />
           </Route>
           <Route element={<RedirectAfterAccVerify />} path="/confirm_registration/:id/:email" />
           <Route element={<AccountEmailVerification />} path="/account_email_verification" />

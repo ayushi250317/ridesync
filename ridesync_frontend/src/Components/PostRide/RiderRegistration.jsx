@@ -86,6 +86,7 @@ const RiderRegistration = () => {
     }
 
     const onSubmitVehicleDetails = ({ regNo, type, make, model, insuranceNo, insuranceExpiry }) => {
+        console.log({ regNo, type, make, model, insuranceNo, insuranceExpiry });
         setLoading(true);
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
@@ -107,11 +108,13 @@ const RiderRegistration = () => {
                         userId: loggedInUserDetails.user.userId,
                         documentId: ""
                     }
+                    console.log("reaching", vehicleInfoReqObj);
                     axios.post(`${API}/vehicle/addVehicle`, vehicleInfoReqObj, config)
                         .then(response => {
+                            console.log("reeeee", response);
                             if (response.data.success) {
-                                setLoading(false);
                                 naviagate("/add_ride")
+                                setLoading(false);
 
                             } else {
                                 toast({
@@ -163,7 +166,7 @@ const RiderRegistration = () => {
                             h={["", "", "40vh", "40vh"]}
                             marginBottom={["20px", "20px", "", ""]}
                             colorScheme='gray'
-                            >
+                        >
                             {steps.map((step, index) => (
                                 <Step key={index}>
                                     <StepIndicator>
