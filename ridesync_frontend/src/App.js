@@ -18,6 +18,7 @@ import NotificationPage from './Pages/NotificationPage';
 import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 import NotFound from './Pages/NotFound';
 import Activity from './Components/Activity/Activity';
+import RideInfo from './sharedComponent/RideInfo/RideInfo';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
             <Route element={<RiderRegistration />} path="/rider_registration" />
             <Route element={<AddRide />} path="/add_ride" />
             <Route element={<Activity />} path="/activity" />
+            <Route element={<RideInfo />} path="/ride_info" />
             <Route element={<NotificationPage />} path="/notifications" />
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
             <Route element={<FindRidePage />} path="/find_ride" />
@@ -39,6 +41,7 @@ function App() {
           <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
           <Route element={<Login />} path="/login" />
           <Route element={<Signup />} path="/signup" />
+          <Route path="/notFound" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
 
 

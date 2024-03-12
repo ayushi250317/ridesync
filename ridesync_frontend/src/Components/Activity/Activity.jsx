@@ -1,4 +1,4 @@
-import { Box, CardBody, CardHeader, Flex, Heading, Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, useMediaQuery, Text, Card, StackDivider, Divider, Button } from "@chakra-ui/react";
+import { Box, CardBody, CardHeader, Flex, Heading, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, useMediaQuery, Text, Card, StackDivider, Divider, Button } from "@chakra-ui/react";
 import BottomNavbar from "../Navbar/BottomNavbar";
 import Navbar from "../Navbar/Navbar";
 import { useEffect, useState } from "react";
@@ -6,7 +6,7 @@ import { API } from "../../sharedComponent/API";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const Activity = () => {
+const Activity = ({ }) => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(null);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
@@ -24,7 +24,7 @@ const Activity = () => {
             const config = {
                 headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
             };
-            axios.get(`${API}/ride/get/${loggedInUserInfo.user.userId}`, config)
+            axios.get(`${API}/ride/getRides/${loggedInUserInfo.user.userId}`, config)
                 .then((resp) => {
                     if (resp.data.success) {
                         const segregatedRides = {
@@ -64,7 +64,7 @@ const Activity = () => {
                                 <Heading size={isLargerThan1280 ? 'md' : 'sm'}
                                     textTransform='uppercase'
                                     _hover={{ cursor: "pointer" }}
-                                    onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId } })}
+                                    onClick={() => navigate("/ride_info", { state: { ride_id: ride.rideId, is_driver: ride.isDriver } })}
                                 >
                                     {ride.startLocationAddress.split(',')[0] + ' to ' + ride.endLocationAddress.split(',')[0]}
                                 </Heading>
