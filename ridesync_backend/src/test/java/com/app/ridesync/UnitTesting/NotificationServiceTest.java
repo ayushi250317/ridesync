@@ -1,4 +1,4 @@
-package com.app.ridesync.services;
+package com.app.ridesync.UnitTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import com.app.ridesync.entities.Notification;
 import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.repositories.NotificationRepository;
+import com.app.ridesync.services.NotificationService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;

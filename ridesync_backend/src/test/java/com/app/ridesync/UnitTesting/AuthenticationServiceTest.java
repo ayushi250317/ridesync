@@ -1,12 +1,6 @@
-package com.app.ridesync.services;
+package com.app.ridesync.UnitTesting;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -15,6 +9,8 @@ import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.DocumentRepository;
 import com.app.ridesync.repositories.UserRepository;
 import com.app.ridesync.repositories.VehicleRepository;
+import com.app.ridesync.services.AuthenticationService;
+import com.app.ridesync.services.JwtService;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -26,7 +22,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;

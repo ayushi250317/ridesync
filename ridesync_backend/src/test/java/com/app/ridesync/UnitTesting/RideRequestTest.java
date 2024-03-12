@@ -1,4 +1,4 @@
-package com.app.ridesync;
+package com.app.ridesync.UnitTesting;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
