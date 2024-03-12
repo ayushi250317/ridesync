@@ -902,6 +902,83 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "GetMessagesForRecipient",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMDIifQ.JFnpVVS_StfRxcbep4h8zkOsJE3a3J146qU4SR0aAj4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/message/messages/302",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"messages",
+								"302"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetMessagesForRecipient Copy",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMDIifQ.JFnpVVS_StfRxcbep4h8zkOsJE3a3J146qU4SR0aAj4",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senderId\": 302,\n    \"recipientId\":302\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/message/messageHistory",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"messageHistory"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
