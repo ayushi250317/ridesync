@@ -13,6 +13,15 @@ import { IoIosKey } from "react-icons/io";
 import { useNavigate, useParams } from "react-router-dom";
 import { API } from "../../sharedComponent/API";
 import { useState } from "react";
+import { yupResolver } from "@hookform/resolvers/yup"
+import { useForm } from "react-hook-form"
+import * as yup from "yup"
+
+const schema = yup.object({
+    newPassword: yup.string().min(6, 'Password must be minimum of 6 character.').required('Password is required'),
+    reNewPassword: yup.string().min(6, 'Password must be minimum of 6 characters.')
+        .oneOf([yup.ref('password'), null], 'Passwords must match')
+});
 
 const ConfirmPassword = () => {
     const toast = useToast()
@@ -21,11 +30,21 @@ const ConfirmPassword = () => {
     const [isLoading, setIsLoading] = useState(null);
     const navigate = useNavigate();
     // const [newPassword,setNewPassword] = useState('');
-    const [password, setPassword] = useState({
-        newPassword: "",
-        reNewPassword: "",
-    });
+    // const [password, setPassword] = useState({
+    //     newPassword: "",
+    //     reNewPassword: "",
+    // });
     // console.log({ params });
+
+    const {
+        register,
+        handleSubmit,
+        watch,
+        formState: { errors },
+    } = useForm({
+        resolver: yupResolver(schema),
+    })
+
 
     useEffect(() => {
         setIsLoading(true)
@@ -42,43 +61,64 @@ const ConfirmPassword = () => {
             }).finally(() => setIsLoading(false));
     }, []);
 
-    const handleChange = (event) => {
-        const { name, value } = event.target;
-        setPassword(() => {
-            return { ...password, [name]: value };
+    // const handleChange = (event) => {
+    //     const { name, value } = event.target;
+    //     setPassword(() => {
+    //         return { ...password, [name]: value };
+    //     });
+    // };
+    const onSubmit = (data) => {
+        console.log("dataonSubmit", data);
+        setIsLoading(true);
+        axios.post(`${API}/auth/newPassword`, { ...data, token, id }).then(resp => {
+            console.log(resp.data);
+            if (resp.data.success) {
+                navigate("/login")
+                toast({
+                    title: 'Password Reset',
+                    description: `${resp.data.message}`,
+                    status: 'success',
+                    duration: 3000,
+                    isClosable: true,
+                })
+            }
+        }).catch(err => {
+            console.log("err in submiting password", err);
+        }).finally(() => {
+            setIsLoading(false)
         });
     };
 
-    const handleSubmit = () => {
-        //validation for two empty string is left and could be done later  
-        if (password.newPassword === password.reNewPassword) {
-            axios.post(`${API}/auth/newPassword`, { ...password, token, id }).then(resp => {
-                console.log(resp.data);
-                if (resp.data.success) {
-                    navigate("/login")
-                    toast({
-                        title: 'Password Reset',
-                        description: `${resp.data.message}`,
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
-                    })
-                }
-            }).catch(err => {
-                console.log("err in submiting password", err);
-            })
-        }
-        else {
-            toast({
-                title: 'Password Reset',
-                description: "Password doesn't match",
-                status: 'error',
-                duration: 3000,
-                isClosable: true,
-            })
-            // console.log("password doesnt match");
-        }
-    };
+    // const handleSubmit = () => {
+    //     //validation for two empty string is left and could be done later  
+    //     if (password.newPassword === password.reNewPassword) {
+    //         axios.post(`${API}/auth/newPassword`, { ...password, token, id }).then(resp => {
+    //             console.log(resp.data);
+    //             if (resp.data.success) {
+    //                 navigate("/login")
+    //                 toast({
+    //                     title: 'Password Reset',
+    //                     description: `${resp.data.message}`,
+    //                     status: 'success',
+    //                     duration: 3000,
+    //                     isClosable: true,
+    //                 })
+    //             }
+    //         }).catch(err => {
+    //             console.log("err in submiting password", err);
+    //         })
+    //     }
+    //     else {
+    //         toast({
+    //             title: 'Password Reset',
+    //             description: "Password doesn't match",
+    //             status: 'error',
+    //             duration: 3000,
+    //             isClosable: true,
+    //         })
+    //         // console.log("password doesnt match");
+    //     }
+    // };
 
 
     if (isLoading) {
@@ -109,17 +149,17 @@ const ConfirmPassword = () => {
                     Forgot Password?
                 </Text>
                 <br />
-                <form action="
-                ">
+                <form onSubmit={handleSubmit(onSubmit)}>
 
                     <Text>Enter a new Password</Text>
                     <Input
                         placeholder="password"
                         type="password"
                         name="newPassword"
-                        value={password.newPasseord}
-                        onChange={handleChange}
+                        {...register("newPassword")}
                     ></Input>
+                    <Text color="red">{errors.newPassword && errors.newPassword?.message}</Text>
+
                     <br />
                     <br />
                     <Text>Re-type new Password</Text>
@@ -127,12 +167,13 @@ const ConfirmPassword = () => {
                         placeholder="confirm password"
                         type="password"
                         name="reNewPassword"
-                        value={password.reNewPassword}
-                        onChange={handleChange}
+                        {...register("reNewPassword")}
                     ></Input>
+                    <Text color="red">{errors.reNewPassword && errors.reNewPassword?.message}</Text>
+
                     <br />
                     <br />
-                    <Button colorScheme="facebook" w="100%" onClick={handleSubmit}>
+                    <Button colorScheme="facebook" w="100%" type="submit">
                         Submit
                     </Button>
                 </form>
