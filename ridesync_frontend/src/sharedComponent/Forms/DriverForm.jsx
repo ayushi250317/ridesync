@@ -1,4 +1,4 @@
-import { Button, Input, FormErrorMessage, FormLabel, FormControl, Form } from '@chakra-ui/react'
+import { Button, Input, FormErrorMessage, FormLabel, FormControl, } from '@chakra-ui/react'
 import { useForm } from 'react-hook-form'
 import React, { useState } from 'react'
 
@@ -20,6 +20,7 @@ const DriverForm = ({ onSubmitDriverDetails, loading }) => {
                 <FormLabel htmlFor='License Number'>License Number</FormLabel>
                 <Input w="100%"
                     id='lNo'
+                    placeholder='License Number'
                     onChange={(e) => setLicenseNo(e.target.value)}
                     {...register('lNo', {
                         required: 'license number is required',
