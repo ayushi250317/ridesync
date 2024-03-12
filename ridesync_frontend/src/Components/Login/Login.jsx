@@ -14,7 +14,6 @@ const schema = yup
         password: yup.string()
             .required('No password provided.')
             .min(6, 'Password must be minimum of 6 characters.')
-        // .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
     })
     .required()
 
@@ -26,7 +25,6 @@ const Login = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -61,43 +59,19 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const handleClick = () => setShow(!show);
 
-    // const handleSubmit = () => {
-    //     let requestObj = {
-    //         email: email,
-    //         password: password
-    //     };
-    //     axios.post(`${API}/auth/authenticate`, requestObj)
-    //         .then(response => {
-    //             if (response.data.success) {
-    //                 let { token, user } = response.data;
-    //                 localStorage.setItem('loggedInUserDetails', JSON.stringify({ token, user }));
-    //                 naviagate("/");
-    //             } else {
-    //                 toast({
-    //                     title: response.data.message,
-    //                     status: 'error',
-    //                     duration: 5000,
-    //                     isClosable: true,
-    //                 });
-    //                 console.log('Response:', response);
-    //             }
-    //         })
-    //         .catch(error => {
-    //             console.error('Error:', error);
-    //         });
-    // }
     return (
         <Box  >
             <Flex w={["100%", "95%", "90%", "80%"]} h={["", "", "100vh", "100vh"]} m={["", "", "auto", "auto"]} mt={["20", "20", "", ""]} justifyContent="center" align="center" flexDir={["column", "column", "row", "row"]}>
                 <Flex w="50%" borderRight={["", "", "1px solid lightgray", "1px solid lightgray"]}>
                     <Image src='/try2.png' w={["100%", "100%", "85%", "80%"]}></Image>
                 </Flex>
-                <Flex mx={["", "", "32", "32"]} p="2" justifyContent="space-between">
-                    <form onSubmit={handleSubmit(onSubmit)}>
+                <Flex mx={["", "", "32", "32"]} justifyContent="space-between" w={["", "", "", "30%"]}>
+                    <form onSubmit={handleSubmit(onSubmit)} style={{ width: "100%" }}>
                         <Text fontSize={["4xl", "4xl", "5xl", "5xl"]} mb="5" textAlign="center">
                             Login
                         </Text>
                         <Input
+                            w="100%"
                             className="placeholder"
                             border="1px solid gray"
                             placeholder="Email"

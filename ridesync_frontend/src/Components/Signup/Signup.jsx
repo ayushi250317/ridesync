@@ -18,7 +18,6 @@ const schema = yup
         password: yup.string()
             .required('No password provided.')
             .min(6, 'Password must be minimum of 6 characters.')
-        // .matches(/[a-zA-Z]/, 'Password can only contain Latin letters.')
     })
     .required()
 
@@ -28,35 +27,22 @@ const Signup = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         mode: "onBlur",
         resolver: yupResolver(schema),
     })
 
-
-    const [userDetails, setUserDetails] = useState({
-        "fullName": "",
-        "email": "",
-        "address": "",
-        "dateOfBirth": "",
-        "phoneNumber": "",
-        "password": ""
-    })
     const [loading, setLoading] = useState(false)
     let navigate = useNavigate();
     const toast = useToast();
 
     const onSubmit = (data) => {
-        console.log("dada", data);
         setLoading(true)
-        // userDetails is the request body
         axios.post(`${API}/auth/register`, data)
             .then(response => {
                 console.log('Response:', response);
                 if (response.data.success) {
-
                     navigate('/account_email_verification', { state: { email: response.data.user.email } });
                 } else {
                     console.log("sdsa", response.data.message);
@@ -73,17 +59,6 @@ const Signup = () => {
             }).finally(() => setLoading(false));
     };
 
-    // const registerUser = () => {
-
-    // }
-    // const setUserDetail = (e) => {
-    //     // e is an event object, it would contain name of the input field and value of the input field
-    //     const { name, value } = e.target;
-    //     setUserDetails(prevDetails => ({
-    //         ...prevDetails,
-    //         [name]: value
-    //     }));
-    // };
     return (
         <Box>
             <br />

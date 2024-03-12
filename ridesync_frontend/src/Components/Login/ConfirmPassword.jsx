@@ -1,8 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import {
     Box,
     Button,
     Center,
     Input,
+    Spinner,
     Text,
     useToast,
 } from "@chakra-ui/react";
@@ -20,7 +22,7 @@ import * as yup from "yup"
 const schema = yup.object({
     newPassword: yup.string().min(6, 'Password must be minimum of 6 character.').required('Password is required'),
     reNewPassword: yup.string().min(6, 'Password must be minimum of 6 characters.')
-        .oneOf([yup.ref('password'), null], 'Passwords must match')
+        .oneOf([yup.ref('newPassword'), null], 'Passwords must match')
 });
 
 const ConfirmPassword = () => {
@@ -39,10 +41,10 @@ const ConfirmPassword = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
+        mode: "onChange"
     })
 
 
@@ -61,12 +63,6 @@ const ConfirmPassword = () => {
             }).finally(() => setIsLoading(false));
     }, []);
 
-    // const handleChange = (event) => {
-    //     const { name, value } = event.target;
-    //     setPassword(() => {
-    //         return { ...password, [name]: value };
-    //     });
-    // };
     const onSubmit = (data) => {
         console.log("dataonSubmit", data);
         setIsLoading(true);
@@ -89,40 +85,15 @@ const ConfirmPassword = () => {
         });
     };
 
-    // const handleSubmit = () => {
-    //     //validation for two empty string is left and could be done later  
-    //     if (password.newPassword === password.reNewPassword) {
-    //         axios.post(`${API}/auth/newPassword`, { ...password, token, id }).then(resp => {
-    //             console.log(resp.data);
-    //             if (resp.data.success) {
-    //                 navigate("/login")
-    //                 toast({
-    //                     title: 'Password Reset',
-    //                     description: `${resp.data.message}`,
-    //                     status: 'success',
-    //                     duration: 3000,
-    //                     isClosable: true,
-    //                 })
-    //             }
-    //         }).catch(err => {
-    //             console.log("err in submiting password", err);
-    //         })
-    //     }
-    //     else {
-    //         toast({
-    //             title: 'Password Reset',
-    //             description: "Password doesn't match",
-    //             status: 'error',
-    //             duration: 3000,
-    //             isClosable: true,
-    //         })
-    //         // console.log("password doesnt match");
-    //     }
-    // };
-
 
     if (isLoading) {
-        return <><Text>Loading...</Text></>
+        return <Center h="80vh"><Spinner
+            thickness='4px'
+            speed='0.65s'
+            emptyColor='gray.200'
+            color='blue.500'
+            size='xl'
+        /></Center>
     }
 
     if (!isTrue)
@@ -131,9 +102,11 @@ const ConfirmPassword = () => {
                 <Text>Unauthorized</Text>
             </>
         );
-
+    const back = "<"
     return (
         <Center h="100vh">
+            <Button onClick={() => window.history.go(-1)} position="absolute" top="8" left="8" backgroundColor="transparent" fontSize="2xl"> {back}  </Button>
+
             <Box
                 w={["90%", "70%", "60%", "40%"]}
                 m="auto"
@@ -151,9 +124,9 @@ const ConfirmPassword = () => {
                 <br />
                 <form onSubmit={handleSubmit(onSubmit)}>
 
-                    <Text>Enter a new Password</Text>
+                    <Text mb="1">Enter a new Password</Text>
                     <Input
-                        placeholder="password"
+                        placeholder="Password"
                         type="password"
                         name="newPassword"
                         {...register("newPassword")}
@@ -162,9 +135,9 @@ const ConfirmPassword = () => {
 
                     <br />
                     <br />
-                    <Text>Re-type new Password</Text>
+                    <Text mb="1">Re-type new Password</Text>
                     <Input
-                        placeholder="confirm password"
+                        placeholder="Confirm password"
                         type="password"
                         name="reNewPassword"
                         {...register("reNewPassword")}

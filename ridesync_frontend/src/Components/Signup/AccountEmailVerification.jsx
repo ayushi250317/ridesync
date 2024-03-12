@@ -1,9 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Box, Button, Center, Image, Text } from '@chakra-ui/react'
-import axios from 'axios';
 import React from 'react'
 import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { API } from '../../sharedComponent/API';
 
 const AccountEmailVerification = () => {
 
@@ -15,17 +14,12 @@ const AccountEmailVerification = () => {
         }
     }, [])
 
-
-    console.log("email ", email);
-
     const back = "<"
 
     return (
         <Center
             h="100vh"
             flexDir="column"
-        // justifyContent="center"
-        // alignItems="center"
         >
             <Button onClick={() => window.history.go(-1)} position="absolute" top="8" left="8" backgroundColor="transparent" fontSize="2xl"> {back}  </Button>
             <Box width={["90%", "85%", "70%", "50%"]} m="auto">

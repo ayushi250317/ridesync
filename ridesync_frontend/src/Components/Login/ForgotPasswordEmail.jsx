@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, Center, Image, Input, Text, useToast } from '@chakra-ui/react'
 import axios from 'axios';
 import React from 'react'
@@ -23,7 +24,6 @@ const ForgotPasswordEmail = () => {
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm({
         resolver: yupResolver(schema),
@@ -32,7 +32,7 @@ const ForgotPasswordEmail = () => {
     const onSubmit = (data) => {
         console.log("dataonSubmitemail", data);
         setLoading(true);
-        axios.post(`${API}/auth/forgotPassword`, { email }).then(resp => {
+        axios.post(`${API}/auth/forgotPassword`, data).then(resp => {
             console.log(resp.data)
             if (resp.data?.success) {
                 setSentSuccess(true)
@@ -52,18 +52,10 @@ const ForgotPasswordEmail = () => {
             setLoading(false)
         });
     };
-    const handleSubmitEmail = () => {
-        console.log({ email });
 
-    }
-
-    const handleChange = (event) => {
-        setEmail(event.target.value)
-
-    }
-    console.log("email", email);
     return (
         <Center h="100vh" className="flip-card">
+
 
             <Box border="1px solid lightgray" padding="5" px="7" borderRadius="xl" boxShadow="xl" w={["90%", "80%", "45%", "35%"]} className="flip-card-inner">
                 {!sentSuccess ? <Box className="flip-card-front">

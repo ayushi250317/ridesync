@@ -3,7 +3,6 @@ import {
     Button,
     Center,
     Flex,
-    Image,
     Input,
     Text,
     Textarea,
@@ -11,7 +10,6 @@ import {
 } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { API } from "../../sharedComponent/API";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -42,7 +40,6 @@ const loggedInUserInfo = JSON.parse(
 const PersonalInfoEdit = () => {
     const [userDetails, setUserDetails] = useState({});
     const [loading, setLoading] = useState(false);
-    let navigate = useNavigate();
     const toast = useToast();
     useEffect(() => {
         const changeDateFormat = (monthOrDay) => {
@@ -54,15 +51,6 @@ const PersonalInfoEdit = () => {
         };
 
         if (loggedInUserInfo) {
-            // setUserDetails(loggedInUserInfo);
-            console.log("loggedInUserInfo", loggedInUserInfo.user);
-            console.log(
-                "new Date(loggedInUserInfo.user.dateOfBirth)",
-                new Date(loggedInUserInfo.user.dateOfBirth).getFullYear(),
-                new Date(loggedInUserInfo.user.dateOfBirth).getMonth(),
-                new Date(loggedInUserInfo.user.dateOfBirth).getDay()
-            );
-
             setUserDetails({
                 fullName: loggedInUserInfo.user.fullName,
                 address: loggedInUserInfo.user.address,
@@ -77,11 +65,9 @@ const PersonalInfoEdit = () => {
             });
         }
     }, []);
-
     const {
         register,
         handleSubmit,
-        watch,
         control,
         formState: { errors },
     } = useForm({
@@ -91,9 +77,7 @@ const PersonalInfoEdit = () => {
     });
 
     const onSubmit = (data) => {
-        console.log("dada", data);
         setLoading(true);
-        // console.log(userDetails);
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
         };
@@ -118,7 +102,6 @@ const PersonalInfoEdit = () => {
             })
             .finally(() => setLoading(false));
     };
-
 
 
     return (
