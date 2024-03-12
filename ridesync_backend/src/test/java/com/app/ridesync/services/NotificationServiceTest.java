@@ -8,6 +8,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.entities.Notification;
+import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.repositories.NotificationRepository;
 
 import java.time.LocalDate;
@@ -38,9 +39,9 @@ class NotificationServiceTest {
     void testAddNotification() {
         // Arrange
         Notification notification = new Notification();
-        notification.setId(1);
+        notification.setContentId(1);
         notification.setMessage("Not all who wander are lost");
-        notification.setMessageType("Message Type");
+        notification.setNotificationType(NotificationType.MESSAGE);
         notification.setNotificationId(1);
         notification.setReadFlag(1);
         notification.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());
@@ -48,9 +49,9 @@ class NotificationServiceTest {
         when(notificationRepository.save(Mockito.<Notification>any())).thenReturn(notification);
 
         Notification notification2 = new Notification();
-        notification2.setId(1);
+        notification2.setContentId(1);
         notification2.setMessage("Not all who wander are lost");
-        notification2.setMessageType("Message Type");
+        notification2.setNotificationType(NotificationType.REQUEST);
         notification2.setNotificationId(1);
         notification2.setReadFlag(1);
         notification2.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());

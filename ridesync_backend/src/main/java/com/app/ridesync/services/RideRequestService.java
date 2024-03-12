@@ -6,11 +6,15 @@ import org.springframework.stereotype.Service;
 import com.app.ridesync.dto.requests.RideRequest;
 import com.app.ridesync.dto.responses.RideRequestResponse;
 import com.app.ridesync.entities.Location;
+import com.app.ridesync.entities.Notification;
+import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.entities.RideRequestInfo;
+import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.RideInfoRepository;
 import com.app.ridesync.repositories.RideRequestRepository;
+import com.app.ridesync.repositories.UserRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,9 +29,14 @@ public class RideRequestService {
         private final JwtService jwtService;
         @Autowired
         private final RideInfoRepository rideInfoRepository;
+        @Autowired
+        private final UserRepository userRepository;
+        @Autowired
+        private final NotificationService notificationService;
 
         public RideRequestResponse requestRide(String jwtToken, RideRequest rideRequest) {
                 jwtToken = jwtToken.substring(7);
+                Integer riderId=jwtService.extractUserId(jwtToken);
                 Location startLocation = locationService.addLocation(new Location(rideRequest.getLattitude1(),
                 rideRequest.getLongitude1(),
                 rideRequest.getLandmark1(),
@@ -39,13 +48,21 @@ public class RideRequestService {
                 RideRequestInfo rideRequestInfo = RideRequestInfo.builder()
                 .rideId(rideRequest.getRideId())
                 .driverId(rideRequest.getDriverId())
-                .riderId(jwtService.extractUserId(jwtToken))
+                .riderId(riderId)
                 .requestStatus(RequestStatus.REQUESTED)
                 .startLocationId(startLocation.getLocationId())
                 .endLocationId(endLocation.getLocationId())
                 .tripStartTime(rideRequest.getEstimatedTripStartTime())
                 .build();
-                rideRequestRepository.save(rideRequestInfo);
+                rideRequestInfo=rideRequestRepository.save(rideRequestInfo);
+                User user=userRepository.findByUserId(riderId);
+                Notification notification=Notification.builder()
+                                .userId(rideRequest.getDriverId())
+                                .contentId(rideRequestInfo.getRideRequestId())
+                                .message(user.getFullName()+" requested a ride")
+                                .notificationType(NotificationType.REQUEST)
+                                .build();
+                notificationService.addNotification(notification);
                 return RideRequestResponse.builder().message("Ride requested successfully")
                                 .success(true).build();
         }

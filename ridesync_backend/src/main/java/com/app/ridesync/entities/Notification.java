@@ -21,18 +21,18 @@ public class Notification {
     private Integer userId;
     private LocalDateTime timeStamp;
     private String message;
-    private String messageType;
-    private Integer id;
+    private NotificationType notificationType;
+    private Integer contentId;
     private Integer readFlag;
 
 
-    public Notification(LocalDateTime timestamp, Integer userId, String message, String messageType, Integer id, Integer read) {
+    public Notification(LocalDateTime timestamp, Integer userId, String message, NotificationType notificationType, Integer contentId, Integer read) {
         super();
         this.timeStamp = timestamp;
         this.userId = userId;
-        this.id = id;
+        this.contentId = contentId;
         this.message = message;
-        this.messageType = messageType;
+        this.notificationType = notificationType;
         this.readFlag = read;
     }
 }
