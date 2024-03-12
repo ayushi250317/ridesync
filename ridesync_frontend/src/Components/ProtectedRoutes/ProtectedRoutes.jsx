@@ -13,7 +13,6 @@ const ProtectedRoutes = () => {
     }
     if (location.pathname === '/add_ride') {
         const hasDrivingLicense = loggedInUserInfo.documents.some(doc => doc.documentType === 'driving_license');
-        console.log(loggedInUserInfo.vehicles.length == 0)
         if ((!hasDrivingLicense) || loggedInUserInfo.vehicles.length === 0) {
             return <Navigate to="/rider_registration" state={{ from: location }} />;
         }
