@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
 import {
     Box, Flex, useToast, Step,
     StepDescription,
@@ -13,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { API } from '../../sharedComponent/API'
 import DriverForm from '../../sharedComponent/Forms/DriverForm'
 import BottomNavbar from "../Navbar/BottomNavbar";

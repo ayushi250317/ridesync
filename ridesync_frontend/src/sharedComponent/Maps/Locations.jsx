@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useCallback, useEffect } from 'react';
-import { Box, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex, InputRightElement, InputGroup, Text } from '@chakra-ui/react';
+import { Box, Input, Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalCloseButton, ModalBody, useDisclosure, Flex, InputRightElement, InputGroup } from '@chakra-ui/react';
 import { GoogleMap, MarkerF, useJsApiLoader, Autocomplete } from '@react-google-maps/api';
 import { IoLocation } from 'react-icons/io5';
 import { ImLocation2 } from 'react-icons/im';

@@ -1,4 +1,5 @@
-import { Box, CardBody, CardHeader, Flex, Heading, Stack, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, useMediaQuery, Text, Card, StackDivider, Divider, Button } from "@chakra-ui/react";
+/* eslint-disable no-unused-vars */
+import { Box, CardBody, CardHeader, Flex, Heading, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, useMediaQuery, Text, Card, StackDivider, Divider, Button } from "@chakra-ui/react";
 import BottomNavbar from "../Navbar/BottomNavbar";
 import Navbar from "../Navbar/Navbar";
 import { useEffect, useState } from "react";
