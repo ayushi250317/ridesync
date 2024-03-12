@@ -60,7 +60,7 @@ public class RideRequestService {
                                 .userId(rideRequest.getDriverId())
                                 .contentId(rideRequestInfo.getRideRequestId())
                                 .message(user.getFullName()+" requested a ride")
-                                .notificationType(NotificationType.REQUEST)
+                                .notificationType(NotificationType.RIDE)
                                 .build();
                 notificationService.addNotification(notification);
                 return RideRequestResponse.builder().message("Ride requested successfully")

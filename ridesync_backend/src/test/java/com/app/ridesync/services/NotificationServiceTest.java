@@ -41,7 +41,7 @@ class NotificationServiceTest {
         Notification notification = new Notification();
         notification.setContentId(1);
         notification.setMessage("Not all who wander are lost");
-        notification.setNotificationType(NotificationType.MESSAGE);
+        notification.setNotificationType(NotificationType.RIDE);
         notification.setNotificationId(1);
         notification.setReadFlag(1);
         notification.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());
@@ -51,7 +51,7 @@ class NotificationServiceTest {
         Notification notification2 = new Notification();
         notification2.setContentId(1);
         notification2.setMessage("Not all who wander are lost");
-        notification2.setNotificationType(NotificationType.REQUEST);
+        notification2.setNotificationType(NotificationType.RIDE);
         notification2.setNotificationId(1);
         notification2.setReadFlag(1);
         notification2.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());
