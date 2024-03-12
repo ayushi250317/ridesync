@@ -1,7 +1,5 @@
-import { Box, Button, Center, Flex, Text, useMediaQuery } from '@chakra-ui/react'
+import { Box, Button, Center, Text, useMediaQuery } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import { IoChatboxEllipsesSharp } from "react-icons/io5";
-import { FaCar } from "react-icons/fa";
 import NotificationCard from './NotificationCard.';
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
@@ -33,7 +31,10 @@ const Notification = () => {
         })
     }, [])
 
-    if (loading) return <Spinner size='xl' />
+    if (loading) return <Center h="80vh">
+
+        <Spinner size='xl' />
+    </Center>
     return (
         <Box h="80vh">
             {!isLargerThan1280 &&
@@ -43,8 +44,7 @@ const Notification = () => {
             <Text fontSize="3xl" my="3" textAlign="center" ml="5" fontWeight="medium">Notifications</Text>
             <Center borderRadius="2xl" w={["", "", "70%", "50%"]} m="auto" flexDir="column" mt={["", "", "5", "5"]} >
                 <Box w="100%" overflow="auto" h={["90vh", "", "70vh", "70vh"]} mb={["10"]}>
-
-                    <NotificationCard />
+                    {notificationsArray.length ? notificationsArray.map(elem => <NotificationCard cardAttributes={elem} />) : <Text>No notifications available</Text>}
                 </Box>
 
 
