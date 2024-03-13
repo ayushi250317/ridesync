@@ -24,7 +24,7 @@ const Activity = ({ route }) => {
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
         };
-        axios.patch(`${API}/request/updateRideRequest/${requestId}`, reqBody, config).then(resp => {
+        axios.put(`${API}/request/updateRideRequest/${requestId}`, reqBody, config).then(resp => {
             if (resp.data.success) {
                 setRequests(currentRequests => currentRequests.map(request =>
                     request.rideRequestId === requestId ? { ...request, requestStatus: status } : request

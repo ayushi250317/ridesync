@@ -110,9 +110,7 @@ const Activity = ({ }) => {
                                             </Button>
                                         </>}
                                     </>
-
                                 }
-
                             </CardBody>
                         </Card>
                     )
