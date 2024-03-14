@@ -62,7 +62,7 @@ const LiveLocationTracking = () => {
                 setDuration(results.routes[0].legs[0].duration.text)
             }
 
-            axios.get(`${API}/ride/getAllTripMembers/${state?.rideId ? state?.rideId : 2}`, config).then(resp => {
+            axios.get(`${API}/ride/getAllTripMembers/${state.rideId}`, config).then(resp => {
                 if (resp.data.success) {
                     const isDriverHere = resp.data.responseObject.find(riders => loggedInUserInfo.user.userId === riders.rideInfo.userId
                     )
