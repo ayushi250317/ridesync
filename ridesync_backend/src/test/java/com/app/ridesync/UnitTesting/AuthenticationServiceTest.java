@@ -74,7 +74,7 @@ class AuthenticationServiceTest {
         user2.setDateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
         user2.setEmail("jane.doe@example.org");
         user2.setFullName("Dr Jane Doe");
-        user2.setPassword("iloveyou");
+        user2.setPassword("123456");
         user2.setPhoneNumber("6625550144");
         user2.setUserId(1);
         user2.setVerified(true);
