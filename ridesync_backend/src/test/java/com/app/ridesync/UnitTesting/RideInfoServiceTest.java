@@ -1,29 +1,20 @@
-package com.app.ridesync.services;
+package com.app.ridesync.UnitTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.anyDouble;
 import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.dto.requests.RideInfoInput;
 import com.app.ridesync.dto.responses.RideInfoResponse;
-import com.app.ridesync.entities.GeoPoint;
-import com.app.ridesync.entities.GeoPointRecord;
 import com.app.ridesync.entities.Location;
-import com.app.ridesync.entities.Ride;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.repositories.RideInfoRepository;
+import com.app.ridesync.services.LocationService;
+import com.app.ridesync.services.RideInfoService;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;

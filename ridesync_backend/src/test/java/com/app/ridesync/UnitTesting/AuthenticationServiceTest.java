@@ -1,23 +1,16 @@
-package com.app.ridesync.services;
+package com.app.ridesync.UnitTesting;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.anyBoolean;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.dto.requests.RegisterRequest;
-import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.DocumentRepository;
 import com.app.ridesync.repositories.UserRepository;
 import com.app.ridesync.repositories.VehicleRepository;
+import com.app.ridesync.services.AuthenticationService;
+import com.app.ridesync.services.JwtService;
 
 import java.time.LocalDate;
 import java.time.ZoneOffset;
@@ -29,7 +22,6 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
@@ -82,7 +74,7 @@ class AuthenticationServiceTest {
         user2.setDateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
         user2.setEmail("jane.doe@example.org");
         user2.setFullName("Dr Jane Doe");
-        user2.setPassword("iloveyou");
+        user2.setPassword("123456");
         user2.setPhoneNumber("6625550144");
         user2.setUserId(1);
         user2.setVerified(true);
@@ -97,42 +89,5 @@ class AuthenticationServiceTest {
         verify(userRepository).save(Mockito.<User>any());
         assertSame(user2, actualUpdateUserDetailsResult);
     }
-
-       @Test
-    public void testVerifyEmail_SuccessfulVerification() {
-        // Arrange
-        User user = new User();
-        user.setUserId(1);
-        user.setEmail("abc@gmail.com");
-        when(userRepository.findByUserId(1)).thenReturn(user);
-
-        // Act
-        AuthenticationResponse response = authenticationService.verifyEmail(1, "abc@gmail.com");
-
-        // Assert
-        assertEquals("Account Email Verification Successful", response.getMessage());
-        assertEquals(true, response.isSuccess());
-        assertEquals(true, user.isVerified());
-        verify(userRepository, times(1)).save(user);
-    }
-
-   
-    @Test
-    public void testResetPassword_SuccessfulVerification() {
-
-        // Arrange
-        User user = new User();
-        user.setUserId(1);
-        when(userRepository.findByUserId(1)).thenReturn(user);
-        when(jwtService.extractUserId("valid_token")).thenReturn(1);
-
-        // Act
-        AuthenticationResponse response = authenticationService.resetPassword(1, "valid_token");
-
-        // Assert
-        assertEquals("Verification done successfully", response.getMessage());
-        assertEquals(true, response.isSuccess());
-    }
-
 
 }

@@ -54,11 +54,11 @@ public class RideRequestService {
                 .endLocationId(endLocation.getLocationId())
                 .tripStartTime(rideRequest.getEstimatedTripStartTime())
                 .build();
-                rideRequestInfo=rideRequestRepository.save(rideRequestInfo);
+                rideRequestRepository.save(rideRequestInfo);
                 User user=userRepository.findByUserId(riderId);
                 Notification notification=Notification.builder()
                                 .userId(rideRequest.getDriverId())
-                                .contentId(rideRequestInfo.getRideRequestId())
+                                .contentId(rideRequestInfo.getRideId())
                                 .message(user.getFullName()+" requested a ride")
                                 .notificationType(NotificationType.RIDE)
                                 .build();
@@ -77,6 +77,7 @@ public class RideRequestService {
         public RideRequestResponse updateRide(String jwtToken, Integer requestId, RideRequest request) {
                 String requestStatus=request.getRequestStatus().toString();
                 RideRequestInfo rideRequestInfo = rideRequestRepository.findByRideRequestId(requestId);
+                User driver=userRepository.findByUserId(rideRequestInfo.getDriverId());
                 if(requestStatus.equals("ACCEPTED")){
                         rideRequestInfo.setRequestStatus(RequestStatus.ACCEPTED);
                         RideInfo driverRideInfo=rideInfoRepository.findByRideIdAndUserId(rideRequestInfo.getRideId(),rideRequestInfo.getDriverId());
@@ -90,9 +91,23 @@ public class RideRequestService {
                         .fare(driverRideInfo.getFare())
                         .build(); 
                         rideInfoRepository.save(rideInfo);
+                        Notification notification=Notification.builder()
+                                .userId(rideRequestInfo.getRiderId())
+                                .contentId(rideRequestInfo.getRideId())
+                                .message(driver.getFullName()+" accepted your ride request")
+                                .notificationType(NotificationType.RIDE)
+                                .build();
+                        notificationService.addNotification(notification);
                 }
                 else if(requestStatus.equals("REJECTED")){
-                        rideRequestInfo.setRequestStatus(RequestStatus.REJECTED);       
+                        rideRequestInfo.setRequestStatus(RequestStatus.REJECTED); 
+                        Notification notification=Notification.builder()
+                                .userId(rideRequestInfo.getRiderId())
+                                .contentId(rideRequestInfo.getRideId())
+                                .message(driver.getFullName()+" rejected your ride request")
+                                .notificationType(NotificationType.RIDE)
+                                .build();
+                        notificationService.addNotification(notification);      
                 } 
                 rideRequestRepository.save(rideRequestInfo);
                 return RideRequestResponse.builder().message("Request updated successfully").success(true).build();
