@@ -1,84 +1,114 @@
+/* eslint-disable array-callback-return */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import {
     Box,
-    Button,
-    ButtonGroup,
     Flex,
-    HStack,
     IconButton,
-    Input,
     SkeletonText,
     Text,
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
-
+import { useLocation } from "react-router-dom"
 import {
     useJsApiLoader,
     GoogleMap,
     Marker,
-    Autocomplete,
     DirectionsRenderer,
 } from '@react-google-maps/api'
-import { useEffect, useRef, useState } from 'react'
-import { GMAP_API_KEY } from "../../sharedComponent/API"
+import { useEffect, useState } from 'react'
+import { API, GMAP_API_KEY } from "../../sharedComponent/API"
+import axios from 'axios'
 
-const center = { lat: 48.8584, lng: 2.2945 }
 
-function LiveLocationTracking() {
+const LiveLocationTracking = () => {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: GMAP_API_KEY,
         libraries: ['places'],
     })
+    const { state } = useLocation();
 
     const [map, setMap] = useState(/** @type google.maps.Map */(null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
+    const [center, setCenter] = useState([])
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [mutipleMarkers, setMutipleMarkers] = useState([
-        { lat: 44.6379, lng: -63.56975 },
-        { lat: 44.63837, lng: -63.56984 },
-        { lat: 44.63909, lng: -63.56996 },
-        { lat: 44.64004, lng: -63.57043 },
-        { lat: 44.64469, lng: -63.57276 }
     ])
+    useEffect(() => {
+        if (state?.rideId === null) {
+            window.history.go(-1)
+        }
+        const loggedInUserInfo = JSON.parse(
+            localStorage.getItem("loggedInUserDetails")
+        );
+        if (loggedInUserInfo) {
+            const config = {
+                headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
+            };
 
+            async function calculateRoute(startLoc, endLoc) {
 
+                // eslint-disable-next-line no-undef
+                const directionsService = new google.maps.DirectionsService()
+                const results = await directionsService.route({
+                    origin: startLoc,
+                    destination: endLoc,
+                    // eslint-disable-next-line no-undef
+                    travelMode: google.maps.TravelMode.DRIVING,
+                })
+                setDirectionsResponse(results)
+                setDistance(results.routes[0].legs[0].distance.text)
+                setDuration(results.routes[0].legs[0].duration.text)
+            }
 
+            axios.get(`${API}/ride/getAllTripMembers/${state.rideId}`, config).then(resp => {
+                if (resp.data.success) {
+                    const isDriverHere = resp.data.responseObject.find(riders => loggedInUserInfo.user.userId === riders.rideInfo.userId
+                    )
+                    if (isDriverHere.rideInfo.driver) {
+                        const ridersCoordinates = resp.data.responseObject.filter(item => {
+                            return !isDriverHere || !item.rideInfo.driver;
+                        })
+                        setMutipleMarkers(ridersCoordinates)
+                    } else {
+                        const riderHere = resp.data.responseObject.find(riders => riders.rideInfo.driver
+                        )
+                        setCenter({ lat: riderHere.pickupLocation.lattitude, lng: riderHere.pickupLocation.longitude })
+                    }
+                    resp.data.responseObject.map(rideDetails => {
+                        if (loggedInUserInfo.user.userId === rideDetails.rideInfo.userId) {
+                            calculateRoute(rideDetails.location1.address, rideDetails.location2.address)
+                        }
+                    })
+                }
+            }).catch(err => {
+                console.log("err in liveloctrack", err);
+            })
 
-    /** @type React.MutableRefObject<HTMLInputElement> */
-    const originRef = useRef()
-    /** @type React.MutableRefObject<HTMLInputElement> */
-    const destiantionRef = useRef()
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0,
+            };
+
+            function success(pos) {
+                const crd = pos.coords;
+                setCenter({ lat: crd.latitude, lng: crd.longitude })
+            }
+
+            function error(err) {
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+    }, [])
 
     if (!isLoaded) {
         return <SkeletonText />
     }
 
-    async function calculateRoute() {
-        if (originRef.current.value === '' || destiantionRef.current.value === '') {
-            return
-        }
-        // eslint-disable-next-line no-undef
-        const directionsService = new google.maps.DirectionsService()
-        const results = await directionsService.route({
-            origin: originRef.current.value,
-            destination: destiantionRef.current.value,
-            // eslint-disable-next-line no-undef
-            travelMode: google.maps.TravelMode.DRIVING,
-        })
-        setDirectionsResponse(results)
-        setDistance(results.routes[0].legs[0].distance.text)
-        setDuration(results.routes[0].legs[0].duration.text)
-    }
-
-    function clearRoute() {
-        setDirectionsResponse(null)
-        setDistance('')
-        setDuration('')
-        originRef.current.value = ''
-        destiantionRef.current.value = ''
-    }
-    console.log("livearr", mutipleMarkers);
     return (
         <Flex
             position='relative'
@@ -88,7 +118,6 @@ function LiveLocationTracking() {
             w='100vw'
         >
             <Box position='absolute' left={0} top={0} h='100%' w='100%'>
-                {/* Google Map Box */}
                 <GoogleMap
                     center={center}
                     zoom={15}
@@ -102,67 +131,42 @@ function LiveLocationTracking() {
                     onLoad={map => setMap(map)}
                 >
 
-                    <Marker position={center} />
+                    <Marker position={center} icon={{
+                        url: (require('../../assets/favicon.ico')),
+                        fillColor: '#EB00FF',
+                        rotation: 180,
+                        scale: 7
+                    }} />
                     {directionsResponse && (
                         <DirectionsRenderer directions={directionsResponse} />
-
                     )}
                     {mutipleMarkers.map((marker, index) => (
-                        <Marker key={index} position={marker} />
+                        <Marker key={index} position={{ lat: marker.location1.lattitude, lng: marker.location1.longitude }} />
                     ))}
-
                 </GoogleMap>
             </Box>
-            <Box
-                p={4}
-                borderRadius='lg'
-                m={4}
-                bgColor='white'
-                shadow='base'
-                minW='container.md'
-                zIndex='1'
-            >
-                <HStack spacing={2} justifyContent='space-between'>
-                    <Box flexGrow={1}>
-                        <Autocomplete>
-                            <Input type='text' placeholder='Origin' ref={originRef} />
-                        </Autocomplete>
-                    </Box>
-                    <Box flexGrow={1}>
-                        <Autocomplete>
-                            <Input
-                                type='text'
-                                placeholder='Destination'
-                                ref={destiantionRef}
-                            />
-                        </Autocomplete>
-                    </Box>
 
-                    <ButtonGroup>
-                        <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
-                            Calculate Route
-                        </Button>
-                        <IconButton
-                            aria-label='center back'
-                            icon={<FaTimes />}
-                            onClick={clearRoute}
-                        />
-                    </ButtonGroup>
-                </HStack>
-                <HStack spacing={4} mt={4} justifyContent='space-between'>
-                    <Text>Distance: {distance} </Text>
-                    <Text>Duration: {duration} </Text>
-                    <IconButton
-                        aria-label='center back'
-                        icon={<FaLocationArrow />}
-                        isRound
-                        onClick={() => {
-                            map.panTo(center)
-                            map.setZoom(15)
-                        }}
-                    />
-                </HStack>
+            <Box position="absolute" top="2" left="2" p="3" className='mapBackground'>
+                <Text fontWeight="medium">Distance: {distance} </Text>
             </Box>
+
+            <Box position="absolute" top="2" right="2" p="3" className='mapBackground'>
+                <Text fontWeight="medium">Duration: {duration} </Text>
+            </Box>
+
+            <IconButton
+                position="absolute"
+                bottom="1"
+                right="1"
+                aria-label='center back'
+                backgroundColor="lightblue"
+                icon={<FaLocationArrow />}
+                isRound
+                onClick={() => {
+                    map.panTo(center)
+                    map.setZoom(15)
+                }}
+            />
         </Flex>
     )
 }

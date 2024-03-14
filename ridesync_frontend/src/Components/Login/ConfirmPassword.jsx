@@ -31,12 +31,7 @@ const ConfirmPassword = () => {
     const [isTrue, setIsTrue] = useState(null);
     const [isLoading, setIsLoading] = useState(null);
     const navigate = useNavigate();
-    // const [newPassword,setNewPassword] = useState('');
-    // const [password, setPassword] = useState({
-    //     newPassword: "",
-    //     reNewPassword: "",
-    // });
-    // console.log({ params });
+
 
     const {
         register,
@@ -105,7 +100,9 @@ const ConfirmPassword = () => {
     const back = "<"
     return (
         <Center h="100vh">
-            <Button onClick={() => window.history.go(-1)} position="absolute" top="8" left="8" backgroundColor="transparent" fontSize="2xl"> {back}  </Button>
+            <Button position="absolute" top="8" left="8" backgroundColor="transparent" fontSize="2xl"
+                onClick={() => navigate("/login")}
+            > {back}  </Button>
 
             <Box
                 w={["90%", "70%", "60%", "40%"]}

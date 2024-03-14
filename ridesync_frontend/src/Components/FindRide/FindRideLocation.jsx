@@ -1,10 +1,11 @@
-import { Box, Button, Center, Flex, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Input, Text, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Locations from '../../sharedComponent/Maps/Locations'
 import { MdAccessTimeFilled } from "react-icons/md";
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
 const FindRideLocation = () => {
+    const toast = useToast();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
@@ -81,7 +82,12 @@ const FindRideLocation = () => {
         axios.post(`${API}/request/addRequest`, newReqObj, config).then(resp => {
             console.log("request ride", resp.data);
             if (resp.data.success) {
-
+                toast({
+                    title: "Ride requested successfully.",
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
             }
         }).catch(err => {
             console.log("err in req ride", err);

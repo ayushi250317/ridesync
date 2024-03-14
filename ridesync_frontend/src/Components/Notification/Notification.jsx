@@ -38,7 +38,8 @@ const Notification = () => {
     return (
         <Box h="80vh">
             {!isLargerThan1280 &&
-                <Button position="absolute" top="1" ml="2" backgroundColor="transparent" fontSize="2xl">   {backbtn} </Button>
+                <Button position="absolute" top="1" ml="2" backgroundColor="transparent" fontSize="2xl"
+                    onClick={() => window.history.go(-1)}>   {backbtn} </Button>
             }
 
             <Text fontSize="3xl" my="3" textAlign="center" ml="5" fontWeight="medium">Notifications</Text>

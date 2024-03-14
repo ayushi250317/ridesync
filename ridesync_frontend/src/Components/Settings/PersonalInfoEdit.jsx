@@ -11,6 +11,7 @@ import {
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { API } from "../../sharedComponent/API";
+import { useNavigate } from "react-router-dom"
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Controller, useForm } from "react-hook-form";
@@ -38,33 +39,18 @@ const loggedInUserInfo = JSON.parse(
 );
 
 const PersonalInfoEdit = () => {
-    const [userDetails, setUserDetails] = useState({});
     const [loading, setLoading] = useState(false);
     const toast = useToast();
-    useEffect(() => {
-        const changeDateFormat = (monthOrDay) => {
-            if (monthOrDay < 10) {
-                return `0${monthOrDay}`;
-            } else {
-                return monthOrDay;
-            }
-        };
+    const navigate = useNavigate()
 
-        if (loggedInUserInfo) {
-            setUserDetails({
-                fullName: loggedInUserInfo.user.fullName,
-                address: loggedInUserInfo.user.address,
-                dateOfBirth: `${new Date(
-                    loggedInUserInfo.user.dateOfBirth
-                ).getFullYear()}-${changeDateFormat(
-                    new Date(loggedInUserInfo.user.dateOfBirth).getMonth()
-                )}-${changeDateFormat(
-                    new Date(loggedInUserInfo.user.dateOfBirth).getDate()
-                )}`,
-                phoneNumber: loggedInUserInfo.user.phoneNumber,
-            });
+    const changeDateFormat = (monthOrDay) => {
+        if (monthOrDay < 10) {
+            return `0${monthOrDay}`;
+        } else {
+            return monthOrDay;
         }
-    }, []);
+    };
+
     const {
         register,
         handleSubmit,
@@ -73,7 +59,18 @@ const PersonalInfoEdit = () => {
     } = useForm({
         mode: "onBlur",
         resolver: yupResolver(schema),
-        values: userDetails,
+        values: {
+            fullName: loggedInUserInfo.user.fullName,
+            address: loggedInUserInfo.user.address,
+            dateOfBirth: `${new Date(
+                loggedInUserInfo.user.dateOfBirth
+            ).getFullYear()}-${changeDateFormat(
+                new Date(loggedInUserInfo.user.dateOfBirth).getMonth()
+            )}-${changeDateFormat(
+                new Date(loggedInUserInfo.user.dateOfBirth).getDate()
+            )}`,
+            phoneNumber: loggedInUserInfo.user.phoneNumber,
+        },
     });
 
     const onSubmit = (data) => {
@@ -83,10 +80,22 @@ const PersonalInfoEdit = () => {
         };
         console.log("config", config);
         axios
-            .post(`${API}/auth/updateUser`, data, config)
+            .put(`${API}/auth/updateUser`, data, config)
             .then((response) => {
                 console.log("Response in edit user:", response);
                 if (response.data.success) {
+                    console.log("localstorgae data", loggedInUserInfo);
+                    const newStorageObj = { ...loggedInUserInfo, user: response.data.responseObject }
+                    console.log({ newStorageObj });
+                    localStorage.setItem('loggedInUserDetails', JSON.stringify(newStorageObj));
+                    toast({
+                        title: `User updated successfully`,
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                    });
+
+                    navigate("/")
                 } else {
                     console.log("sdsa", response.data.message);
                     toast({
