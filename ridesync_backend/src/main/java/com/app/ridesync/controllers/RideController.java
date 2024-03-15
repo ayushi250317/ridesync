@@ -127,7 +127,7 @@ public class RideController {
 					.body(new ApiResponse<>(true, true, "Update Successful"));
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "ERROR: " + e.getMessage()));
+					.body(new ApiResponse<>(null, false, "Update failed with the following error: " + e.getMessage()));
 		}
 	}
 }
