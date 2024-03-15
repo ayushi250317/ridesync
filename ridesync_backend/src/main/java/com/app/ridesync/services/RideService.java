@@ -157,6 +157,13 @@ public class RideService {
 		return res;
 	}
 
+	public boolean updateStatus(Integer rideId, Integer userId, String status){
+		Ride ride = rideRepository.findByRideId(rideId);
+		ride.setStatus(status);
+		rideRepository.save(ride);
+		return true;
+	}
+
 	public List<RideHistoryProjection> getRideHistoryProjectionByUserId(Integer userId) {
 		return rideRepository.findRidesByUserId(userId);	
 
