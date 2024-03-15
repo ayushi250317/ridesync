@@ -3,6 +3,7 @@ package com.app.ridesync.controllers;
 import java.util.List;
 
 import com.app.ridesync.dto.requests.PickupLocationRequest;
+import com.app.ridesync.dto.requests.RideStatusUpdateRequest;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.services.RideInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,5 +118,17 @@ public class RideController {
 		}
 	}
 
+	@PutMapping("/updateRideStatus")
+	public ResponseEntity<ApiResponse<Object>> updateRideStatus(@RequestHeader("Authorization") String jwtToken, @RequestBody RideStatusUpdateRequest input){
+		try {
+			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+			rideService.updateStatus(input.getRideId(), userId, input.getRideStatus());
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(new ApiResponse<>(true, true, "Update Successful"));
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body(new ApiResponse<>(null, false, "Update failed with the following error: " + e.getMessage()));
+		}
+	}
 }
 
