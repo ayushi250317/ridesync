@@ -9,17 +9,23 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.UserRepository;
+import com.app.ridesync.security.UserSecurity;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Configuration
 @RequiredArgsConstructor
 public class ApplicationConfig {
-    private final UserRepository repository;
+    private final UserRepository userRepository;
     @Bean
     public UserDetailsService userDetailsService() {
-        return username -> repository.findByEmail(username);
+      return username -> {
+        User user=userRepository.findByEmail(username);
+        return new UserSecurity(user);
+      };
     }
 
     @Bean
