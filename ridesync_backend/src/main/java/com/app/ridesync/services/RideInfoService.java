@@ -150,4 +150,8 @@ public class RideInfoService {
 
 	}
 
+    public RideInfoResponse getDriverLocation(Integer rideId) {
+       return RideInfoResponse.builder().build();
+    }
+
 }
