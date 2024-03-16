@@ -664,6 +664,39 @@
 					"response": []
 				},
 				{
+					"name": "GetRidesByUserId",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMDIifQ.mwhH_iggL1WZa6YlOmhXL4ahY3YskRcA-Jd-6dQ9ivQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getRides/202",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getRides",
+								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "updateRide",
 					"request": {
 						"auth": {
@@ -703,6 +736,39 @@
 								"v1",
 								"ride",
 								"updateRide"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRideDetailById",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyMDIifQ.mwhH_iggL1WZa6YlOmhXL4ahY3YskRcA-Jd-6dQ9ivQ",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getRideDetail/253",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getRideDetail",
+								"253"
 							]
 						}
 					},
@@ -887,6 +953,55 @@
 								"v1",
 								"geo",
 								"create"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Messaging",
+			"item": [
+				{
+					"name": "GetChatIdentifier",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTIifQ.7KjwphRNd7qYUwpHonAaJ_QLmrOLax_t7r_ha2FIork",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"senderId\": 2,\n    \"recipientId\":1,\n    \"chatIdentifier\": \"\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/message/chatIdentifier",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"message",
+								"chatIdentifier"
 							]
 						}
 					},
