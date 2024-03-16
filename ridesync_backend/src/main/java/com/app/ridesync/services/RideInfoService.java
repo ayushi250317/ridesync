@@ -151,7 +151,9 @@ public class RideInfoService {
 	}
 
     public RideInfoResponse getDriverLocation(Integer rideId) {
-       return RideInfoResponse.builder().build();
+		RideInfo rideInfo=rideInfoRepository.findByRideIdAndIsDriver(rideId, true);
+		Location pickupLocation=locationService.findLocationById(rideInfo.getPickupLocationId());
+		return RideInfoResponse.builder().pickupLocation(pickupLocation).build();
     }
 
 }
