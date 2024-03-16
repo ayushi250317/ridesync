@@ -10,7 +10,7 @@ import { FiCheck, FiX, FiMoreVertical } from 'react-icons/fi';
 const Activity = ({ route }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { ride_id, is_driver } = location.state;
+    const { rideId, is_driver } = location.state;
     const [isLoading, setIsLoading] = useState(null);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const isMobile = useBreakpointValue({ base: true, md: false });
@@ -65,14 +65,15 @@ const Activity = ({ route }) => {
         if (loggedInUserInfo) {
             setIsLoading(true);
             setLoggedInUserDetails(loggedInUserInfo);
+            console.log({ rideId, is_driver })
             const config = {
                 headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
             };
-            axios.get(`${API}/ride/getRideDetail/${ride_id}`, config)
+            axios.get(`${API}/ride/getRideDetail/${rideId}`, config)
                 .then((resp) => {
                     if (resp.data.success) {
                         if (is_driver)
-                            axios.get(`${API}/request/getRideRequest?rideId=${ride_id}`, config)
+                            axios.get(`${API}/request/getRideRequest?rideId=${rideId}`, config)
                                 .then((response) => {
                                     if (response.data.success)
                                         console.log(response.data.requests);

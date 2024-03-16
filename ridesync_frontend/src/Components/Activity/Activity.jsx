@@ -61,7 +61,7 @@ const Activity = ({ }) => {
             _hover: { color: 'gray.600' },
             _active: { color: 'gray.800' },
         };
-
+        console.log("rrrr", rides)
         return (
             <Flex w="100%" direction="column">
                 {rides[rideType].map((ride, index) => {
@@ -72,7 +72,7 @@ const Activity = ({ }) => {
                                     <Heading size={isLargerThan1280 ? 'md' : 'sm'}
                                         textTransform='uppercase'
                                         _hover={{ cursor: "pointer" }}
-                                        onClick={() => navigate("/ride_info", { state: { ride_id: ride.rideId, is_driver: ride.isDriver } })}
+                                        onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId, is_driver: ride.isDriver } })}
                                     >
                                         {ride.startLocationAddress.split(',')[0] + ' to ' + ride.endLocationAddress.split(',')[0]}
                                     </Heading>
@@ -179,7 +179,7 @@ const Activity = ({ }) => {
     }
 
     const trackRide = (rideId) => {
-        navigate("/livelocationtracking", { state: { ride_id: rideId } });
+        navigate("/livelocationtracking", { state: { rideId: rideId } });
     }
 
     if (isLoading) return <Center h="80vh">
