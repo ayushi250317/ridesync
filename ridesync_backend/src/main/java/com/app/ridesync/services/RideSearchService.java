@@ -31,15 +31,16 @@ public class RideSearchService {
 		this.rideRepository = rideRepository;
 	}
 
-	public  List<SearchResultProjection> findRides(LatLng source, LatLng destination, LocalDateTime rideTime) {
+	public  List<SearchResultProjection> findRides(Integer userId, LatLng source, LatLng destination, LocalDateTime rideTime) {
 		return filterRides(geoPointRepo.findAll(),
 				Point.fromLngLat(source.lng,source.lat),
 				Point.fromLngLat(destination.lng,destination.lat),
-				rideTime);
+				rideTime,
+				userId);
 
 	}
 
-	private  List<SearchResultProjection> filterRides(List<GeoPoint> geoPoints, Point source, Point destination, LocalDateTime rideTime) {
+	private  List<SearchResultProjection> filterRides(List<GeoPoint> geoPoints, Point source, Point destination, LocalDateTime rideTime, Integer userId) {
 		filteredRides = new ArrayList<>();
 		
 		for(GeoPoint geoPoint : geoPoints) {
@@ -57,12 +58,12 @@ public class RideSearchService {
 			
 		}
 
-		return findRideDetailsByFilteredRideIds(filteredRides, rideTime);
+		return findRideDetailsByFilteredRideIds(filteredRides, rideTime, userId);
 	}
 	
 
-	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime) {
-		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12));		
+	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime, Integer userId) {
+		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12), userId);		
 	}
 
 	private boolean isValid(Point foundSrc, Point foundDes, Point src, Point des) {

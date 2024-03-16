@@ -73,7 +73,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ " JOIN Location startLocation ON startLocation.locationId = rideInfo.startLocationId"
 			+ " JOIN Location endLocation ON endLocation.locationId = rideInfo.endLocationId"
 			+ " JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId"
-			+ " WHERE ride.status != 'completed' AND ride.startTime >= :rideTimeStartLimit AND ride.startTime <= :rideTimeEndLimit AND ride.rideId IN :rideIds"
+			+ " WHERE rideInfo.userId != :userId AND ride.status != 'completed' AND ride.startTime >= :rideTimeStartLimit AND ride.startTime <= :rideTimeEndLimit AND ride.rideId IN :rideIds"
 			+ " ORDER BY ride.startTime")
-	List<SearchResultProjection>findRideDetailsByRideIds(@Param("rideIds") List<Integer> rideIds, @Param("rideTimeStartLimit") LocalDateTime rideTimeStartLimit, @Param("rideTimeEndLimit") LocalDateTime rideTimeEndLimit);
+	List<SearchResultProjection>findRideDetailsByRideIds(@Param("rideIds") List<Integer> rideIds, @Param("rideTimeStartLimit") LocalDateTime rideTimeStartLimit, @Param("rideTimeEndLimit") LocalDateTime rideTimeEndLimit, @Param("userId") Integer userId);
 }
