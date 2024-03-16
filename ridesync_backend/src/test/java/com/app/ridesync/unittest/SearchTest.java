@@ -38,6 +38,7 @@ public class SearchTest {
 	private static Ride ride;
 	private static GeoPointRecord geoPointRecord;
 	private static GeoPoint geoPoint;
+	private static Integer userId;
 
 	@BeforeAll
 	static void setup() {		
@@ -49,6 +50,8 @@ public class SearchTest {
 
 		geoPoint.setGeoPointRecord(geoPointRecord);
 		geoPoint.setRide(ride);
+		
+		userId = 1;
 	}
 
 	@Test
@@ -58,12 +61,12 @@ public class SearchTest {
 		LocalDateTime rideTime = LocalDateTime.now();
 
 		when(geoPointRepository.findAll()).thenReturn(List.of(geoPoint));
-		when(rideRepository.findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12))).thenReturn(List.of());
+		when(rideRepository.findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12),userId)).thenReturn(List.of());
 
-		rideSearchService.findRides(source,destination,rideTime);
+		rideSearchService.findRides(userId,source,destination,rideTime);
 
 		verify(geoPointRepository).findAll();
-		verify(rideRepository).findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12));
+		verify(rideRepository).findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12),userId);
 
 	}
 
@@ -74,11 +77,11 @@ public class SearchTest {
 		LocalDateTime rideTime = LocalDateTime.now();
 
 		when(geoPointRepository.findAll()).thenReturn(List.of(geoPoint));
-		when(rideRepository.findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12))).thenReturn(List.of());
+		when(rideRepository.findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12),userId)).thenReturn(List.of());
 
-		rideSearchService.findRides(source,destination,rideTime);
+		rideSearchService.findRides(userId, source,destination,rideTime);
 
-		verify(rideRepository).findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12));
+		verify(rideRepository).findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12),userId);
 
 	}
 	
