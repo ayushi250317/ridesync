@@ -98,11 +98,11 @@ const Activity = ({ route }) => {
                             <Table variant='simple' size={isMobile ? "sm" : "md"}>
                                 <Thead>
                                     <Tr>
+                                        <Th>Actions / status</Th>
                                         <Th>Rider Name</Th>
                                         <Th>Pickup Point</Th>
                                         <Th>Drop Point</Th>
                                         <Th>Pickup Time</Th>
-                                        <Th>Actions / status</Th>
                                     </Tr>
                                 </Thead>
                                 <Tbody>
@@ -110,12 +110,6 @@ const Activity = ({ route }) => {
                                         const tripStartTime = request.tripStartTime[0] + "/" + request.tripStartTime[1] + "/" + request.tripStartTime[2] + " " + request.tripStartTime[3] + ":" + request.tripStartTime[4];
                                         return (
                                             <Tr>
-                                                <Td>{request.riderId}</Td>
-                                                <Td>Barrigton Street</Td>
-                                                <Td>Duke Street</Td>
-                                                <Td>
-                                                    {tripStartTime}
-                                                </Td>
                                                 <Td>
                                                     {request.requestStatus !== "REQUESTED" &&
                                                         <Badge colorScheme={request.requestStatus === "ACCEPTED" ? 'green' : "red"}>{request.requestStatus}</Badge>
@@ -133,6 +127,12 @@ const Activity = ({ route }) => {
                                                             </Button>
                                                         </Tooltip>
                                                     ))}</Td>
+                                                <Td>{request.riderId}</Td>
+                                                <Td>Barrigton Street</Td>
+                                                <Td>Duke Street</Td>
+                                                <Td>
+                                                    {tripStartTime}
+                                                </Td>
                                             </Tr>
                                         )
                                     })}
