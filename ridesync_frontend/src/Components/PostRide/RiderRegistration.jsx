@@ -113,8 +113,10 @@ const RiderRegistration = () => {
                     console.log("reaching", vehicleInfoReqObj);
                     axios.post(`${API}/vehicle/addVehicle`, vehicleInfoReqObj, config)
                         .then(response => {
-                            console.log("reeeee", response);
                             if (response.data.success) {
+                                let modifiedLocalStorage = { ...loggedInUserDetails, vehicles: [...loggedInUserDetails.vehicles, vehicleInfoReqObj] }
+                                localStorage.setItem('loggedInUserDetails', JSON.stringify(modifiedLocalStorage));
+
                                 naviagate("/add_ride")
                                 setLoading(false);
 
