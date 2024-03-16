@@ -52,7 +52,7 @@ const AddRide = () => {
     const [vehiclesArr, setSelectedVehicleArr] = useState([]);
     const [description, setDescription] = useState("");
     const toast = useToast();
-
+    console.log("hithere");
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")

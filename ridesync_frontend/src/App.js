@@ -11,13 +11,14 @@ import AccountEmailVerification from './Components/Signup/AccountEmailVerificati
 import RedirectAfterAccVerify from './Components/Signup/RedirectAfterAccVerify';
 import RiderRegistration from './Components/PostRide/RiderRegistration';
 import AddRide from './Components/PostRide/AddRide';
-import SelectLocation from './Components/FindRide/SelectLocation';
-import FindRideLocation from './Components/FindRide/FindRideLocation';
 import FindRidePage from './Pages/FindRidePage';
 import NotificationPage from './Pages/NotificationPage';
 import ProtectedRoutes from './Components/ProtectedRoutes/ProtectedRoutes';
 import NotFound from './Pages/NotFound';
+import LiveLocationTracking from './Components/LiveLocationTracking/LiveLocationTracking';
+import EditPersonalDetailsPage from './Pages/EditPersonalDetailsPage';
 import Activity from './Components/Activity/Activity';
+import RideInfo from './sharedComponent/RideInfo/RideInfo';
 
 function App() {
   return (
@@ -25,12 +26,15 @@ function App() {
       <Router>
         <Routes>
           <Route element={<ProtectedRoutes />}>
-            <Route element={<Home />} path="/" />
             <Route element={<RiderRegistration />} path="/rider_registration" />
+            <Route element={<FindRidePage />} path="/find_ride" />
             <Route element={<AddRide />} path="/add_ride" />
             <Route element={<Activity />} path="/activity" />
+            <Route element={<RideInfo />} path="/ride_info" />
             <Route element={<NotificationPage />} path="/notifications" />
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
+            <Route element={<Home />} path="/" />
+            <Route element={<EditPersonalDetailsPage />} path="/editpersonalinfo" />
             <Route element={<FindRidePage />} path="/find_ride" />
           </Route>
           <Route element={<RedirectAfterAccVerify />} path="/confirm_registration/:id/:email" />
@@ -38,7 +42,9 @@ function App() {
           <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
           <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
           <Route element={<Login />} path="/login" />
+          <Route element={<LiveLocationTracking />} path="/livelocationtracking" />
           <Route element={<Signup />} path="/signup" />
+          <Route path="/notFound" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
 
 

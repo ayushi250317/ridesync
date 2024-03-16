@@ -9,6 +9,10 @@ const Home = () => {
     const naviagate = useNavigate();
 
     const [isLargerThan1280] = useMediaQuery('(min-width: 700px)')
+    const loggedInUserInfo = JSON.parse(
+        localStorage.getItem("loggedInUserDetails")
+    );
+    console.log("loggedInUserInfo", loggedInUserInfo);
 
     return (
         <>
@@ -17,7 +21,7 @@ const Home = () => {
             <br />
             <Flex flexDir="column" w="90%" m="auto" zIndex="-10">
                 <Text textAlign="center" fontSize={["3xl", "3xl", "4xl", "5xl"]}>
-                    Hey Hodophiles!!
+                    Hey {loggedInUserInfo?.user?.fullName}!!
                 </Text>
                 <br />
                 {/* <br /> */}

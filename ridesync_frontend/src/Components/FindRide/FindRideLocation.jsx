@@ -1,13 +1,15 @@
-import { Box, Button, Center, Flex, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Flex, Input, Text, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Locations from '../../sharedComponent/Maps/Locations'
 import { MdAccessTimeFilled } from "react-icons/md";
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
 const FindRideLocation = () => {
+    const toast = useToast();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const [reqSent, setReqSent] = useState(false)
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
@@ -43,6 +45,7 @@ const FindRideLocation = () => {
         }
         console.log("new obj", newObj);
         setLoading(true)
+        setReqSent(true)
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
@@ -79,7 +82,12 @@ const FindRideLocation = () => {
         axios.post(`${API}/request/addRequest`, newReqObj, config).then(resp => {
             console.log("request ride", resp.data);
             if (resp.data.success) {
-
+                toast({
+                    title: "Ride requested successfully.",
+                    status: 'success',
+                    duration: 5000,
+                    isClosable: true,
+                });
             }
         }).catch(err => {
             console.log("err in req ride", err);
@@ -88,57 +96,60 @@ const FindRideLocation = () => {
 
     }
 
-    return (
-        <Box w={["88%", "92%", "63%", "67%"]} m="auto">
+    return <Box w={["88%", "92%", "63%", "67%"]} m="auto">
 
-            <Center flexDir="column" mt="5" >
-                <Text textAlign="center" fontSize="4xl" mb="3">Find Rides</Text>
+        <Center flexDir="column" mt="5" >
+            <Text textAlign="center" fontSize="4xl" mb="3">Find Rides</Text>
 
-                <Locations fromAddress={fromAddress} toAddress={toAddress} setFromAddress={setFromAddress} setToAddress={setToAddress} />
+            <Locations fromAddress={fromAddress} toAddress={toAddress} setFromAddress={setFromAddress} setToAddress={setToAddress} />
 
-                <Flex w="100%" justifyContent="center" alignItems="center" ml="2">
+            <Flex w="100%" justifyContent="center" alignItems="center" ml="2">
 
-                    <Box mr="2">
-                        <MdAccessTimeFilled size="24px" />
-                    </Box>
-                    <Input type='datetime-local' placeholder='Enter start time' w="98%" value={rideTime} onChange={(e) => setRideTime(e.target.value)}></Input>
-                </Flex>
-                <Button onClick={handleSubmitFindRide} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
-            </Center>
+                <Box mr="2">
+                    <MdAccessTimeFilled size="24px" />
+                </Box>
+                <Input type='datetime-local' placeholder='Enter start time' w="98%" value={rideTime} onChange={(e) => setRideTime(e.target.value)} />
+            </Flex>
+            <Button onClick={handleSubmitFindRide} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
+        </Center>
 
-            <Box>
-                {findRidesResult.length ? <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text> : <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text>}
-                {findRidesResult.map(rides => {
-                    return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
-                        <Flex justifyContent="space-between">
-                            <Box>
+        <Box>
+            {reqSent && findRidesResult.length === 0 ? <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text> :
+                <Box>
+                    {reqSent && <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text>}
+                    {findRidesResult.map(rides => {
+                        return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
+                            <Flex justifyContent="space-between">
+                                <Box>
+
+                                    <Text>
+
+                                        Start Location: {rides.startLocationAddress}
+                                    </Text>
+                                    <Text>
+                                        End Location: {rides.endLocationAddress}
+                                    </Text>
+                                    <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                </Box>
+
+                            </Flex>
+
+                            <Center justifyContent="space-between">
 
                                 <Text>
-
-                                    Start Location: {rides.startLocationAddress}
+                                    Seat available : {rides.seatsAvailable}
                                 </Text>
-                                <Text>
-                                    End Location: {rides.endLocationAddress}
-                                </Text>
-                                <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
-                            </Box>
 
-                        </Flex>
-
-                        <Center justifyContent="space-between">
-
-                            <Text>
-                                Seat available : {rides.seatsAvailable}
-                            </Text>
-
-                            <Button colorScheme='green' onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>Request Ride</Button>
-                        </Center>
-                    </Box>
-                })}
-            </Box>
-
+                                <Button colorScheme='green' onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>Request Ride</Button>
+                            </Center>
+                        </Box>
+                    })}
+                </Box>
+            }
         </Box >
-    )
+    </Box>
+
+
 }
 
-export default FindRideLocation
+export default FindRideLocation;
