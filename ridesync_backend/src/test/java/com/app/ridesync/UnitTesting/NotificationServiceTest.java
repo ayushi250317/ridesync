@@ -1,15 +1,14 @@
-package com.app.ridesync.services;
+package com.app.ridesync.UnitTesting;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.entities.Notification;
 import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.repositories.NotificationRepository;
+import com.app.ridesync.services.NotificationService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -40,46 +39,38 @@ class NotificationServiceTest {
         // Arrange
         Notification notification = new Notification();
         notification.setContentId(1);
-        notification.setMessage("Not all who wander are lost");
+        notification.setMessage("Test notification");
         notification.setNotificationType(NotificationType.RIDE);
         notification.setNotificationId(1);
         notification.setReadFlag(1);
         notification.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());
         notification.setUserId(1);
         when(notificationRepository.save(Mockito.<Notification>any())).thenReturn(notification);
-
-        Notification notification2 = new Notification();
-        notification2.setContentId(1);
-        notification2.setMessage("Not all who wander are lost");
-        notification2.setNotificationType(NotificationType.RIDE);
-        notification2.setNotificationId(1);
-        notification2.setReadFlag(1);
-        notification2.setTimeStamp(LocalDate.of(1970, 1, 1).atStartOfDay());
-        notification2.setUserId(1);
-
         // Act
-        boolean actualAddNotificationResult = notificationService.addNotification(notification2);
-
+        notificationService.addNotification(notification);
         // Assert
         verify(notificationRepository).save(Mockito.<Notification>any());
-        assertEquals(0, notification2.getReadFlag().intValue());
-        assertFalse(actualAddNotificationResult);
+        assertEquals(0, notification.getReadFlag().intValue());
     }
 
 
     @Test
     void testGetNotification() {
         // Arrange
+        Notification notification=Notification.builder()
+        .contentId(1)
+        .userId(1)
+        .message("Test notification")
+        .notificationType(NotificationType.RIDE)
+        .build();
         ArrayList<Notification> notificationList = new ArrayList<>();
-        when(notificationRepository.findByUserIdAndReadFlag(Mockito.<Integer>any(), Mockito.<Integer>any()))
+        notificationList.add(notification);
+        when(notificationRepository.findByUserId(1))
                 .thenReturn(notificationList);
-
         // Act
         List<Notification> actualNotification = notificationService.getNotification(1);
-
         // Assert
-        verify(notificationRepository).findByUserIdAndReadFlag(Mockito.<Integer>any(), Mockito.<Integer>any());
-        assertTrue(actualNotification.isEmpty());
+        verify(notificationRepository).findByUserId(Mockito.<Integer>any());
         assertSame(notificationList, actualNotification);
     }
 

@@ -14,11 +14,10 @@ public class NotificationService {
     @Autowired
     private NotificationRepository notificationRepository;
 
-    public boolean addNotification(Notification notification){
+    public void addNotification(Notification notification){
         notification.setReadFlag(0);
         notification.setTimeStamp(LocalDateTime.now());
         notificationRepository.save(notification);
-        return false;
     }
 
     public List<Notification> getNotification(Integer userId){
