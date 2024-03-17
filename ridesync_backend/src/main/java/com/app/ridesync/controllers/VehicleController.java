@@ -11,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.requests.VehicleInput;
-import com.app.ridesync.dto.responses.DocumentResponse;
-import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.dto.responses.GetVehicleResponse;
+import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.VehicleService;
 

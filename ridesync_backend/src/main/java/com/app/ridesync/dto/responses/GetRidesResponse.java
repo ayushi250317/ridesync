@@ -2,8 +2,6 @@ package com.app.ridesync.dto.responses;
 
 import java.util.List;
 
-import com.app.ridesync.entities.Ride;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
