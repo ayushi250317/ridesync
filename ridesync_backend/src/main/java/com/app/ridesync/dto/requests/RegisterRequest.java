@@ -1,6 +1,6 @@
 package com.app.ridesync.dto.requests;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,7 +15,7 @@ public class RegisterRequest {
     private String fullName;
     private String email;
     private String address;
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
     private String password;
     private String phoneNumber;
 

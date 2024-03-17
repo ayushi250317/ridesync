@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Button, Flex, Image, PopoverArrow, Portal, Text } from "@chakra-ui/react"
+import { Box, Flex, Image, PopoverArrow } from "@chakra-ui/react"
 import { Link } from 'react-router-dom'
 import { IoSettingsSharp } from "react-icons/io5";
 import {
@@ -8,12 +8,11 @@ import {
     PopoverContent,
     PopoverHeader,
     PopoverBody,
-    PopoverFooter,
     PopoverCloseButton,
 } from '@chakra-ui/react'
-import { RiLogoutCircleRFill } from 'react-icons/ri';
 import { IoMdDocument } from 'react-icons/io';
 import { FaCar, FaUser } from 'react-icons/fa';
+
 const Navbar = () => {
     return (
         <Box borderBottom="1px solid lightgray" >
@@ -24,23 +23,23 @@ const Navbar = () => {
                 </Box>
                 <Flex fontSize="xl" >
                     <Box mx="5">
-                        <Link>
+                        <Link to="/">
                             Home
                         </Link>
                     </Box>
                     <Box mx="5">
-                        <Link>
-                            History
+                        <Link to="/activity">
+                            Activity
                         </Link>
                     </Box>
                     <Box mx="5" position="relative">
                         {/* <Box className='notification-number-uppernav'><Text>5</Text> </Box> */}
-                        <Link>
+                        <Link to="/notifications">
                             Notifications
                         </Link>
                     </Box>
                     <Box mx="5" backgroundColor="black" color="white" px={["", "", "", "4"]} borderRadius="xl" pb={["", "", "", "1"]}>
-                        <Link>
+                        <Link to="/login" onClick={() => localStorage.removeItem("loggedInUserDetails")}>
                             Log out
                         </Link>
                     </Box>
@@ -57,7 +56,6 @@ const Navbar = () => {
                                         // bg='gray.300'
                                         children='Click'
                                     >
-
                                         <IoSettingsSharp size="30px" />
                                     </Box>
 
@@ -72,7 +70,7 @@ const Navbar = () => {
                                                 <FaUser size="25px" />
                                                 <Box mx="2">
 
-                                                    <Link >Personal Details</Link>
+                                                    <Link to="/editpersonalinfo" >Personal Details</Link>
                                                 </Box>
                                             </Flex>
                                             <Flex justifyContent="start" alignItems="center" my="1">

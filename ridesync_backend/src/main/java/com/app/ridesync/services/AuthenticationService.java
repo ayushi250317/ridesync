@@ -4,12 +4,18 @@ import com.app.ridesync.dto.requests.AuthenticationRequest;
 import com.app.ridesync.dto.requests.PasswordResetRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
+import com.app.ridesync.repositories.DocumentRepository;
 import com.app.ridesync.repositories.UserRepository;
+import com.app.ridesync.repositories.VehicleRepository;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
+import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.User;
+import com.app.ridesync.entities.Vehicle;
+
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -28,6 +34,10 @@ public class AuthenticationService {
 	
 	@Autowired
     private final UserRepository repository;
+    @Autowired
+    private final DocumentRepository documentRepository;
+    @Autowired
+    private final VehicleRepository vehicleRepository;
 	@Autowired
     private final PasswordEncoder passwordEncoder;
 	@Autowired
@@ -59,6 +69,7 @@ public class AuthenticationService {
         message.setFrom("ayushimalhotra9799@gmail.com");
         message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
         message.setSubject("Verify Ridesync Account");
+//        String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
         String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
         message.setContent(htmlContent,"text/html;charset=utf-8");
         javaMailSender.send(message);
@@ -93,12 +104,16 @@ public class AuthenticationService {
         catch(AuthenticationException e){
             return AuthenticationResponse.builder().message("Incorrect Password").build();
         }
+        List<Document> documents=documentRepository.findByUserId(user.getUserId());
+        List<Vehicle> vehicles=vehicleRepository.findByUserId(user.getUserId());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .message("Login Successful")
                 .success(true)
                 .user(user)
                 .token(jwtToken)
+                .documents(documents)
+                .vehicles(vehicles)
                 .build();
     }
 
@@ -112,6 +127,7 @@ public class AuthenticationService {
       message.setFrom("ayushimalhotra9799@gmail.com");
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
+//      String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       message.setContent(htmlContent,"text/html;charset=utf-8");
       javaMailSender.send(message);
@@ -136,6 +152,16 @@ public class AuthenticationService {
             return AuthenticationResponse.builder().message("Password Reset Successful").success(true).build();
         }
         return AuthenticationResponse.builder().message("Passwords do not match").build();
+    }
+
+    public User updateUserDetails(RegisterRequest request, Integer userId){
+        User user = repository.findByUserId(userId);
+        user.setFullName(request.getFullName());
+        user.setAddress(request.getAddress());
+        user.setDateOfBirth(request.getDateOfBirth());
+        user.setPhoneNumber(request.getPhoneNumber());
+
+        return repository.save(user);
     }
 
 }

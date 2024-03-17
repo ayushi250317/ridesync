@@ -30,37 +30,37 @@ const BottomNavbar = () => {
                     <DrawerHeader>Settings</DrawerHeader>
                     <DrawerBody>
                         <Center>
-                            <FaUserEdit size="52px" />
+                            <FaUser size="52px" />
                         </Center>
                         <br />
-                        <Flex flexDir="column" fontSize="xl">
+                        <Flex flexDir="column" fontSize="2xl">
                             <Flex justifyContent="start" alignItems="center" my="1">
-                                <FaUser size="25px" />
+                                <FaUserEdit size="30px" />
                                 <Box mx="2">
 
-                                    <Link >Personal Details</Link>
+                                    <Link to="/editpersonalinfo">Personal Details</Link>
                                 </Box>
                             </Flex>
                             <Flex justifyContent="start" alignItems="center" my="1">
 
-                                <FaCar size="25px" />
+                                <FaCar size="30px" />
                                 <Box mx="2">
 
                                     <Link>Vehicle</Link>
                                 </Box>
                             </Flex>
                             <Flex justifyContent="start" alignItems="center" my="1">
-                                <IoMdDocument size="25px" />
+                                <IoMdDocument size="30px" />
                                 <Box mx="2">
 
                                     <Link>Documents</Link>
                                 </Box>
                             </Flex>
                             <Flex justifyContent="start" alignItems="center" my="1">
-                                <RiLogoutCircleRFill size="25px" />
+                                <RiLogoutCircleRFill size="30px" />
                                 <Box mx="2">
 
-                                    <Link>Log out</Link>
+                                    <Link onClick={() => localStorage.removeItem("loggedInUserDetails")}>Log out</Link>
                                 </Box>
                             </Flex>
                         </Flex>
@@ -68,10 +68,21 @@ const BottomNavbar = () => {
 
                 </DrawerContent>
             </Drawer>
-            <Flex w="92%" m="auto" justifyContent="space-between" alignItems="center" p="1">
-                <Box><FaHistory size="33px" /></Box>
-                <Box><FaHome size="33px" /></Box>
-                <Box position="relative"> <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" /></Box>
+            <Flex w="90%" m="auto" justifyContent="space-between" alignItems="center" p="2">
+                <Box>
+                    <Link to="/">
+                        <FaHome size="33px" />
+                    </Link>
+                </Box>
+                <Box>
+                    <Link to="/activity">
+                        <FaHistory size="33px" />
+                    </Link>
+                </Box>
+                <Box position="relative"><Link to="/notifications">
+                    <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" />
+                </Link>
+                </Box>
                 <Box><IoSettingsSharp size="33px" onClick={onOpen} /></Box>
             </Flex>
         </Box >

@@ -2,10 +2,13 @@ package com.app.ridesync.entities;
 
 import java.time.LocalDateTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +35,9 @@ public class Ride {
 	private Integer seatsAvailable;
 	private Integer vehicleId;
 	private Integer userId;
+	
+    @OneToOne(mappedBy = "ride", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private GeoPoint geopoint;
 	
 	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
 			int seatsAvailable, Integer vehicleId, Integer userId) {

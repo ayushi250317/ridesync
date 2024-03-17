@@ -9,6 +9,10 @@ const Home = () => {
     const naviagate = useNavigate();
 
     const [isLargerThan1280] = useMediaQuery('(min-width: 700px)')
+    const loggedInUserInfo = JSON.parse(
+        localStorage.getItem("loggedInUserDetails")
+    );
+    console.log("loggedInUserInfo", loggedInUserInfo);
 
     return (
         <>
@@ -17,7 +21,7 @@ const Home = () => {
             <br />
             <Flex flexDir="column" w="90%" m="auto" zIndex="-10">
                 <Text textAlign="center" fontSize={["3xl", "3xl", "4xl", "5xl"]}>
-                    Hey Hodophiles!!
+                    Hey {loggedInUserInfo?.user?.fullName}!!
                 </Text>
                 <br />
                 {/* <br /> */}
@@ -28,7 +32,7 @@ const Home = () => {
                 >
                     <Box
                         m="3"
-                        onClick={() => naviagate("/createdrive")}
+                        onClick={() => naviagate("/add_ride")}
                         className="transition-all hover:scale-105"
                         border="1px solid lightgray"
                         px={["2", "10", "12", "16"]}
@@ -49,7 +53,7 @@ const Home = () => {
                     </Box>
                     <Box
                         m="3"
-                        onClick={() => naviagate("/joinride")}
+                        onClick={() => naviagate("/find_ride")}
                         className="transition-all hover:scale-105"
                         border="1px solid lightgray"
                         p={["4", "4", "6", "10"]}

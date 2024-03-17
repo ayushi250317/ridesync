@@ -1,7 +1,7 @@
 package com.app.ridesync.entities;
 
-import java.time.LocalDate;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import org.hibernate.annotations.DynamicUpdate;
@@ -35,7 +35,7 @@ public class User implements UserDetails {
     @Column(unique = true,nullable = false)
     private String email;
     private String address;
-    private LocalDate dateOfBirth;
+    private Date dateOfBirth;
     private String password;
     private String phoneNumber;
     private boolean isVerified;
