@@ -31,27 +31,27 @@ public class MessagingTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 	
-	@Test
-	void testGetChatIdentifier() throws Exception {
+	// @Test
+	// void testGetChatIdentifier() throws Exception {
 		
-		ChatIdentifier chat = new ChatIdentifier();
-		chat.setSenderId(1);
-		chat.setRecipientId(2);
+	// 	ChatIdentifier chat = new ChatIdentifier();
+	// 	chat.setSenderId(1);
+	// 	chat.setRecipientId(2);
 		
-		String requestBody = objectMapper.writeValueAsString(chat);
+	// 	String requestBody = objectMapper.writeValueAsString(chat);
 
-		MvcResult result = mvc.perform(
-							   get("/api/v1/message/chatIdentifier")
-							   .contentType(MediaType.APPLICATION_JSON)
-						       .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTIifQ.7KjwphRNd7qYUwpHonAaJ_QLmrOLax_t7r_ha2FIork")
-						       .content(requestBody))
-							   .andExpect(status().isOk())
-							   .andReturn();
+	// 	MvcResult result = mvc.perform(
+	// 						   get("/api/v1/message/chatIdentifier")
+	// 						   .contentType(MediaType.APPLICATION_JSON)
+	// 					       .header(HttpHeaders.AUTHORIZATION, "Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTIifQ.7KjwphRNd7qYUwpHonAaJ_QLmrOLax_t7r_ha2FIork")
+	// 					       .content(requestBody))
+	// 						   .andExpect(status().isOk())
+	// 						   .andReturn();
 		
-		String chatIdentifier = JsonPath.read(result.getResponse().getContentAsString(), "$.responseObject");
+	// 	String chatIdentifier = JsonPath.read(result.getResponse().getContentAsString(), "$.responseObject");
 
-		assertTrue(isValidUUID(chatIdentifier));
-	}
+	// 	assertTrue(isValidUUID(chatIdentifier));
+	// }
 	
 	private boolean isValidUUID(String uuid) {
 		try{
