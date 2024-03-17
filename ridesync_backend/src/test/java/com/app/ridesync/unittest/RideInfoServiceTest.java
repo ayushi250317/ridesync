@@ -1,18 +1,10 @@
-package com.app.ridesync.UnitTesting;
+package com.app.ridesync.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.app.ridesync.dto.requests.RideInfoInput;
-import com.app.ridesync.dto.responses.RideInfoResponse;
-import com.app.ridesync.entities.Location;
-import com.app.ridesync.entities.RideInfo;
-import com.app.ridesync.repositories.RideInfoRepository;
-import com.app.ridesync.services.LocationService;
-import com.app.ridesync.services.RideInfoService;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -27,6 +19,14 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.app.ridesync.dto.requests.RideInfoInput;
+import com.app.ridesync.dto.responses.RideInfoResponse;
+import com.app.ridesync.entities.Location;
+import com.app.ridesync.entities.RideInfo;
+import com.app.ridesync.repositories.RideInfoRepository;
+import com.app.ridesync.services.LocationService;
+import com.app.ridesync.services.RideInfoService;
 
 @ContextConfiguration(classes = {RideInfoService.class})
 @ExtendWith(SpringExtension.class)

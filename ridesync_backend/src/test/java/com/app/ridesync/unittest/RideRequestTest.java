@@ -1,7 +1,12 @@
-package com.app.ridesync.UnitTesting;
+package com.app.ridesync.unittest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,7 +14,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,6 +26,7 @@ import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.entities.RideRequestInfo;
+import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.RideInfoRepository;
 import com.app.ridesync.repositories.RideRequestRepository;
 import com.app.ridesync.repositories.UserRepository;
@@ -29,7 +34,6 @@ import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.LocationService;
 import com.app.ridesync.services.NotificationService;
 import com.app.ridesync.services.RideRequestService;
-import com.app.ridesync.entities.User;
 
 public class RideRequestTest {
 
