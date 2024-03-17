@@ -92,7 +92,7 @@ const Activity = ({ }) => {
                                     </>}
                                     {rideType === "ongoing" && <>
                                         <Box>
-                                            <Button {...buttonAttributes} onClick={() => { trackRide(ride.rideId) }}>
+                                            <Button {...buttonAttributes} onClick={() => { trackRide(ride.rideId, ride.isDriver) }}>
                                                 Track Riders
                                             </Button>
                                         </Box>
@@ -115,7 +115,7 @@ const Activity = ({ }) => {
                                             </Box>
                                         </>}
                                         {rideType === "ongoing" && <>
-                                            <Button {...buttonAttributes}>
+                                            <Button {...buttonAttributes} onClick={() => navigate("/livelocationtracking", { state: { rideId: ride.rideId, isDriver: ride.isDriver } })}>
                                                 Track Driver
                                             </Button>
                                         </>}
@@ -178,8 +178,8 @@ const Activity = ({ }) => {
         })
     }
 
-    const trackRide = (rideId) => {
-        navigate("/livelocationtracking", { state: { rideId: rideId } });
+    const trackRide = (rideId, isDriver) => {
+        navigate("/livelocationtracking", { state: { rideId, isDriver } });
     }
 
     if (isLoading) return <Center h="80vh">

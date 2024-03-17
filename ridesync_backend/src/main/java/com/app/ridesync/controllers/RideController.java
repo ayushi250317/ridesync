@@ -130,5 +130,19 @@ public class RideController {
 					.body(new ApiResponse<>(null, false, "Update failed with the following error: " + e.getMessage()));
 		}
 	}
+
+	@GetMapping("/getDriverLocation/{rideId}")
+	public ResponseEntity<ApiResponse<RideInfoResponse>> getRiderLocation(@PathVariable Integer rideId) {
+		try {
+			RideInfoResponse rideInfoResponse=rideInfoService.getDriverLocation(rideId);
+			return ResponseEntity.status(HttpStatus.OK)
+								 .body(new ApiResponse<>(rideInfoResponse, true, "Result set was retrieved successfully"));
+
+		}catch (Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
+		}
+	}
+
 }
 
