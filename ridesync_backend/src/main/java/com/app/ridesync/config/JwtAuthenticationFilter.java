@@ -2,14 +2,15 @@ package com.app.ridesync.config;
 
 import java.io.IOException;
 
-import com.app.ridesync.entities.User;
-import com.app.ridesync.repositories.UserRepository;
-import com.app.ridesync.services.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+
+import com.app.ridesync.entities.User;
+import com.app.ridesync.repositories.UserRepository;
+import com.app.ridesync.services.JwtService;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
