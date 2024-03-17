@@ -15,7 +15,7 @@ COPY ./pom.xml .
 COPY ./src ./src
 
 # Build the application
-RUN mvn clean package
+RUN mvn clean package -X
 
 # Command to run the application
 CMD ["java", "-jar", "target/ridesync-0.0.1-SNAPSHOT.jar"]
