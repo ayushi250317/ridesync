@@ -1,6 +1,7 @@
 package com.app.ridesync.dto.responses;
 
 import com.app.ridesync.entities.Document;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -1,6 +1,7 @@
 package com.app.ridesync.dto.responses;
 
 import java.util.List;
+
 import com.app.ridesync.entities.Vehicle;
 
 import lombok.AllArgsConstructor;

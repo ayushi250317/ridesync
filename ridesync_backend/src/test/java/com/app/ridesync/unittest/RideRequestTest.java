@@ -1,7 +1,12 @@
-package com.app.ridesync.UnitTesting;
+package com.app.ridesync.unittest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -9,7 +14,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,6 +26,8 @@ import com.app.ridesync.entities.NotificationType;
 import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.entities.RideRequestInfo;
+import com.app.ridesync.entities.User;
+import com.app.ridesync.projections.RideRequestProjection;
 import com.app.ridesync.repositories.RideInfoRepository;
 import com.app.ridesync.repositories.RideRequestRepository;
 import com.app.ridesync.repositories.UserRepository;
@@ -29,7 +35,6 @@ import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.LocationService;
 import com.app.ridesync.services.NotificationService;
 import com.app.ridesync.services.RideRequestService;
-import com.app.ridesync.entities.User;
 
 public class RideRequestTest {
 
@@ -116,32 +121,15 @@ public class RideRequestTest {
 
         @Test
         public void testGetRequestByRideId() {
-                List<RideRequestInfo> expectedRequests = new ArrayList<>();
-                RideRequestInfo request1 = RideRequestInfo.builder()
-                                .rideId(1)
-                                .driverId(1)
-                                .riderId(2)
-                                .requestStatus(RequestStatus.REQUESTED)
-                                .startLocationId(1)
-                                .endLocationId(2)
-                                .tripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
-                                .build();
-                RideRequestInfo request2 = RideRequestInfo.builder()
-                                .rideId(1)
-                                .driverId(1)
-                                .riderId(3)
-                                .requestStatus(RequestStatus.REQUESTED)
-                                .startLocationId(3)
-                                .endLocationId(4)
-                                .tripStartTime(LocalDateTime.parse("2024-03-06T12:30:00"))
-                                .build();
-                expectedRequests.add(request1);
-                expectedRequests.add(request2);
+                List<RideRequestProjection> expectedRequests = new ArrayList<>();
+                RideRequestProjection rideRequestProjection1=new RideRequestProjection(1, 1, 1, 3, LocalDateTime.parse("2024-03-06T12:00:00"),RequestStatus.ACCEPTED,"Barrington Street", 12.2, 13.2, "Quinpool Road", 15.2, 16.2, "TestUser1");
+                RideRequestProjection rideRequestProjection2=new RideRequestProjection(2, 1, 2, 3, LocalDateTime.parse("2024-03-06T12:30:00"),RequestStatus.ACCEPTED,"Oxford Street", 12.5, 13.2, "Spring Garden Road", 13.2, 17.2, "TestUser2");
+                expectedRequests.add(rideRequestProjection1);
+                expectedRequests.add(rideRequestProjection2);
                 Integer rideId = 1;
                 when(rideRequestRepository.findByRideId(rideId)).thenReturn(expectedRequests);
-                RideRequestResponse rideRequestResponse = rideRequestService.getRides(rideId);
-                assertEquals(rideRequestResponse.getRequests(), expectedRequests);
-                assertEquals("Requests fetched successfully", rideRequestResponse.getMessage());
+                List<RideRequestProjection> rideRequestProjections = rideRequestService.getRides(rideId);
+                assertEquals(rideRequestProjections, expectedRequests);
         }
 
         @Test

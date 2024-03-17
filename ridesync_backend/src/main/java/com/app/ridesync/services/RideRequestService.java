@@ -1,5 +1,7 @@
 package com.app.ridesync.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,10 +14,10 @@ import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.entities.RideRequestInfo;
 import com.app.ridesync.entities.User;
+import com.app.ridesync.projections.RideRequestProjection;
 import com.app.ridesync.repositories.RideInfoRepository;
 import com.app.ridesync.repositories.RideRequestRepository;
 import com.app.ridesync.repositories.UserRepository;
-
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -67,11 +69,8 @@ public class RideRequestService {
                                 .success(true).build();
         }
 
-        public RideRequestResponse getRides(Integer rideId) {
-                return RideRequestResponse.builder()
-                                .requests(rideRequestRepository.findByRideId(rideId))
-                                .message("Requests fetched successfully")
-                                .success(true).build();
+        public List<RideRequestProjection> getRides(Integer rideId) {
+             return rideRequestRepository.findByRideId(rideId);  
         }
 
         public RideRequestResponse updateRide(String jwtToken, Integer requestId, RideRequest request) {

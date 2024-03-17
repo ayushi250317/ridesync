@@ -2,6 +2,7 @@ package com.app.ridesync.controllers;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,11 +11,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import com.app.ridesync.dto.requests.VehicleInput;
-import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.dto.responses.GetVehicleResponse;
+import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.VehicleService;
 

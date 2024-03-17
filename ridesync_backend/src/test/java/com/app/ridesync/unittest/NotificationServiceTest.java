@@ -1,14 +1,9 @@
-package com.app.ridesync.UnitTesting;
+package com.app.ridesync.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
-import com.app.ridesync.entities.Notification;
-import com.app.ridesync.entities.NotificationType;
-import com.app.ridesync.repositories.NotificationRepository;
-import com.app.ridesync.services.NotificationService;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -22,6 +17,11 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.aot.DisabledInAotMode;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.app.ridesync.entities.Notification;
+import com.app.ridesync.entities.NotificationType;
+import com.app.ridesync.repositories.NotificationRepository;
+import com.app.ridesync.services.NotificationService;
 
 @ContextConfiguration(classes = {NotificationService.class})
 @ExtendWith(SpringExtension.class)

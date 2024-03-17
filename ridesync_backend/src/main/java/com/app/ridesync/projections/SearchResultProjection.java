@@ -14,5 +14,7 @@ public record SearchResultProjection (
 	String status,
 	String description,
 	Integer seatsAvailable,
-	String rideVehicle
+	String rideVehicle,
+	Boolean enableRequestRide,
+	Double fare
 ) {}
