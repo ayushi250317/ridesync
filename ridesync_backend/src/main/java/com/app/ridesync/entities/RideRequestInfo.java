@@ -29,6 +29,7 @@ public class RideRequestInfo {
     private Integer startLocationId;
 	private Integer endLocationId;
     private LocalDateTime tripStartTime;
+    private LocalDateTime createdTime;
 }
 
 

@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.app.ridesync.entities.Ride;
+import com.app.ridesync.entities.RequestStatus;
 import com.app.ridesync.entities.User;
 import com.app.ridesync.projections.RideHeaderProjection;
 import com.app.ridesync.projections.RideHistoryProjection;
@@ -67,13 +68,24 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 	List<RideHeaderProjection> findRideHeaderInfoByRideId(@Param("rideId") Integer rideId);
 
 	
-	@Query("SELECT new com.app.ridesync.projections.SearchResultProjection(ride.rideId as rideId,rideInfo.userId as driverId,ride.startTime, startLocation.address startLocationAddress, startLocation.landmark startLocationLandmark, endLocation.address endLocationAddress, endLocation.landmark endLocationLandmark, ride.createdTime, ride.status, ride.description, ride.seatsAvailable, vehicle.model AS rideVehicle)"
+	@Query("SELECT new com.app.ridesync.projections.SearchResultProjection(ride.rideId as rideId,rideInfo.userId as driverId,ride.startTime,"
+			+ " startLocation.address startLocationAddress, startLocation.landmark startLocationLandmark, endLocation.address endLocationAddress, endLocation.landmark endLocationLandmark, "
+			+ " ride.createdTime, ride.status, ride.description, ride.seatsAvailable, vehicle.model AS rideVehicle, "
+			+ " CASE WHEN rideRequest.rideRequestId IS NULL THEN true"
+			+ "      WHEN rideRequest.requestStatus IN (RequestStatus.REJECTED, RequestStatus.EXPIRED) THEN true "
+			+ " ELSE false END AS enableRequestRide,"
+			+ " rideInfo.fare) "
 			+ " FROM Ride ride "
 			+ " JOIN RideInfo rideInfo ON ride.rideId = rideInfo.rideId AND rideInfo.isDriver"
 			+ " JOIN Location startLocation ON startLocation.locationId = rideInfo.startLocationId"
 			+ " JOIN Location endLocation ON endLocation.locationId = rideInfo.endLocationId"
 			+ " JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId"
-			+ " WHERE ride.status != 'completed' AND ride.startTime >= :rideTimeStartLimit AND ride.startTime <= :rideTimeEndLimit AND ride.rideId IN :rideIds"
+			+ " LEFT JOIN (SELECT rideRequestId rideRequestId ,rideId rideId , riderId riderId, driverId driverId, requestStatus requestStatus FROM RideRequestInfo "
+			+ "            WHERE riderId = :userId AND rideId in :rideIds "
+			+ "            GROUP BY rideId,riderId,rideRequestId,requestStatus "
+			+ "            ORDER BY createdTime DESC LIMIT 1) AS rideRequest "
+			+ "			   ON rideRequest.driverId = rideInfo.userId AND rideRequest.rideId = ride.rideId AND rideRequest.riderId = :userId"
+			+ " WHERE rideInfo.userId != :userId AND ride.status != 'completed' AND ride.startTime >= :rideTimeStartLimit AND ride.startTime <= :rideTimeEndLimit AND ride.rideId IN :rideIds"
 			+ " ORDER BY ride.startTime")
-	List<SearchResultProjection>findByRideIds(@Param("rideIds") List<Integer> rideIds, @Param("rideTimeStartLimit") LocalDateTime rideTimeStartLimit, @Param("rideTimeEndLimit") LocalDateTime rideTimeEndLimit);
+	List<SearchResultProjection>findRideDetailsByRideIds(@Param("rideIds") List<Integer> rideIds, @Param("rideTimeStartLimit") LocalDateTime rideTimeStartLimit, @Param("rideTimeEndLimit") LocalDateTime rideTimeEndLimit, @Param("userId") Integer userId);
 }
