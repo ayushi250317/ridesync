@@ -1,7 +1,7 @@
 stages: # List of stages for jobs, and their order of execution
   - build-backend
   # - build-frontend
-  # - test
+  - test-backend
   # - quality
   - publish-backend
   - publish-frontend
@@ -15,7 +15,16 @@ build-backend:
     - cd ridesync_backend
     - mvn clean package
   only:
-    - CICD_Test
+    - runner
+
+test-backend:
+  stage: test-backend
+  image: maven:latest
+  script:
+    - cd ridesync_backend
+    - mvn test
+  only:
+    - runner
 
 # build-frontend:
 #   stage: build-frontend
@@ -49,7 +58,7 @@ publish-backend:
     - docker build -t docker.io/meer2838/cicdtest:midbackend .
     - docker push docker.io/meer2838/cicdtest:midbackend
   only:
-    - CICD_Test
+    - runner
 
 publish-frontend:
   image: docker:latest
@@ -75,7 +84,7 @@ publish-frontend:
     - docker build -t docker.io/meer2838/cicdtest:midfrontend .
     - docker push docker.io/meer2838/cicdtest:midfrontend
   only:
-    - CICD_Test
+    - runner
 
 deploy-backend:
   image: alpine:latest
@@ -89,7 +98,7 @@ deploy-backend:
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-backend-app || true"
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 8073:8073 --name my-backend-app docker.io/meer2838/cicdtest:midbackend"
   only:
-    - CICD_Test
+    - runner
 
 deploy-frontend:
   image: alpine:latest
@@ -103,4 +112,4 @@ deploy-frontend:
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 3000:3000 --name my-frontend-app docker.io/meer2838/cicdtest:midfrontend"
   only:
-    - CICD_Test
+    - runner
