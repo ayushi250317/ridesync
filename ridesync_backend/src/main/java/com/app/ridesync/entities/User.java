@@ -2,8 +2,6 @@ package com.app.ridesync.entities;
 
 import java.util.Date;
 
-import jakarta.persistence.*;
-
 import org.hibernate.annotations.DynamicUpdate;
 import lombok.Builder;
 import lombok.Getter;

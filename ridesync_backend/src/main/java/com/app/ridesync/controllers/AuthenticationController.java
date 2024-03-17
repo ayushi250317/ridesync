@@ -1,23 +1,30 @@
 package com.app.ridesync.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.app.ridesync.dto.requests.AuthenticationRequest;
 import com.app.ridesync.dto.requests.PasswordResetRequest;
 import com.app.ridesync.dto.requests.RegisterRequest;
 import com.app.ridesync.dto.responses.ApiResponse;
 import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.entities.User;
-import com.app.ridesync.projections.RideHistoryProjection;
 import com.app.ridesync.services.AuthenticationService;
-
 import com.app.ridesync.services.JwtService;
+
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "*")
