@@ -1,5 +1,7 @@
 package com.app.ridesync.services;
 
+import java.time.LocalDateTime;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,7 @@ public class RideRequestService {
                 .startLocationId(startLocation.getLocationId())
                 .endLocationId(endLocation.getLocationId())
                 .tripStartTime(rideRequest.getEstimatedTripStartTime())
+                .createdTime(LocalDateTime.now())
                 .build();
                 rideRequestRepository.save(rideRequestInfo);
                 User user=userRepository.findByUserId(riderId);
