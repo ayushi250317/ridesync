@@ -37,6 +37,8 @@ quality:
     paths:
       - smells/
       - $CI_PROJECT_DIR
+  only:
+    - runner
 
 publish-backend:
   image: docker:latest
