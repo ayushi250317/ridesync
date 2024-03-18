@@ -14,6 +14,11 @@ COPY ./pom.xml .
 # Copy the source code
 COPY ./src ./src
 
+ENV PORT=8073
+
+# Expose the port on which the React app will run
+EXPOSE $PORT
+
 # Build the application
 RUN mvn clean package -X
 
