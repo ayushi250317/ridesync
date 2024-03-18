@@ -2,7 +2,7 @@ stages: # List of stages for jobs, and their order of execution
   - build-backend
   # - build-frontend
   - test-backend
-  # - quality
+  - quality
   - publish-backend
   - publish-frontend
   - deploy-backend
@@ -26,13 +26,17 @@ test-backend:
   only:
     - runner
 
-# build-frontend:
-#   stage: build-frontend
-#   image: node:alpine
-#   script:
-#     - cd ridesync_frontend
-#     - npm install
-#     - npm run build
+quality:
+  stage: quality
+  image: openjdk:11
+  script:
+    - echo "Extracting the smells..."
+    - mkdir smells/
+    - java -jar $CI_PROJECT_DIR/.gitlab/DesigniteJava.jar -i $CI_PROJECT_DIR -o $CI_PROJECT_DIR/smells/ -d
+  artifacts:
+    paths:
+      - smells/
+      - $CI_PROJECT_DIR
 
 publish-backend:
   image: docker:latest
