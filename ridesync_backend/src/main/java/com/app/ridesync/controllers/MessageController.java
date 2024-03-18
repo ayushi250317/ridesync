@@ -31,7 +31,7 @@ public class MessageController {
 		this.messageService = messageService;
 	}	
 	
-	@MessageMapping("/message/{channelIdentifier}")
+	@MessageMapping("/send/{channelIdentifier}")
 	public void sendMessage(@PathVariable String channelIdentifier, Message message){
 		messageService.persistAndSendMessageToBroker(channelIdentifier, message);
 	}
@@ -65,7 +65,7 @@ public class MessageController {
 	} 
 	
 	@GetMapping("/messageHistory")
-	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(MessageHistoryRequest messageHistoryRequest) {
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(@RequestBody MessageHistoryRequest messageHistoryRequest) {
 		try {
 			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(messageHistoryRequest.senderId(), messageHistoryRequest.recipientId());
 			
