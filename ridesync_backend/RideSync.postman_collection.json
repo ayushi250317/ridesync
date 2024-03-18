@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "2d03a89b-d232-4d08-b1e4-dabd177f37b4",
+		"_postman_id": "887ed6f4-d279-4a46-b843-741a1e2ca5dc",
 		"name": "RideSync",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "16764820"
+		"_exporter_id": "32619004"
 	},
 	"item": [
 		{
@@ -16,7 +16,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"fullName\" : \"Nithin Bharathi\",\r\n    \"email\" : \"nithinbharathi38@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"fullName\" : \"Ayushi Malhotra\",\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"address\" : \"903 Spring Garden Road\",\r\n    \"dateOfBirth\" : \"2003-08-09\",\r\n    \"phoneNumber\" : \"+1 782 882 8381\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -47,7 +47,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"email\" : \"nithinbharathi38@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
+							"raw": "{\r\n    \"email\" : \"ayushimalhotra1999@gmail.com\",\r\n    \"password\" : \"123456\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -180,9 +180,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -222,9 +226,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -263,9 +271,22 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+										"type": "string"
+									},
+									"type": "any"
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -294,6 +315,20 @@
 								"updateVehicle"
 							]
 						}
+						"url": {
+							"raw": "http://localhost:8073/api/v1/vehicle/updateVehicle",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"vehicle",
+								"updateVehicle"
+							]
+						}
 					},
 					"response": []
 				},
@@ -304,9 +339,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -351,9 +390,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -399,9 +442,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -432,9 +479,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -473,9 +524,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -511,9 +566,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -552,9 +611,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -593,9 +656,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -614,47 +681,6 @@
 								"ride",
 								"getRide",
 								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "updateRide",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{   \r\n    \"rideId\":4,\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval-------------------\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8073/api/v1/ride/updateRide",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"ride",
-								"updateRide"
 							]
 						}
 					},
@@ -688,6 +714,60 @@
 								"ride",
 								"getRides",
 								"202"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateRide",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
+							"bearer": [
+								{
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{   \r\n    \"rideId\":4,\r\n    \"startTime\":\"2024-02-13T14:30:00\",\r\n    \"createdTime\":\"2024-02-11T14:30:00\",\r\n    \"description\":\"test\",\r\n    \"seatsAvailable\":4,\r\n    \"lattitude1\":12345.321,\r\n    \"longitude1\":12345.321,\r\n    \"landmark1\":\"emera oval-------------------\",\r\n    \"address1\":\"ice rink\",\r\n    \"lattitude2\":12345,\r\n    \"longitude2\":12345,\r\n    \"landmark2\":\"atlantic Superstore\",\r\n    \"address2\":\"Barrington Street\",\r\n    \"fare\":\"20\",\r\n    \"comments\":\"Test comments\",\r\n    \"waitTime\":\"14:30:00\",\r\n    \"estimatedTripStartTime\":\"2024-02-11T14:30:00\",\r\n    \"estimatedTripEndTime\":\"2024-02-11T14:30:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/updateRide",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"updateRide"
 							]
 						}
 					},
@@ -728,18 +808,25 @@
 				},
 				{
 					"name": "Search Ride",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
-						"method": "POST",
+						"method": "GET",
 						"header": [],
 						"body": {
 							"mode": "raw",
@@ -766,6 +853,213 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "updateRideStatus",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rideId\":2,\r\n    \"rideStatus\":\"ongoing\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/updateRideStatus",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"updateRideStatus"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RequestRide",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"estimatedTripStartTime\":\"2024-03-05T14:30:00\",\r\n\"lattitude1\":12345.321,\r\n\"longitude1\":12345.321,\r\n\"landmark1\":\"emera oval\",\r\n\"address1\":\"ice rink\",\r\n\"lattitude2\":12345,\r\n\"longitude2\":12345,\r\n\"landmark2\":\"atlantic Superstore\",\r\n\"address2\":\"Barrington Street\",\r\n\"rideId\" : 1,\r\n\"driverId\" : 1,\r\n\"riderId\" :1 \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/addRequest",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"addRequest"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetRideRequestByRideId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/getRideRequest?rideId=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"getRideRequest"
+							],
+							"query": [
+								{
+									"key": "rideId",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateRideRequest",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"requestStatus\" : \"ACCEPTED\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8073/api/v1/request/updateRideRequest/553",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"request",
+								"updateRideRequest",
+								"553"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetDriverLocation",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8073/api/v1/ride/getDriverLocation/353",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8073",
+							"path": [
+								"api",
+								"v1",
+								"ride",
+								"getDriverLocation",
+								"353"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -779,9 +1073,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},
@@ -820,9 +1118,13 @@
 							"type": "bearer",
 							"bearer": [
 								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-									"type": "string"
+									"key": "0",
+									"value": {
+										"key": "token",
+										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
+										"type": "string"
+									},
+									"type": "any"
 								}
 							]
 						},

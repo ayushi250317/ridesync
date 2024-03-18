@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable eqeqeq */
 import {
     Box, Flex, useToast, Step,
     StepDescription,
@@ -13,7 +15,7 @@ import {
 } from '@chakra-ui/react'
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { API } from '../../sharedComponent/API'
 import DriverForm from '../../sharedComponent/Forms/DriverForm'
 import BottomNavbar from "../Navbar/BottomNavbar";
@@ -86,6 +88,7 @@ const RiderRegistration = () => {
     }
 
     const onSubmitVehicleDetails = ({ regNo, type, make, model, insuranceNo, insuranceExpiry }) => {
+        console.log({ regNo, type, make, model, insuranceNo, insuranceExpiry });
         setLoading(true);
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
@@ -107,11 +110,15 @@ const RiderRegistration = () => {
                         userId: loggedInUserDetails.user.userId,
                         documentId: ""
                     }
+                    console.log("reaching", vehicleInfoReqObj);
                     axios.post(`${API}/vehicle/addVehicle`, vehicleInfoReqObj, config)
                         .then(response => {
                             if (response.data.success) {
-                                setLoading(false);
+                                let modifiedLocalStorage = { ...loggedInUserDetails, vehicles: [...loggedInUserDetails.vehicles, vehicleInfoReqObj] }
+                                localStorage.setItem('loggedInUserDetails', JSON.stringify(modifiedLocalStorage));
+
                                 naviagate("/add_ride")
+                                setLoading(false);
 
                             } else {
                                 toast({
@@ -163,7 +170,7 @@ const RiderRegistration = () => {
                             h={["", "", "40vh", "40vh"]}
                             marginBottom={["20px", "20px", "", ""]}
                             colorScheme='gray'
-                            >
+                        >
                             {steps.map((step, index) => (
                                 <Step key={index}>
                                     <StepIndicator>

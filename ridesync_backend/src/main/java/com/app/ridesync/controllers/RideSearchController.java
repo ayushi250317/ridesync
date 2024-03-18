@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.app.ridesync.dto.requests.RideSearchRequest;
 import com.app.ridesync.dto.responses.ApiResponse;
 import com.app.ridesync.projections.SearchResultProjection;
+import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideSearchService;
 
 @RequestMapping(path = "api/v1/geo")
@@ -19,16 +20,19 @@ import com.app.ridesync.services.RideSearchService;
 @Controller
 public class RideSearchController {
 	private final RideSearchService searchService;
-
+    private final JwtService jwtService;
+    
 	@Autowired
-	public RideSearchController(RideSearchService searchService) {
+	public RideSearchController(RideSearchService searchService, JwtService jwtService) {
 		this.searchService = searchService;
+		this.jwtService = jwtService;
 	}
 
 	@PostMapping("/search")
-	public  ResponseEntity<ApiResponse<List<SearchResultProjection>>> GetRides(@RequestBody RideSearchRequest request) {
+	public  ResponseEntity<ApiResponse<List<SearchResultProjection>>> GetRides(@RequestHeader("Authorization") String jwtToken, @RequestBody RideSearchRequest request) {
 		try {
-			List<SearchResultProjection> rides = searchService.findRides(request.source(),request.destination(), request.rideTime());
+			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+			List<SearchResultProjection> rides = searchService.findRides(userId, request.source(),request.destination(), request.rideTime());
 			return ResponseEntity.status(HttpStatus.OK)
 								 .body(new ApiResponse<>(rides, true, "Result set was retrieved successfully"));
 

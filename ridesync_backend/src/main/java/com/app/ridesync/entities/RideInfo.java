@@ -36,9 +36,10 @@ public class RideInfo {
 	private LocalTime waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;
+	private Integer pickupLocationId;                  //location for the riders pickup.
 
 	public RideInfo(Integer rideId, Integer userId, Integer locationId1, Integer locationId2, boolean isDriver, double d,
-			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime) {
+			String comments, LocalDateTime estimatedTripStartTime, LocalDateTime estimatedTripEndTime, Integer pickupLocationId) {
 		super();
 		this.rideId = rideId;
 		this.userId = userId;
@@ -51,6 +52,7 @@ public class RideInfo {
 		this.estimatedTripEndTime = estimatedTripEndTime;
 		this.isActive = false;                             // the ride is initially to be false every time a new one is created.
 		this.rating = 0;                                   // the ride must have a 0 rating initially unless the user changes it.
+		this.pickupLocationId = pickupLocationId;          //creates a dummy entry in the location table that must be updated.
 	}
 
 }
