@@ -72,7 +72,7 @@ const Activity = ({ }) => {
                                     <Heading size={isLargerThan1280 ? 'md' : 'sm'}
                                         textTransform='uppercase'
                                         _hover={{ cursor: "pointer" }}
-                                        onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId, is_driver: ride.isDriver } })}
+                                        onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId, isDriver: ride.isDriver } })}
                                     >
                                         {ride.startLocationAddress.split(',')[0] + ' to ' + ride.endLocationAddress.split(',')[0]}
                                     </Heading>
