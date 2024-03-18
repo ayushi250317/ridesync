@@ -32,6 +32,7 @@ quality:
   script:
     - echo "Extracting the smells..."
     - mkdir smells/
+    - echo $CI_PROJECT_DIR
     - java -jar $CI_PROJECT_DIR/.gitlab/DesigniteJava.jar -i $CI_PROJECT_DIR/ridesync_backend -o $CI_PROJECT_DIR/smells/ -d
   artifacts:
     paths:
