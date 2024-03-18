@@ -10,6 +10,7 @@ import com.app.ridesync.repositories.VehicleRepository;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import jakarta.transaction.Transactional;
 
 import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.User;
@@ -151,5 +152,9 @@ public class AuthenticationService {
         }
         return AuthenticationResponse.builder().message("Passwords do not match").build();
     }
-
+    
+    @Transactional
+    public void deleteByUserId(Integer userId) {
+    	repository.deleteByUserId(userId);
+    }
 }
