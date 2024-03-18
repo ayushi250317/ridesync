@@ -278,15 +278,6 @@
 										"type": "string"
 									},
 									"type": "any"
-							"bearer": [
-								{
-									"key": "0",
-									"value": {
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY",
-										"type": "string"
-									},
-									"type": "any"
 								}
 							]
 						},
@@ -314,7 +305,7 @@
 								"vehicle",
 								"updateVehicle"
 							]
-						}
+						},
 						"url": {
 							"raw": "http://localhost:8073/api/v1/vehicle/updateVehicle",
 							"protocol": "http",
@@ -724,15 +715,6 @@
 					"request": {
 						"auth": {
 							"type": "bearer",
-							"bearer": [
-								{
-									"key": "0",
-									"value": {
-										"key": "token",
-										"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIn0.UjgGjeM-U61_Fa9KHDLC7IVCpfFrGeJ_WCQuXa9rNe8",
-										"type": "string"
-									},
-									"type": "any"
 							"bearer": [
 								{
 									"key": "0",
