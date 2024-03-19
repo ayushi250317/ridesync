@@ -5,12 +5,16 @@ import java.time.LocalTime;
 
 public record RideInfoProjection(
 		String riderName,
+		Integer riderId,
 		Boolean IsDriver,
-
 		String startLocationAddress,
 		String startLocationLandmark,
+		Double startLat,
+		Double startLong,
 		String endLocationAddress,
 		String endLocationLandmark,
+		Double endLat,
+		Double endLong,
 
 		Double fare,
 		String comments,
