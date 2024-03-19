@@ -59,25 +59,19 @@ class AuthenticationServiceTest {
     @Test
     void testUpdateUserDetails() {
         // Arrange
-        User user = new User();
-        user.setAddress("42 Main St");
-        user.setDateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-        user.setEmail("jane.doe@example.org");
-        user.setFullName("Dr Jane Doe");
-        user.setPassword("iloveyou");
-        user.setPhoneNumber("6625550144");
-        user.setUserId(1);
-        user.setVerified(true);
+        User user =  User.builder()
+                    .address("42 Main St")
+                    .dateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()))
+                    .fullName("Dr Jane Doe")
+                    .phoneNumber("6625550144")
+                    .build();
+        User user2 =  User.builder()
+                    .address("423 Main St")
+                    .dateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()))
+                    .fullName("Dr Jane Doe")
+                    .phoneNumber("6625550144")
+                    .build();
 
-        User user2 = new User();
-        user2.setAddress("42 Main St");
-        user2.setDateOfBirth(Date.from(LocalDate.of(1970, 1, 1).atStartOfDay().atZone(ZoneOffset.UTC).toInstant()));
-        user2.setEmail("jane.doe@example.org");
-        user2.setFullName("Dr Jane Doe");
-        user2.setPassword("123456");
-        user2.setPhoneNumber("6625550144");
-        user2.setUserId(1);
-        user2.setVerified(true);
         when(userRepository.save(Mockito.<User>any())).thenReturn(user2);
         when(userRepository.findByUserId(Mockito.<Integer>any())).thenReturn(user);
 
