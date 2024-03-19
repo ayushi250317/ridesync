@@ -10,7 +10,7 @@ import { FiCheck, FiX, FiMoreVertical } from 'react-icons/fi';
 const Activity = ({ route }) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { rideId, is_driver } = location.state;
+    const { rideId, isDriver } = location.state;
     const [isLoading, setIsLoading] = useState(null);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const isMobile = useBreakpointValue({ base: true, md: false });
@@ -65,19 +65,21 @@ const Activity = ({ route }) => {
         if (loggedInUserInfo) {
             setIsLoading(true);
             setLoggedInUserDetails(loggedInUserInfo);
-            console.log({ rideId, is_driver })
+            console.log({ rideId, isDriver })
             const config = {
                 headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
             };
             axios.get(`${API}/ride/getRideDetail/${rideId}`, config)
                 .then((resp) => {
+                    console.log(resp.data);
                     if (resp.data.success) {
-                        if (is_driver)
+                        if (isDriver)
                             axios.get(`${API}/request/getRideRequest?rideId=${rideId}`, config)
                                 .then((response) => {
+                                    console.log(response.data);
+
                                     if (response.data.success)
-                                        console.log(response.data.requests);
-                                    setRequests(response.data.requests)
+                                        setRequests(response.data.responseObject)
                                 })
                     }
                 })
@@ -86,7 +88,7 @@ const Activity = ({ route }) => {
                 }).finally(() => setIsLoading(false));
         }
     }, [])
-
+    console.log("qwewq");
     return (
         <>
             {isMobile ? <BottomNavbar /> : <Navbar />}
