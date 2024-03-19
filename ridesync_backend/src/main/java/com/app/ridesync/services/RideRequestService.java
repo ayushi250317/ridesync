@@ -1,5 +1,6 @@
 package com.app.ridesync.services;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,7 @@ public class RideRequestService {
                 rideRequest.getLongitude2(),
                 rideRequest.getLandmark2(),
                 rideRequest.getAddress2()));
+                
                 RideRequestInfo rideRequestInfo = RideRequestInfo.builder()
                 .rideId(rideRequest.getRideId())
                 .driverId(rideRequest.getDriverId())
@@ -54,9 +56,12 @@ public class RideRequestService {
                 .requestStatus(RequestStatus.REQUESTED)
                 .startLocationId(startLocation.getLocationId())
                 .endLocationId(endLocation.getLocationId())
+                .createdTime(LocalDateTime.now())
                 .tripStartTime(rideRequest.getEstimatedTripStartTime())
                 .build();
+                
                 rideRequestRepository.save(rideRequestInfo);
+                
                 User user=userRepository.findByUserId(riderId);
                 Notification notification=Notification.builder()
                                 .userId(rideRequest.getDriverId())
@@ -64,7 +69,9 @@ public class RideRequestService {
                                 .message(user.getFullName()+" requested a ride")
                                 .notificationType(NotificationType.RIDE)
                                 .build();
+                
                 notificationService.addNotification(notification);
+                
                 return RideRequestResponse.builder().message("Ride requested successfully")
                                 .success(true).build();
         }
