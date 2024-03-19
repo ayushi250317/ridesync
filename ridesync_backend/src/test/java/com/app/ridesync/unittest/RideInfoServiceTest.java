@@ -1,5 +1,7 @@
 package com.app.ridesync.unittest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
@@ -7,6 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +43,6 @@ class RideInfoServiceTest {
 
     @Autowired
     private RideInfoService rideInfoService;
-
 
     @Test
     void testAddRideInfo() {
@@ -124,7 +126,8 @@ class RideInfoServiceTest {
         rideInfo2.setUserId(1);
         rideInfo2.setWaitTime(LocalTime.MIDNIGHT);
         when(rideInfoRepository.save(Mockito.<RideInfo>any())).thenReturn(rideInfo2);
-        when(rideInfoRepository.findByRideIdAndUserId(Mockito.<Integer>any(), Mockito.<Integer>any())).thenReturn(rideInfo);
+        when(rideInfoRepository.findByRideIdAndUserId(Mockito.<Integer>any(), Mockito.<Integer>any()))
+                .thenReturn(rideInfo);
 
         // Act
         RideInfoResponse actualUpdateRideInfoResult = rideInfoService.updateRideInfo(new RideInfoInput());
@@ -178,7 +181,8 @@ class RideInfoServiceTest {
         rideInfo.setStartLocationId(1);
         rideInfo.setUserId(1);
         rideInfo.setWaitTime(LocalTime.MIDNIGHT);
-        when(rideInfoRepository.findByRideIdAndUserId(Mockito.<Integer>any(), Mockito.<Integer>any())).thenReturn(rideInfo);
+        when(rideInfoRepository.findByRideIdAndUserId(Mockito.<Integer>any(), Mockito.<Integer>any()))
+                .thenReturn(rideInfo);
 
         Location pickup = new Location();
         pickup.setAddress("42 Main St");
@@ -210,5 +214,39 @@ class RideInfoServiceTest {
         // Assert
         verify(rideInfoRepository).findByRideId(Mockito.<Integer>any());
         assertTrue(actualAllMembers.isEmpty());
+    }
+
+    @Test
+    public void testGetRiderLocation() {
+        Integer rideId = 303;
+        RideInfo rideInfo = RideInfo.builder()
+                .isDriver(true)
+                .rideId(303)
+                .userId(1)
+                .startLocationId(502)
+                .endLocationId(503)
+                .fare(50)
+                .isActive(true)
+                .estimatedTripStartTime(LocalDateTime.parse("2024-03-06T12:00:00"))
+                .estimatedTripEndTime(LocalDateTime.parse("2024-03-06T12:30:00"))
+                .pickupLocationId(450)
+                .build();
+
+        Location pickupLocation = Location.builder()
+                .locationId(450)
+                .lattitude(123.321)
+                .longitude(45.23)
+                .build();
+
+        RideInfoResponse expectedRideInfoResponse = RideInfoResponse.builder()
+                .pickupLocation(pickupLocation)
+                .build();
+        when(rideInfoRepository.findByRideIdAndIsDriver(rideId, true)).thenReturn(rideInfo);
+        when(locationService.findLocationById(rideInfo.getPickupLocationId())).thenReturn(pickupLocation);
+        RideInfoResponse rideInfoResponse = rideInfoService.getDriverLocation(rideId);
+        verify(rideInfoRepository).findByRideIdAndIsDriver(rideId, true);
+        verify(locationService).findLocationById(rideInfo.getPickupLocationId());
+
+        assertEquals(expectedRideInfoResponse.getPickupLocation(), rideInfoResponse.getPickupLocation());
     }
 }

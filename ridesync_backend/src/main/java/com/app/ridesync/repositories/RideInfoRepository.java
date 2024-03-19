@@ -18,4 +18,6 @@ public interface RideInfoRepository extends JpaRepository<RideInfo, Integer> {
 
 	RideInfo findByRideIdAndUserId(Integer rideId, Integer userId);
 
+	RideInfo findByRideIdAndIsDriver(Integer rideId, boolean isDriver);
 }
+

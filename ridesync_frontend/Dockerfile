@@ -16,6 +16,10 @@ COPY . .
 # Build the React app
 RUN npm run build
 
+ENV PORT=3000
+
+# Expose the port on which the React app will run
+EXPOSE $PORT
 # Command to run the application
 CMD ["npm", "start"]
 

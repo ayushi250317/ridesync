@@ -45,7 +45,7 @@ public class RideService {
 			res.setRide(rideRepository.save(new Ride(
 					input.getStartTime(),
 					input.getCreatedTime(),
-					rand.nextInt(1001, 9999),
+					rand.nextInt(),
 					"posted",                         // can be posted/ active/ completed.
 					input.getDescription(),
 					input.getSeatsAvailable(),

@@ -15,7 +15,7 @@ import jakarta.transaction.Transactional;
 import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.User;
 import com.app.ridesync.entities.Vehicle;
-
+import org.springframework.core.env.Environment;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
+import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
 
 
@@ -33,6 +33,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthenticationService {
 	
+    @Autowired
+    private Environment env;
 	@Autowired
     private final UserRepository repository;
     @Autowired
@@ -48,6 +50,12 @@ public class AuthenticationService {
     @Autowired
     private final JavaMailSender javaMailSender;
 
+    @Value("${IP_ADDRESS}")
+    private String ip_address;
+
+    @Value("${FRONTEND_PORT}")
+    private String port;
+
     public AuthenticationResponse validateRequest(RegisterRequest request) throws MessagingException {
         User user=repository.findByEmail(request.getEmail());
         if(user!=null){
@@ -57,6 +65,8 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse register(RegisterRequest request) throws MessagingException {
+
+
         User user = User.builder()
                 .fullName(request.getFullName())
                 .email(request.getEmail())
@@ -71,7 +81,7 @@ public class AuthenticationService {
         message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
         message.setSubject("Verify Ridesync Account");
 //        String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
-        String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
+        String htmlContent="<p>Click the <a href=\"http://"+ip_address+":"+port+"/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
         message.setContent(htmlContent,"text/html;charset=utf-8");
         javaMailSender.send(message);
         return AuthenticationResponse.builder()
@@ -119,6 +129,8 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse forgotPassword(AuthenticationRequest request) throws MessagingException {
+        String ip_address = env.getProperty("IP_ADDRESS");
+        String port = env.getProperty("FRONTEND_PORT");
       User user=repository.findByEmail(request.getEmail());
       if(user==null){
         return AuthenticationResponse.builder().message("Email do not exist").build();
@@ -129,7 +141,7 @@ public class AuthenticationService {
       message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
       message.setSubject("Reset Password");
 //      String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
-      String htmlContent="<p>Click the <a href=\"http://localhost:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
+      String htmlContent="<p>Click the <a href=\"http://"+ip_address+":"+port+"/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
       message.setContent(htmlContent,"text/html;charset=utf-8");
       javaMailSender.send(message);
       return AuthenticationResponse.builder().message("email sent successfully").success(true).build();

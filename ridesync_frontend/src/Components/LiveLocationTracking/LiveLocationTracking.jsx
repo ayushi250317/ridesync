@@ -3,9 +3,12 @@
 /* eslint-disable no-unused-vars */
 import {
     Box,
+    Button,
+    Center,
     Flex,
     IconButton,
     SkeletonText,
+    Spinner,
     Text,
 } from '@chakra-ui/react'
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
@@ -13,7 +16,7 @@ import { useLocation } from "react-router-dom"
 import {
     useJsApiLoader,
     GoogleMap,
-    Marker,
+    MarkerF,
     DirectionsRenderer,
 } from '@react-google-maps/api'
 import { useEffect, useState } from 'react'
@@ -30,9 +33,10 @@ const LiveLocationTracking = () => {
 
     const [map, setMap] = useState(/** @type google.maps.Map */(null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
-    const [center, setCenter] = useState([])
+    const [center, setCenter] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
+    // const [time, setTime] = useState(Date.now());
     const [mutipleMarkers, setMutipleMarkers] = useState([
     ])
     useEffect(() => {
@@ -42,10 +46,12 @@ const LiveLocationTracking = () => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
         );
+
+        const config = {
+            headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
+        };
+
         if (loggedInUserInfo) {
-            const config = {
-                headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
-            };
 
             async function calculateRoute(startLoc, endLoc) {
 
@@ -74,7 +80,6 @@ const LiveLocationTracking = () => {
                     } else {
                         const riderHere = resp.data.responseObject.find(riders => riders.rideInfo.driver
                         )
-                        setCenter({ lat: riderHere.pickupLocation.lattitude, lng: riderHere.pickupLocation.longitude })
                     }
                     resp.data.responseObject.map(rideDetails => {
                         if (loggedInUserInfo.user.userId === rideDetails.rideInfo.userId) {
@@ -105,8 +110,75 @@ const LiveLocationTracking = () => {
         }
     }, [])
 
+    useEffect(() => {
+        const setDriverLocation = () => {
+            const loggedInUserInfo = JSON.parse(
+                localStorage.getItem("loggedInUserDetails")
+            );
+
+            const config = {
+                headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
+            };
+            const getDriverDetails = async () => {
+                await axios.get(`${API}/ride/getDriverLocation/${state?.rideId}`, config).then(getresp => {
+                    console.log("getres", getresp);
+                    if (getresp.data.success) {
+                        setCenter({ lat: getresp.data.responseObject.pickupLocation.lattitude, lng: getresp.data.responseObject.pickupLocation.longitude })
+                    }
+                }).catch(err => {
+                    console.log("err in getDriverDetails", err);
+                })
+            }
+            const options = {
+                enableHighAccuracy: true,
+                timeout: 5000,
+                maximumAge: 0,
+            };
+
+            function success(pos) {
+                const crd = pos.coords;
+                console.log("state.isDriver", state);
+
+                if (state.isDriver) {
+                    axios.put(`${API}/ride/updatePickupLocation`, {
+                        rideId: state?.rideId,
+                        location: {
+                            lattitude: crd.latitude,
+                            longitude: crd.longitude,
+                            address: "string",
+                            landmark: "string"
+                        }
+                    }, config).then((resp) => {
+                        if (resp.data.success) {
+                            getDriverDetails()
+                        }
+                    }).catch(err => {
+                        console.log("err", err);
+                    })
+                }
+                else {
+                    getDriverDetails()
+                }
+            }
+
+            function error(err) {
+                console.warn(`ERROR(${err.code}): ${err.message}`);
+            }
+
+            navigator.geolocation.getCurrentPosition(success, error, options);
+        }
+        const interval = setInterval(setDriverLocation, 20000);
+        return () => {
+            clearInterval(interval);
+        };
+    }, []);
+    const back = "<"
+
     if (!isLoaded) {
-        return <SkeletonText />
+        return <Center h="80vh">
+
+            <Spinner size='xl' />
+        </Center>;
     }
 
     return (
@@ -114,9 +186,10 @@ const LiveLocationTracking = () => {
             position='relative'
             flexDirection='column'
             alignItems='center'
-            h='100vh'
+            h={["90vh", "90vh", "100vh", "100vh"]}
             w='100vw'
         >
+
             <Box position='absolute' left={0} top={0} h='100%' w='100%'>
                 <GoogleMap
                     center={center}
@@ -131,24 +204,30 @@ const LiveLocationTracking = () => {
                     onLoad={map => setMap(map)}
                 >
 
-                    <Marker position={center} icon={{
-                        url: (require('../../assets/favicon.ico')),
-                        fillColor: '#EB00FF',
-                        rotation: 180,
-                        scale: 7
-                    }} />
+                    {center && <MarkerF position={center}
+                        icon={{
+                            url: (require('../../assets/favicon.ico')),
+                            fillColor: '#EB00FF',
+                            rotation: 180,
+                            scale: 7
+                        }}
+                    />}
+
                     {directionsResponse && (
                         <DirectionsRenderer directions={directionsResponse} />
                     )}
                     {mutipleMarkers.map((marker, index) => (
-                        <Marker key={index} position={{ lat: marker.location1.lattitude, lng: marker.location1.longitude }} />
+                        <MarkerF key={index} position={{ lat: marker.location1.lattitude, lng: marker.location1.longitude }} />
                     ))}
+
                 </GoogleMap>
             </Box>
 
-            <Box position="absolute" top="2" left="2" p="3" className='mapBackground'>
-                <Text fontWeight="medium">Distance: {distance} </Text>
-            </Box>
+            <Center position="absolute" top="2" left="2" px="2" py="1" className='mapBackground'>
+                <Text fontWeight="medium" fontSize="2xl" _hover={{ cursor: "pointer" }}
+                    onClick={() => window.history.go(-1)}
+                > {back}  </Text>  <Text ml="2" fontWeight="medium">Distance: {distance} </Text>
+            </Center>
 
             <Box position="absolute" top="2" right="2" p="3" className='mapBackground'>
                 <Text fontWeight="medium">Duration: {duration} </Text>
