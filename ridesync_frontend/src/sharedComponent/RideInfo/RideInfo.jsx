@@ -16,7 +16,7 @@ const libraries = ['places'];
 
 const Activity = ({ route }) => {
     const { isLoaded } = useJsApiLoader({
-        googleMapsApiKey: "AIzaSyAgF12Bol5WhhLKL8WFlTc-qjMlPjugM3A",
+        googleMapsApiKey: GMAP_API_KEY,
         libraries,
     });
     const backbtn = "<"
