@@ -15,7 +15,7 @@ build-backend:
     - cd ridesync_backend
     - mvn clean package
   only:
-    - runner
+    - develop
 
 test-backend:
   stage: test-backend
@@ -24,7 +24,7 @@ test-backend:
     - cd ridesync_backend
     - mvn test
   only:
-    - runner
+    - develop
 
 quality:
   stage: quality
@@ -39,7 +39,7 @@ quality:
       - smells/
       - $CI_PROJECT_DIR
   only:
-    - runner
+    - develop
 
 publish-backend:
   image: docker:latest
@@ -65,7 +65,7 @@ publish-backend:
     - docker build -t docker.io/meer2838/cicdtest:backend .
     - docker push docker.io/meer2838/cicdtest:backend
   only:
-    - runner
+    - develop
 
 publish-frontend:
   image: docker:latest
@@ -91,7 +91,7 @@ publish-frontend:
     - docker build -t docker.io/meer2838/cicdtest:frontend .
     - docker push docker.io/meer2838/cicdtest:frontend
   only:
-    - runner
+    - develop
 
 deploy-backend:
   image: alpine:latest
@@ -108,7 +108,7 @@ deploy-backend:
     name: development
     url: http://172.17.1.101:$SERVER_PORT
   only:
-    - runner
+    - develop
 
 deploy-frontend:
   image: alpine:latest
@@ -122,4 +122,4 @@ deploy-frontend:
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker container rm -f my-frontend-app || true"
     - sshpass -p "$MY_PASS" ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP "docker run -d -p 3000:3000 --name my-frontend-app -e REACT_APP_API_URL=$REACT_APP_API_URL docker.io/meer2838/cicdtest:frontend"
   only:
-    - runner
+    - develop
