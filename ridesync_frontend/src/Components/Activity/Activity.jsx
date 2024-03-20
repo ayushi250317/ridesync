@@ -72,7 +72,7 @@ const Activity = ({ }) => {
                                     <Heading size={isLargerThan1280 ? 'md' : 'sm'}
                                         textTransform='uppercase'
                                         _hover={{ cursor: "pointer" }}
-                                        onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId, is_driver: ride.isDriver } })}
+                                        onClick={() => navigate("/ride_info", { state: { rideId: ride.rideId, isDriver: ride.isDriver } })}
                                     >
                                         {ride.startLocationAddress.split(',')[0] + ' to ' + ride.endLocationAddress.split(',')[0]}
                                     </Heading>
@@ -92,7 +92,7 @@ const Activity = ({ }) => {
                                     </>}
                                     {rideType === "ongoing" && <>
                                         <Box>
-                                            <Button {...buttonAttributes} onClick={() => { trackRide(ride.rideId) }}>
+                                            <Button {...buttonAttributes} onClick={() => { trackRide(ride.rideId, ride.isDriver) }}>
                                                 Track Riders
                                             </Button>
                                         </Box>
@@ -115,7 +115,7 @@ const Activity = ({ }) => {
                                             </Box>
                                         </>}
                                         {rideType === "ongoing" && <>
-                                            <Button {...buttonAttributes}>
+                                            <Button {...buttonAttributes} onClick={() => navigate("/livelocationtracking", { state: { rideId: ride.rideId, isDriver: ride.isDriver } })}>
                                                 Track Driver
                                             </Button>
                                         </>}
@@ -178,8 +178,8 @@ const Activity = ({ }) => {
         })
     }
 
-    const trackRide = (rideId) => {
-        navigate("/livelocationtracking", { state: { rideId: rideId } });
+    const trackRide = (rideId, isDriver) => {
+        navigate("/livelocationtracking", { state: { rideId, isDriver } });
     }
 
     if (isLoading) return <Center h="80vh">

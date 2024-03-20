@@ -130,17 +130,21 @@ const FindRideLocation = () => {
                                         End Location: {rides.endLocationAddress}
                                     </Text>
                                     <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                    <Text>
+                                    Seat available : {rides.seatsAvailable}
+                                </Text>
                                 </Box>
 
                             </Flex>
 
                             <Center justifyContent="space-between">
 
+                                
                                 <Text>
-                                    Seat available : {rides.seatsAvailable}
+                                    Fare: ${rides.fare}
                                 </Text>
 
-                                <Button colorScheme='green' onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>Request Ride</Button>
+                                <Button colorScheme='green' isDisabled={!rides.enableRequestRide} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
                             </Center>
                         </Box>
                     })}
