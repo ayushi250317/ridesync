@@ -108,7 +108,7 @@ const RiderRegistration = () => {
                         make,
                         type,
                         userId: loggedInUserDetails.user.userId,
-                        documentId: ""
+                        documentId: response.data.document.documentId
                     }
                     console.log("reaching", vehicleInfoReqObj);
                     axios.post(`${API}/vehicle/addVehicle`, vehicleInfoReqObj, config)

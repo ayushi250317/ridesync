@@ -11,6 +11,7 @@ import { SiLivechat } from "react-icons/si";
 import { GrMapLocation } from "react-icons/gr";
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import { dateAndTimeInString, extractAddress } from "../Utils";
+import ChatDrawer from "../Chat/ChatDrawer";
 
 const libraries = ['places'];
 
@@ -21,18 +22,19 @@ const Activity = ({ route }) => {
     });
     const backbtn = "<"
     const navigate = useNavigate();
+    const toast = useToast();
+    const isMobile = useBreakpointValue({ base: true, md: false });
     const location = useLocation();
     const { rideId, isDriver } = location.state;
     const [isLoading, setIsLoading] = useState(null);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
-    const isMobile = useBreakpointValue({ base: true, md: false });
     const [requests, setRequests] = useState(null);
     const [riders, setRiders] = useState([])
     const [rideInfo, setRideInfo] = useState({});
-    const toast = useToast();
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [markers, setMarkers] = useState([]);
-
+    const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
+    const [chatUserId, setchatUserId] = useState(null);
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
         if (loggedInUserInfo) {
@@ -74,6 +76,9 @@ const Activity = ({ route }) => {
                 }).finally(() => setIsLoading(false));
         }
     }, [])
+
+    const toggleChatDrawer = () => setIsChatDrawerOpen(!isChatDrawerOpen);
+
     const handleRequestUpdate = (requestId, status) => {
         const reqBody = {
             "requestStatus": status
@@ -125,13 +130,20 @@ const Activity = ({ route }) => {
             return <></>
         } else if (isDriverCard && !isDriver) {
             return (<Flex>
-                <SiLivechat />
-                <GrMapLocation />
+                <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
+                    toggleChatDrawer();
+                    setchatUserId(riderInfo.driverId);
+                }}>
+                    { }
+                </Button>
             </Flex>)
         } else if (!isDriverCard && isDriver) {
             return (
                 <Stack direction='row' spacing={1}>
-                    <Button leftIcon={<SiLivechat />} variant='ghost'>
+                    <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
+                        toggleChatDrawer();
+                        setchatUserId(riderInfo.riderId);
+                    }}>
                         { }
                     </Button>
                     <Button leftIcon={<GrMapLocation />} variant='ghost' onClick={() => {
@@ -307,6 +319,11 @@ const Activity = ({ route }) => {
                         </Box>
                     </Flex>
                 </Flex>
+                <ChatDrawer
+                    isOpen={isChatDrawerOpen}
+                    onClose={toggleChatDrawer}
+                    chatPartnerId={chatUserId}
+                />
             </>
         )
     }
