@@ -4,20 +4,15 @@ import Locations from '../../sharedComponent/Maps/Locations'
 import { MdAccessTimeFilled } from "react-icons/md";
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
+import { useNavigate } from 'react-router-dom';
 const FindRideLocation = () => {
+    const navigate = useNavigate();
     const toast = useToast();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
     const [reqSent, setReqSent] = useState(false)
-    useEffect(() => {
-        const loggedInUserInfo = JSON.parse(
-            localStorage.getItem("loggedInUserDetails")
-        );
-        if (loggedInUserInfo) {
-            setLoggedInUserDetails(loggedInUserInfo);
-        }
-    }, []);
+
     const [fromAddress, setFromAddress] = useState({
         address: "",
         lat: null,
@@ -29,25 +24,47 @@ const FindRideLocation = () => {
         lng: null
     });
     const [rideTime, setRideTime] = useState("")
+
     console.log({ fromAddress, toAddress, rideTime });
 
-    const handleSubmitFindRide = () => {
+    useEffect(() => {
+        const loggedInUserInfo = JSON.parse(
+            localStorage.getItem("loggedInUserDetails")
+        );
+        if (loggedInUserInfo) {
+            setLoggedInUserDetails(loggedInUserInfo);
+            const searchInfo = JSON.parse(
+                localStorage.getItem("searchInfo")
+            );
+            if (searchInfo && searchInfo !== null) {
+                const hasAllKeys = ["fromAddress", "toAddress", "rideTime"].every(key => Object.keys(searchInfo).includes(key));
+                if (hasAllKeys) {
+                    setFromAddress(searchInfo.fromAddress);
+                    setToAddress(searchInfo.toAddress);
+                    setRideTime(searchInfo.rideTime);
+                    handleSubmitFindRide(searchInfo.fromAddress, searchInfo.toAddress, searchInfo.rideTime, loggedInUserInfo.token);
+                    localStorage.removeItem('searchInfo');
+                }
+            }
+        }
+    }, []);
+    const handleSubmitFindRide = (fromAdd, toAdd, time, token) => {
         const newObj = {
             source: {
-                lat: fromAddress.lat,
-                lng: fromAddress.lng,
+                lat: fromAdd.lat,
+                lng: fromAdd.lng,
             },
             destination: {
-                lat: toAddress.lat,
-                lng: toAddress.lng
+                lat: toAdd.lat,
+                lng: toAdd.lng
             },
-            rideTime: `${rideTime}:00.000000`
+            rideTime: `${time}:00.000000`
         }
         console.log("new obj", newObj);
         setLoading(true)
         setReqSent(true)
         const config = {
-            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
+            headers: { Authorization: `Bearer ${token}` },
         };
         axios.post(`${API}/geo/search`, newObj, config).then(resp => {
             console.log("search ride", resp.data);
@@ -110,7 +127,7 @@ const FindRideLocation = () => {
                 </Box>
                 <Input type='datetime-local' placeholder='Enter start time' w="98%" value={rideTime} onChange={(e) => setRideTime(e.target.value)} />
             </Flex>
-            <Button onClick={handleSubmitFindRide} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
+            <Button onClick={() => { handleSubmitFindRide(fromAddress, toAddress, rideTime, loggedInUserDetails.token) }} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
         </Center>
 
         <Box>
@@ -121,9 +138,7 @@ const FindRideLocation = () => {
                         return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
                             <Flex justifyContent="space-between">
                                 <Box>
-
                                     <Text>
-
                                         Start Location: {rides.startLocationAddress}
                                     </Text>
                                     <Text>
@@ -133,19 +148,21 @@ const FindRideLocation = () => {
                                     <Text>
                                         Seat available : {rides.seatsAvailable}
                                     </Text>
+                                    <Text>
+                                        Fare: ${rides.fare}
+                                    </Text>
                                 </Box>
 
                             </Flex>
-
-                            <Center justifyContent="space-between">
-
-
-                                <Text>
-                                    Fare: ${rides.fare}
-                                </Text>
-
-                                <Button colorScheme='green' isDisabled={!rides.enableRequestRide} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
-                            </Center>
+                            <Flex justifyContent="flex-end" mt="1">
+                                <Button colorScheme='green' mr="1" isDisabled={!rides.enableRequestRide} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
+                                <Button colorScheme='blue'
+                                    onClick={() => {
+                                        localStorage.setItem('searchInfo', JSON.stringify({ fromAddress, toAddress, rideTime }));
+                                        navigate("/ride_info", { state: { rideId: rides.rideId, isDriver: false } })
+                                    }}>View Ride
+                                </Button>
+                            </Flex>
                         </Box>
                     })}
                 </Box>
