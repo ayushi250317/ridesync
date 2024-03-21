@@ -49,7 +49,7 @@ const FindRideLocation = () => {
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
-        axios.get(`${API}/geo/search`, newObj, config).then(resp => {
+        axios.post(`${API}/geo/search`, newObj, config).then(resp => {
             console.log("search ride", resp.data);
             if (resp.data.success) {
                 setFindRidesResult(resp.data.responseObject)
