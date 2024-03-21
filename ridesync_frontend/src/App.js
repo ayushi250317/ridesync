@@ -32,6 +32,7 @@ function App() {
             <Route element={<Activity />} path="/activity" />
             <Route element={<RideInfo />} path="/ride_info" />
             <Route element={<NotificationPage />} path="/notifications" />
+            <Route element={<LiveLocationTracking />} path="/livelocationtracking" />
             {/* <Route element={<SelectLocation />} path="/find_ride" /> */}
             <Route element={<Home />} path="/" />
             <Route element={<EditPersonalDetailsPage />} path="/editpersonalinfo" />
@@ -42,7 +43,6 @@ function App() {
           <Route element={<ForgotPasswordEmail />} path="/forgot_password" />
           <Route element={<ConfirmPassword />} path="/confirm_password/:token/:id" />
           <Route element={<Login />} path="/login" />
-          <Route element={<LiveLocationTracking />} path="/livelocationtracking" />
           <Route element={<Signup />} path="/signup" />
           <Route path="/notFound" element={<NotFound />} />
           <Route path="*" element={<NotFound />} />
