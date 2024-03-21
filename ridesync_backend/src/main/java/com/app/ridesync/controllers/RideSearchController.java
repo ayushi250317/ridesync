@@ -14,7 +14,7 @@ import com.app.ridesync.projections.SearchResultProjection;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideSearchService;
 
-@RequestMapping(path = "api/v1/geo")
+@RequestMapping(path = "/api/v1/geo")
 @CrossOrigin(origins = "*")
 
 @Controller
