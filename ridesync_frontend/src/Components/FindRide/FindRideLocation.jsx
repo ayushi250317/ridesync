@@ -131,15 +131,15 @@ const FindRideLocation = () => {
                                     </Text>
                                     <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
                                     <Text>
-                                    Seat available : {rides.seatsAvailable}
-                                </Text>
+                                        Seat available : {rides.seatsAvailable}
+                                    </Text>
                                 </Box>
 
                             </Flex>
 
                             <Center justifyContent="space-between">
 
-                                
+
                                 <Text>
                                     Fare: ${rides.fare}
                                 </Text>

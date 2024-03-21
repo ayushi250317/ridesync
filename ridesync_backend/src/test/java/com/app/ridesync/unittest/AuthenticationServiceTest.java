@@ -1,10 +1,13 @@
 package com.app.ridesync.unittest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.dto.requests.RegisterRequest;
+import com.app.ridesync.dto.responses.AuthenticationResponse;
 import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.DocumentRepository;
 import com.app.ridesync.repositories.UserRepository;
@@ -83,5 +86,42 @@ class AuthenticationServiceTest {
         verify(userRepository).save(Mockito.<User>any());
         assertSame(user2, actualUpdateUserDetailsResult);
     }
+
+           @Test
+    public void testVerifyEmail_SuccessfulVerification() {
+        // Arrange
+        User user = new User();
+        user.setUserId(1);
+        user.setEmail("abc@gmail.com");
+        when(userRepository.findByUserId(1)).thenReturn(user);
+
+        // Act
+        AuthenticationResponse response = authenticationService.verifyEmail(1, "abc@gmail.com");
+
+        // Assert
+        assertEquals("Account Email Verification Successful", response.getMessage());
+        assertEquals(true, response.isSuccess());
+        assertEquals(true, user.isVerified());
+        verify(userRepository, times(1)).save(user);
+    }
+
+   
+    @Test
+    public void testResetPassword_SuccessfulVerification() {
+
+        // Arrange
+        User user = new User();
+        user.setUserId(1);
+        when(userRepository.findByUserId(1)).thenReturn(user);
+        when(jwtService.extractUserId("valid_token")).thenReturn(1);
+
+        // Act
+        AuthenticationResponse response = authenticationService.resetPassword(1, "valid_token");
+
+        // Assert
+        assertEquals("Verification done successfully", response.getMessage());
+        assertEquals(true, response.isSuccess());
+    }
+
 
 }
