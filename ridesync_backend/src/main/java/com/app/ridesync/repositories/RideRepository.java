@@ -40,6 +40,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ "JOIN User user ON rideInfo.userId = user.userId "
 			+ "WHERE rideInfo.userId = :userId")
 
+
 	List<RideHistoryProjection> findRidesByUserId(@Param("userId") Integer userId);
 
 	@Query ("SELECT "
@@ -57,6 +58,8 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ "WHERE rideInfo.rideId = :rideId")
 	List<RideInfoProjection> findRideInfoByRideId(@Param("rideId") Integer rideId);
 
+
+
 	@Query ("SELECT "
 			+ "NEW com.app.ridesync.projections.RideHeaderProjection(ride.description,ride.startTime AS originalTripStartTime, "
 			+ "ride.createdTime as tripPostedTime, ride.status, "
@@ -70,6 +73,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ "JOIN Location endLocation ON rideInfo.endLocationId = endLocation.locationId "
 			+ "JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId "
 			+ "WHERE ride.rideId = :rideId")
+
 
 	List<RideHeaderProjection> findRideHeaderInfoByRideId(@Param("rideId") Integer rideId);
 
@@ -86,11 +90,7 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ " JOIN Location startLocation ON startLocation.locationId = rideInfo.startLocationId"
 			+ " JOIN Location endLocation ON endLocation.locationId = rideInfo.endLocationId"
 			+ " JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId"
-			+ " LEFT JOIN (SELECT rideRequestId rideRequestId ,rideId rideId , riderId riderId, driverId driverId, requestStatus requestStatus FROM RideRequestInfo "
-			+ "            WHERE riderId = :userId AND rideId in :rideIds "
-			+ "            GROUP BY rideId,riderId,rideRequestId,requestStatus "
-			+ "            ORDER BY createdTime DESC LIMIT 1) AS rideRequest "
-			+ "			   ON rideRequest.driverId = rideInfo.userId AND rideRequest.rideId = ride.rideId AND rideRequest.riderId = :userId"
+			+ " LEFT JOIN RideRequestInfo rideRequest ON rideRequest.driverId = rideInfo.userId AND rideRequest.rideId = ride.rideId AND rideRequest.riderId = :userId"
 			+ " WHERE rideInfo.userId != :userId AND ride.status != 'completed' AND ride.startTime >= :rideTimeStartLimit AND ride.startTime <= :rideTimeEndLimit AND ride.rideId IN :rideIds"
 			+ " ORDER BY ride.startTime")
 	List<SearchResultProjection>findRideDetailsByRideIds(@Param("rideIds") List<Integer> rideIds, @Param("rideTimeStartLimit") LocalDateTime rideTimeStartLimit, @Param("rideTimeEndLimit") LocalDateTime rideTimeEndLimit, @Param("userId") Integer userId);
