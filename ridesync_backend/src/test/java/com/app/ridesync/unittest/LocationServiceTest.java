@@ -37,14 +37,7 @@ class LocationServiceTest {
         location.setLongitude(10.0d);
         when(locationRepository.save(Mockito.<Location>any())).thenReturn(location);
 
-        Location location2 = new Location();
-        location2.setAddress("42 Main St");
-        location2.setLandmark("Landmark");
-        location2.setLattitude(10.0d);
-        location2.setLocationId(1);
-        location2.setLongitude(10.0d);
-
-        Location actualAddLocationResult = locationService.addLocation(location2);
+        Location actualAddLocationResult = locationService.addLocation(location);
 
         verify(locationRepository).save(Mockito.<Location>any());
         assertSame(location, actualAddLocationResult);
@@ -59,23 +52,10 @@ class LocationServiceTest {
         location.setLocationId(1);
         location.setLongitude(10.0d);
 
-        Location location2 = new Location();
-        location2.setAddress("42 Main St");
-        location2.setLandmark("Landmark");
-        location2.setLattitude(10.0d);
-        location2.setLocationId(1);
-        location2.setLongitude(10.0d);
-        when(locationRepository.save(Mockito.<Location>any())).thenReturn(location2);
+        when(locationRepository.save(Mockito.<Location>any())).thenReturn(location);
         when(locationRepository.findByLocationId(Mockito.<Integer>any())).thenReturn(location);
 
-        Location location3 = new Location();
-        location3.setAddress("42 Main St");
-        location3.setLandmark("Landmark");
-        location3.setLattitude(10.0d);
-        location3.setLocationId(1);
-        location3.setLongitude(10.0d);
-
-        Location actualUpdateLocationResult = locationService.updateLocation(location3);
+        Location actualUpdateLocationResult = locationService.updateLocation(location);
 
         verify(locationRepository).findByLocationId(Mockito.<Integer>any());
         verify(locationRepository).save(Mockito.<Location>any());

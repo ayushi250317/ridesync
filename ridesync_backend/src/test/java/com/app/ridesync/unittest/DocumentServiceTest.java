@@ -91,13 +91,7 @@ class DocumentServiceTest {
         document.setUserDocumentID("User Document ID");
         document.setUserId(1);
 
-        Document document2 = new Document();
-        document2.setDocumentId(1);
-        document2.setDocumentType("Document Type");
-        document2.setExpiryDate(LocalDate.of(1970, 1, 1));
-        document2.setUserDocumentID("User Document ID");
-        document2.setUserId(1);
-        when(documentRepository.save(Mockito.<Document>any())).thenReturn(document2);
+        when(documentRepository.save(Mockito.<Document>any())).thenReturn(document);
         when(documentRepository.findByDocumentId(Mockito.<Integer>any())).thenReturn(document);
 
         DocumentResponse actualUpdateDocumentByDocIdResult = documentService.updateDocumentByDocId(new DocumentInput());
@@ -106,7 +100,7 @@ class DocumentServiceTest {
         verify(documentRepository).save(Mockito.<Document>any());
         assertEquals("Updated Selected Document Successfully", actualUpdateDocumentByDocIdResult.getMessage());
         assertTrue(actualUpdateDocumentByDocIdResult.isSuccess());
-        assertSame(document2, actualUpdateDocumentByDocIdResult.getDocument());
+        assertSame(document, actualUpdateDocumentByDocIdResult.getDocument());
     }
 
 
