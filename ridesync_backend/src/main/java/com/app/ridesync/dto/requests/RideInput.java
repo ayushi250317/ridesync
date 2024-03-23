@@ -7,13 +7,13 @@ import com.app.ridesync.entities.GeoPoint;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
 public class RideInput{
 
 	private Integer userId; //-----------------common userId
@@ -49,6 +49,10 @@ public class RideInput{
 	private LocalTime waitTime;
 	private LocalDateTime estimatedTripStartTime;
 	private LocalDateTime estimatedTripEndTime;	
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 
 	private GeoPoint routeCoordinates;
 

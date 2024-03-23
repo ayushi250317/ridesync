@@ -6,15 +6,18 @@ import com.app.ridesync.entities.RequestStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class RideRequest {
-    private Integer rideId;
+    public void setRequestStatus(RequestStatus requestStatus) {
+		this.requestStatus = requestStatus;
+	}
+	private Integer rideId;
     private Integer driverId;
 
     //Location - 1 start

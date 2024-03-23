@@ -4,10 +4,10 @@ import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +17,7 @@ public class DocumentInput {
 	private String documentType;
 	private LocalDate expiryDate;
 	private Integer documentId;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }
