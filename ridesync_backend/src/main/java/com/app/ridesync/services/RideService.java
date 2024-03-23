@@ -131,32 +131,6 @@ public class RideService {
 		return res;
 	}
 
-
-	public GetRidesResponse getRides(Integer userId) {
-
-		GetRidesResponse res = new GetRidesResponse();
-		try {
-			List<Ride> rides = rideRepository.findAllByUserId(userId);
-
-			List<RideInfoResponse> rideInfos = rideInfoService.getAllRideInfo(rides);
-			List<RideResponse> resValue = new ArrayList<>();
-
-			for(int i=0;i<rides.size();i++) {
-				resValue.add(new RideResponse(rides.get(i),rideInfos.get(i),"Fetch Successfull", true));
-			}
-			res.setRides(resValue);
-		}catch(Exception e) {
-
-			res.setMessage("RideService: "+e.toString());
-			res.setSuccess(false);
-			return res;
-		}
-
-		res.setMessage("Successfully fetched Rides");
-		res.setSuccess(true);
-		return res;
-	}
-
 	public void updateStatus(Integer rideId, Integer userId, String status){
 		Ride ride = rideRepository.findByRideId(rideId);
 		ride.setStatus(status);

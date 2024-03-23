@@ -96,23 +96,6 @@ public class RideInfoService {
 		return res;		
 	}
 
-	public List<RideInfoResponse> getAllRideInfo(List<Ride> rides) {
-		List<RideInfoResponse> res = new ArrayList<>();
-		
-		for(Ride r:rides) {
-			RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(r.getRideId(),r.getUserId());
-			
-			Location loc1 = locationService.findLocationById(rideInfo.getStartLocationId());
-			Location loc2 = locationService.findLocationById(rideInfo.getEndLocationId());
-			Location pickupLocation = locationService.findLocationById(rideInfo.getPickupLocationId());
-
-			RideInfoResponse temp = new RideInfoResponse(loc1, loc2, rideInfo, pickupLocation);
-			
-			res.add(temp);
-		}
-		return res;
-	}
-
 	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup){
 		RideInfoResponse res = new RideInfoResponse();
 			res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
