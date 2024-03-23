@@ -29,7 +29,7 @@ class DocumentControllerTest {
 
 
     @Test
-    void testAddDocument() throws Exception {
+    void addDocumentTest() throws Exception {
 
         // Arrange
         DocumentInput documentInput = new DocumentInput();
@@ -49,7 +49,7 @@ class DocumentControllerTest {
     }
 
     @Test
-    void testDeleteDocument() throws Exception {
+    void deleteDocumentTest() throws Exception {
 
         // Arrange
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -62,7 +62,7 @@ class DocumentControllerTest {
 
 
     @Test
-    void testUpdateDocument() throws Exception {
+    void updateDocumentTest() throws Exception {
 
         // Arrange
         DocumentInput documentInput = new DocumentInput();
