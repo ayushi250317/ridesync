@@ -11,6 +11,7 @@ import { SiLivechat } from "react-icons/si";
 import { GrMapLocation } from "react-icons/gr";
 import { GoogleMap, useJsApiLoader, Marker, DirectionsRenderer } from '@react-google-maps/api';
 import { dateAndTimeInString, extractAddress } from "../Utils";
+import ChatDrawer from "../Chat/ChatDrawer";
 
 const libraries = ['places'];
 
@@ -21,18 +22,19 @@ const Activity = ({ route }) => {
     });
     const backbtn = "<"
     const navigate = useNavigate();
+    const toast = useToast();
+    const isMobile = useBreakpointValue({ base: true, md: false });
     const location = useLocation();
     const { rideId, isDriver } = location.state;
     const [isLoading, setIsLoading] = useState(null);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
-    const isMobile = useBreakpointValue({ base: true, md: false });
     const [requests, setRequests] = useState(null);
     const [riders, setRiders] = useState([])
     const [rideInfo, setRideInfo] = useState({});
-    const toast = useToast();
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [markers, setMarkers] = useState([]);
-
+    const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
+    const [chatUserId, setchatUserId] = useState(null);
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
         if (loggedInUserInfo) {
@@ -74,7 +76,19 @@ const Activity = ({ route }) => {
                 }).finally(() => setIsLoading(false));
         }
     }, [])
+
+    const toggleChatDrawer = () => setIsChatDrawerOpen(!isChatDrawerOpen);
+
     const handleRequestUpdate = (requestId, status) => {
+        if (status === "ACCEPTED" && rideInfo.seatsAvailable <= riders.length + 1) {
+            toast({
+                title: "Max capacity reached",
+                status: 'error',
+                duration: 5000,
+                isClosable: true,
+            });
+            return
+        }
         const reqBody = {
             "requestStatus": status
         }
@@ -83,9 +97,38 @@ const Activity = ({ route }) => {
         };
         axios.put(`${API}/request/updateRideRequest/${requestId}`, reqBody, config).then(resp => {
             if (resp.data.success) {
-                setRequests(currentRequests => currentRequests.map(request =>
-                    request.rideRequestId === requestId ? { ...request, requestStatus: status } : request
+                let modifiedRequest;
+                setRequests(currentRequests => currentRequests.map(request => {
+                    if (request.rideRequestId === requestId) {
+                        modifiedRequest = request
+                        return { ...request, requestStatus: status }
+                    } else {
+                        return request
+                    }
+                }
                 ));
+                if (status === "ACCEPTED") {
+                    let newRider = {
+                        "riderName": modifiedRequest.riderName,
+                        "riderId": modifiedRequest.riderId,
+                        "IsDriver": false,
+                        "startLocationAddress": modifiedRequest.pickupAddress,
+                        "startLocationLandmark": "",
+                        "startLat": modifiedRequest.pickupLat,
+                        "startLong": modifiedRequest.pickupLong,
+                        "endLocationAddress": modifiedRequest.dropAddress,
+                        "endLocationLandmark": "",
+                        "endLat": modifiedRequest.dropLat,
+                        "endLong": modifiedRequest.dropLong,
+                        "fare": 0,
+                        "comments": null,
+                        "rating": null,
+                        "waitTime": null,
+                        "riderTripStartTime": modifiedRequest.tripStartTime,
+                        "riderTripEndTime": null
+                    }
+                    setRiders(currentRiders => [...currentRiders, newRider])
+                }
                 toast({
                     title: "Request updated",
                     status: "success",
@@ -125,19 +168,26 @@ const Activity = ({ route }) => {
             return <></>
         } else if (isDriverCard && !isDriver) {
             return (<Flex>
-                <SiLivechat />
-                <GrMapLocation />
+                <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
+                    toggleChatDrawer();
+                    setchatUserId(riderInfo.driverId);
+                }}>
+                    {isMobile ? '' : 'chat'}
+                </Button>
             </Flex>)
         } else if (!isDriverCard && isDriver) {
             return (
                 <Stack direction='row' spacing={1}>
-                    <Button leftIcon={<SiLivechat />} variant='ghost'>
-                        { }
+                    <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
+                        toggleChatDrawer();
+                        setchatUserId(riderInfo.riderId);
+                    }}>
+                        {isMobile ? '' : 'chat'}
                     </Button>
                     <Button leftIcon={<GrMapLocation />} variant='ghost' onClick={() => {
                         setMarkers([...markers, ...newMarkers]);
                     }}>
-                        { }
+                        {isMobile ? '' : 'map'}
                     </Button>
                 </Stack>)
         }
@@ -226,7 +276,7 @@ const Activity = ({ route }) => {
                             {
                                 riders && Array.from({ length: rideInfo.seatsAvailable + 1 }, (_, index) => {
                                     if (riders[index]) {
-                                        let { riderName, IsDriver, startLocationAddress, endLocationAddress, fare, riderTripStartTime, riderTripEndTime } = riders[index];
+                                        let { riderName, IsDriver, startLocationAddress, endLocationAddress, riderTripStartTime } = riders[index];
                                         return (
                                             <Card>
                                                 <CardHeader>
@@ -240,7 +290,11 @@ const Activity = ({ route }) => {
                                                     </Flex>
                                                 </CardHeader>
                                                 <CardBody>
-                                                    <Text>View a summary of all your customers over the last month.</Text>
+                                                    {isDriver && !IsDriver && <Flex direction="column">
+                                                        <Text><b>Pickup Location:</b>{" " + startLocationAddress}</Text>
+                                                        <Text><b>Drop Location:</b>{" " + endLocationAddress}</Text>
+                                                        <Text><b>Pickup Time:</b>{" " + riderTripStartTime[3] + ":" + riderTripStartTime[4]}</Text>
+                                                    </Flex>}
                                                 </CardBody>
                                                 <CardFooter>
                                                     <RiderFooter isDriverCard={IsDriver} isDriver={isDriver} riderInfo={riders[index]} index={index} />
@@ -307,6 +361,11 @@ const Activity = ({ route }) => {
                         </Box>
                     </Flex>
                 </Flex>
+                <ChatDrawer
+                    isOpen={isChatDrawerOpen}
+                    onClose={toggleChatDrawer}
+                    chatPartnerId={chatUserId}
+                />
             </>
         )
     }
