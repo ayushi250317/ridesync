@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "de7e5337-83f8-4eda-a578-ba1f5f991921",
+		"_postman_id": "bda10cdc-527e-47d8-a283-ff9086caad7a",
 		"name": "RideSync",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "16764820"
@@ -1103,7 +1103,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyNTIifQ.7KjwphRNd7qYUwpHonAaJ_QLmrOLax_t7r_ha2FIork",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
 									"type": "string"
 								}
 							]
@@ -1112,7 +1112,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"senderId\": 2,\n    \"recipientId\":1,\n    \"chatIdentifier\": \"\"\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1120,7 +1120,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8073/api/v1/message/chatIdentifier",
+							"raw": "http://localhost:8073/api/v1/message/chatIdentifier/3",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1130,47 +1130,15 @@
 								"api",
 								"v1",
 								"message",
-								"chatIdentifier"
+								"chatIdentifier",
+								"3"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "GetMessagesForRecipient",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMDIifQ.JFnpVVS_StfRxcbep4h8zkOsJE3a3J146qU4SR0aAj4",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8073/api/v1/message/messages/302",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8073",
-							"path": [
-								"api",
-								"v1",
-								"message",
-								"messages",
-								"302"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "GetMessagesForRecipient Copy",
+					"name": "GetMessagesBetweenUsers",
 					"protocolProfileBehavior": {
 						"disableBodyPruning": true
 					},
@@ -1180,7 +1148,7 @@
 							"bearer": [
 								{
 									"key": "token",
-									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIzMDIifQ.JFnpVVS_StfRxcbep4h8zkOsJE3a3J146qU4SR0aAj4",
+									"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiI1MiJ9.6rSyai9Rh6lecYoaX_eChnuLj-EF2o29u6jK3ea4O0s",
 									"type": "string"
 								}
 							]
@@ -1189,7 +1157,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"senderId\": 302,\n    \"recipientId\":302\n}",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1197,7 +1165,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8073/api/v1/message/messageHistory",
+							"raw": "http://localhost:8073/api/v1/message/messageHistory/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -1207,7 +1175,8 @@
 								"api",
 								"v1",
 								"message",
-								"messageHistory"
+								"messageHistory",
+								"2"
 							]
 						}
 					},
