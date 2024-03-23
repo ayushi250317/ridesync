@@ -5,12 +5,15 @@ import { MdAccessTimeFilled } from "react-icons/md";
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
 import { useNavigate } from 'react-router-dom';
+import { FaCar, FaRegCircle } from 'react-icons/fa';
+import { ImLocation2 } from 'react-icons/im';
 const FindRideLocation = () => {
     const navigate = useNavigate();
     const toast = useToast();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const [handleReqloading, setHandleReqloading] = useState(false)
     const [reqSent, setReqSent] = useState(false)
 
     const [fromAddress, setFromAddress] = useState({
@@ -79,6 +82,7 @@ const FindRideLocation = () => {
     }
 
     const handleRequestRide = (rideId, driverId) => {
+        setHandleReqloading(true)
         const newReqObj = {
             estimatedTripStartTime: rideTime,
             lattitude1: fromAddress.lat,
@@ -109,6 +113,7 @@ const FindRideLocation = () => {
         }).catch(err => {
             console.log("err in req ride", err);
         }).finally(() => {
+            setHandleReqloading(false)
         })
 
     }
@@ -122,7 +127,7 @@ const FindRideLocation = () => {
 
             <Flex w="100%" justifyContent="center" alignItems="center" ml="2">
 
-                <Box mr="2">
+                <Box mr="2" >
                     <MdAccessTimeFilled size="24px" />
                 </Box>
                 <Input type='datetime-local' placeholder='Enter start time' w="98%" value={rideTime} onChange={(e) => setRideTime(e.target.value)} />
@@ -130,32 +135,59 @@ const FindRideLocation = () => {
             <Button onClick={() => { handleSubmitFindRide(fromAddress, toAddress, rideTime, loggedInUserDetails.token) }} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
         </Center>
 
-        <Box>
+        <Box mb="20">
             {reqSent && findRidesResult.length === 0 ? <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text> :
-                <Box>
+                <Box w="100%"  >
                     {reqSent && <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text>}
                     {findRidesResult.map(rides => {
-                        return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
-                            <Flex justifyContent="space-between">
-                                <Box>
-                                    <Text>
-                                        Start Location: {rides.startLocationAddress}
-                                    </Text>
-                                    <Text>
-                                        End Location: {rides.endLocationAddress}
-                                    </Text>
-                                    <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
-                                    <Text>
-                                        Seat available : {rides.seatsAvailable}
-                                    </Text>
-                                    <Text>
-                                        Fare: ${rides.fare}
-                                    </Text>
-                                </Box>
+                        return <Box border="1px solid #D4D4D4" borderRadius="xl" my="5" p={["4", "4", "5", "6"]} boxShadow="xl" >
+                            <Box >
+                                <Flex justifyContent="space-between">
 
-                            </Flex>
+
+                                    <Text fontWeight="bold">{`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} at ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                    <Text>
+                                        {rides.seatsAvailable} seats left - <span style={{ color: "blue" }}>
+                                            ${rides.fare}
+                                        </span>
+                                    </Text>
+
+                                </Flex>
+                                <Flex alignItems="center" my="2">
+                                    <FaRegCircle size="15px" color='blue' />
+
+                                    <Text className='mx-2'>
+                                        {rides.startLocationAddress}
+                                    </Text>
+                                </Flex>
+                                <Flex alignItems="center" my="2" ml="-1">
+
+                                    <ImLocation2 size="20px" color='green' />
+
+                                    <Text className='mx-2'>
+                                        {rides.endLocationAddress}
+                                    </Text>
+                                </Flex>
+                                <Flex alignItems="center" my="2" ml="-1">
+
+
+                                    <Text className='mx-2'>
+                                        {rides.rideVehicle}
+                                    </Text>
+                                    <FaCar size="20px" />
+                                </Flex>
+                                {/* <Text>
+                                        End Location: {rides.endLocationAddress}
+                                    </Text> */}
+
+                                {/* 
+                                <Text>
+                                    Fare: ${rides.fare}
+                                </Text> */}
+
+                            </Box>
                             <Flex justifyContent="flex-end" mt="1">
-                                <Button colorScheme='green' mr="1" isDisabled={!rides.enableRequestRide} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
+                                <Button colorScheme='green' mr="3" isDisabled={!rides.enableRequestRide || loading} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
                                 <Button colorScheme='blue'
                                     onClick={() => {
                                         localStorage.setItem('searchInfo', JSON.stringify({ fromAddress, toAddress, rideTime }));
