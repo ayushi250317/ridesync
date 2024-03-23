@@ -93,15 +93,7 @@ class VehicleServiceTest {
         vehicle.setUserId(1);
         vehicle.setVehicleId(1);
 
-        Vehicle vehicle2 = new Vehicle();
-        vehicle2.setDocumentId(1);
-        vehicle2.setMake("Make");
-        vehicle2.setModel("Model");
-        vehicle2.setRegNo("Reg No");
-        vehicle2.setType("Type");
-        vehicle2.setUserId(1);
-        vehicle2.setVehicleId(1);
-        when(vehicleRepository.save(Mockito.<Vehicle>any())).thenReturn(vehicle2);
+        when(vehicleRepository.save(Mockito.<Vehicle>any())).thenReturn(vehicle);
         when(vehicleRepository.findByVehicleId(Mockito.<Integer>any())).thenReturn(vehicle);
 
         VehicleResponse actualUpdateVehicleByIdResult = vehicleService.updateVehicleById(new VehicleInput());
@@ -110,7 +102,7 @@ class VehicleServiceTest {
         verify(vehicleRepository).save(Mockito.<Vehicle>any());
         assertEquals("Updated Selected Vehicle Successfully", actualUpdateVehicleByIdResult.getMessage());
         assertTrue(actualUpdateVehicleByIdResult.isSuccess());
-        assertSame(vehicle2, actualUpdateVehicleByIdResult.getVehicle());
+        assertSame(vehicle, actualUpdateVehicleByIdResult.getVehicle());
     }
 
 

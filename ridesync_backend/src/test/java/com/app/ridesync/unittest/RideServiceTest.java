@@ -61,10 +61,18 @@ class RideServiceTest {
 
     @Test
     void addRideTest() {
+
+
         Ride ride = new Ride();
+
+        GeoPoint geopoint = new GeoPoint();
+        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
+        geopoint.setId(1);
+        geopoint.setRide(ride);
+
         ride.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
         ride.setDescription("The characteristics of someone or something");
-        ride.setGeopoint(new GeoPoint());
+        ride.setGeopoint(geopoint);
         ride.setOneTimePassword(1);
         ride.setRideId(1);
         ride.setSeatsAvailable(1);
@@ -73,27 +81,10 @@ class RideServiceTest {
         ride.setUserId(1);
         ride.setVehicleId(1);
 
-        GeoPoint geopoint = new GeoPoint();
-        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint.setId(1);
-        geopoint.setRide(ride);
-
-        Ride ride2 = new Ride();
-        ride2.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setDescription("The characteristics of someone or something");
-        ride2.setGeopoint(geopoint);
-        ride2.setOneTimePassword(1);
-        ride2.setRideId(1);
-        ride2.setSeatsAvailable(1);
-        ride2.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setStatus("Status");
-        ride2.setUserId(1);
-        ride2.setVehicleId(1);
-
         GeoPoint geopoint2 = new GeoPoint();
         geopoint2.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
         geopoint2.setId(1);
-        geopoint2.setRide(ride2);
+        geopoint2.setRide(ride);
 
         Ride ride3 = new Ride();
         ride3.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
@@ -181,9 +172,15 @@ class RideServiceTest {
         when(rideInfoService.updateRideInfo(Mockito.<RideInfoInput>any())).thenReturn(buildResult);
 
         Ride ride = new Ride();
+
+        GeoPoint geopoint = new GeoPoint();
+        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
+        geopoint.setId(1);
+        geopoint.setRide(ride);
+
         ride.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
         ride.setDescription("The characteristics of someone or something");
-        ride.setGeopoint(new GeoPoint());
+        ride.setGeopoint(geopoint);
         ride.setOneTimePassword(1);
         ride.setRideId(1);
         ride.setSeatsAvailable(1);
@@ -192,87 +189,8 @@ class RideServiceTest {
         ride.setUserId(1);
         ride.setVehicleId(1);
 
-        GeoPoint geopoint = new GeoPoint();
-        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint.setId(1);
-        geopoint.setRide(ride);
-
-        Ride ride2 = new Ride();
-        ride2.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setDescription("The characteristics of someone or something");
-        ride2.setGeopoint(geopoint);
-        ride2.setOneTimePassword(1);
-        ride2.setRideId(1);
-        ride2.setSeatsAvailable(1);
-        ride2.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setStatus("Status");
-        ride2.setUserId(1);
-        ride2.setVehicleId(1);
-
-        GeoPoint geopoint2 = new GeoPoint();
-        geopoint2.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint2.setId(1);
-        geopoint2.setRide(ride2);
-
-        Ride ride3 = new Ride();
-        ride3.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride3.setDescription("The characteristics of someone or something");
-        ride3.setGeopoint(geopoint2);
-        ride3.setOneTimePassword(1);
-        ride3.setRideId(1);
-        ride3.setSeatsAvailable(1);
-        ride3.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride3.setStatus("Status");
-        ride3.setUserId(1);
-        ride3.setVehicleId(1);
-
-        Ride ride4 = new Ride();
-        ride4.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride4.setDescription("The characteristics of someone or something");
-        ride4.setGeopoint(new GeoPoint());
-        ride4.setOneTimePassword(1);
-        ride4.setRideId(1);
-        ride4.setSeatsAvailable(1);
-        ride4.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride4.setStatus("Status");
-        ride4.setUserId(1);
-        ride4.setVehicleId(1);
-
-        GeoPoint geopoint3 = new GeoPoint();
-        geopoint3.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint3.setId(1);
-        geopoint3.setRide(ride4);
-
-        Ride ride5 = new Ride();
-        ride5.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride5.setDescription("The characteristics of someone or something");
-        ride5.setGeopoint(geopoint3);
-        ride5.setOneTimePassword(1);
-        ride5.setRideId(1);
-        ride5.setSeatsAvailable(1);
-        ride5.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride5.setStatus("Status");
-        ride5.setUserId(1);
-        ride5.setVehicleId(1);
-
-        GeoPoint geopoint4 = new GeoPoint();
-        geopoint4.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint4.setId(1);
-        geopoint4.setRide(ride5);
-
-        Ride ride6 = new Ride();
-        ride6.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride6.setDescription("The characteristics of someone or something");
-        ride6.setGeopoint(geopoint4);
-        ride6.setOneTimePassword(1);
-        ride6.setRideId(1);
-        ride6.setSeatsAvailable(1);
-        ride6.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride6.setStatus("Status");
-        ride6.setUserId(1);
-        ride6.setVehicleId(1);
-        when(rideRepository.save(Mockito.<Ride>any())).thenReturn(ride6);
-        when(rideRepository.findByRideId(Mockito.<Integer>any())).thenReturn(ride3);
+        when(rideRepository.save(Mockito.<Ride>any())).thenReturn(ride);
+        when(rideRepository.findByRideId(Mockito.<Integer>any())).thenReturn(ride);
 
         RideResponse actualUpdateRideResult = rideService.updateRide(new RideInput());
 
@@ -286,15 +204,21 @@ class RideServiceTest {
         assertNull(ride7.getStartTime());
         assertEquals(0, ride7.getSeatsAvailable().intValue());
         assertTrue(actualUpdateRideResult.isSuccess());
-        assertSame(ride3, ride7);
+        assertSame(ride, ride7);
     }
 
     @Test
     void updateStatusTest() {
         Ride ride = new Ride();
+
+        GeoPoint geopoint = new GeoPoint();
+        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
+        geopoint.setId(1);
+        geopoint.setRide(ride);
+
         ride.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
         ride.setDescription("The characteristics of someone or something");
-        ride.setGeopoint(new GeoPoint());
+        ride.setGeopoint(geopoint);
         ride.setOneTimePassword(1);
         ride.setRideId(1);
         ride.setSeatsAvailable(1);
@@ -303,87 +227,8 @@ class RideServiceTest {
         ride.setUserId(1);
         ride.setVehicleId(1);
 
-        GeoPoint geopoint = new GeoPoint();
-        geopoint.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint.setId(1);
-        geopoint.setRide(ride);
-
-        Ride ride2 = new Ride();
-        ride2.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setDescription("The characteristics of someone or something");
-        ride2.setGeopoint(geopoint);
-        ride2.setOneTimePassword(1);
-        ride2.setRideId(1);
-        ride2.setSeatsAvailable(1);
-        ride2.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride2.setStatus("Status");
-        ride2.setUserId(1);
-        ride2.setVehicleId(1);
-
-        GeoPoint geopoint2 = new GeoPoint();
-        geopoint2.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint2.setId(1);
-        geopoint2.setRide(ride2);
-
-        Ride ride3 = new Ride();
-        ride3.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride3.setDescription("The characteristics of someone or something");
-        ride3.setGeopoint(geopoint2);
-        ride3.setOneTimePassword(1);
-        ride3.setRideId(1);
-        ride3.setSeatsAvailable(1);
-        ride3.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride3.setStatus("Status");
-        ride3.setUserId(1);
-        ride3.setVehicleId(1);
-
-        Ride ride4 = new Ride();
-        ride4.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride4.setDescription("The characteristics of someone or something");
-        ride4.setGeopoint(new GeoPoint());
-        ride4.setOneTimePassword(1);
-        ride4.setRideId(1);
-        ride4.setSeatsAvailable(1);
-        ride4.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride4.setStatus("Status");
-        ride4.setUserId(1);
-        ride4.setVehicleId(1);
-
-        GeoPoint geopoint3 = new GeoPoint();
-        geopoint3.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint3.setId(1);
-        geopoint3.setRide(ride4);
-
-        Ride ride5 = new Ride();
-        ride5.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride5.setDescription("The characteristics of someone or something");
-        ride5.setGeopoint(geopoint3);
-        ride5.setOneTimePassword(1);
-        ride5.setRideId(1);
-        ride5.setSeatsAvailable(1);
-        ride5.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride5.setStatus("Status");
-        ride5.setUserId(1);
-        ride5.setVehicleId(1);
-
-        GeoPoint geopoint4 = new GeoPoint();
-        geopoint4.setGeoPointRecord(new GeoPointRecord(new ArrayList<>()));
-        geopoint4.setId(1);
-        geopoint4.setRide(ride5);
-
-        Ride ride6 = new Ride();
-        ride6.setCreatedTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride6.setDescription("The characteristics of someone or something");
-        ride6.setGeopoint(geopoint4);
-        ride6.setOneTimePassword(1);
-        ride6.setRideId(1);
-        ride6.setSeatsAvailable(1);
-        ride6.setStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        ride6.setStatus("Status");
-        ride6.setUserId(1);
-        ride6.setVehicleId(1);
-        when(rideRepository.save(Mockito.<Ride>any())).thenReturn(ride6);
-        when(rideRepository.findByRideId(Mockito.<Integer>any())).thenReturn(ride3);
+        when(rideRepository.save(Mockito.<Ride>any())).thenReturn(ride);
+        when(rideRepository.findByRideId(Mockito.<Integer>any())).thenReturn(ride);
 
         rideService.updateStatus(1, 1, "Status");
 
