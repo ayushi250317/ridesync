@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, Center, Flex, Input, Text, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Locations from '../../sharedComponent/Maps/Locations'
