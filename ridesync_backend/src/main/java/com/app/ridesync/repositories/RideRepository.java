@@ -40,12 +40,15 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ "JOIN User user ON rideInfo.userId = user.userId "
 			+ "WHERE rideInfo.userId = :userId")
 
+
 	List<RideHistoryProjection> findRidesByUserId(@Param("userId") Integer userId);
 
 	@Query ("SELECT "
-			+ "NEW com.app.ridesync.projections.RideInfoProjection(user.fullName AS riderName, rideInfo.isDriver, "
+			+ "NEW com.app.ridesync.projections.RideInfoProjection(user.fullName AS riderName,user.userId riderId ,rideInfo.isDriver, "
 			+ "startLocation.address AS startLocationAddress, startLocation.landmark AS startLocationLandmark, "
+			+ "startLocation.lattitude startLat, startLocation.longitude startLong, "
 			+ "endLocation.address AS endLocationAddress, endLocation.landmark AS endLocationLandmark, "
+			+ "endLocation.lattitude endLat, endLocation.longitude endLong, "
 			+ "rideInfo.fare,rideInfo.comments,rideInfo.rating,rideInfo.waitTime,rideInfo.estimatedTripStartTime AS riderTripStartTime, rideInfo.estimatedTripEndTime AS riderTripEndTime) "
 
 			+ "FROM RideInfo rideInfo "
@@ -55,15 +58,22 @@ public interface RideRepository extends JpaRepository<Ride, Integer> {
 			+ "WHERE rideInfo.rideId = :rideId")
 	List<RideInfoProjection> findRideInfoByRideId(@Param("rideId") Integer rideId);
 
+
+
 	@Query ("SELECT "
 			+ "NEW com.app.ridesync.projections.RideHeaderProjection(ride.description,ride.startTime AS originalTripStartTime, "
 			+ "ride.createdTime as tripPostedTime, ride.status, "
-			+ "vehicle.model AS rideVehicle, "
-			+ "geoPoint.geoPointRecord as routeCoordinates) "		
+			+ "ride.seatsAvailable,"
+			+ "startLocation.address startLocationAddress, "
+			+ "endLocation.address endLocationAddress,"
+			+ "vehicle.model AS rideVehicle) "
 			+ "FROM Ride ride "
+			+ "JOIN RideInfo rideInfo ON ride.rideId = rideInfo.rideId AND rideInfo.isDriver "
+			+ "JOIN Location startLocation ON rideInfo.startLocationId = startLocation.locationId "
+			+ "JOIN Location endLocation ON rideInfo.endLocationId = endLocation.locationId "
 			+ "JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId "
-			+ "JOIN ride.geopoint geoPoint "
 			+ "WHERE ride.rideId = :rideId")
+
 
 	List<RideHeaderProjection> findRideHeaderInfoByRideId(@Param("rideId") Integer rideId);
 
