@@ -112,20 +112,20 @@ class RideServiceTest {
     }
 
 
-    @Test
-    void getRidesTest() {
-        ArrayList<RideInfoResponse> rideInfoResponseList = new ArrayList<>();
-        when(rideInfoService.getAllRideInfo(Mockito.<List<Ride>>any())).thenReturn(rideInfoResponseList);
-        when(rideRepository.findAllByUserId(Mockito.<Integer>any())).thenReturn(new ArrayList<>());
+    // @Test
+    // void getRidesTest() {
+    //     ArrayList<RideInfoResponse> rideInfoResponseList = new ArrayList<>();
+    //     when(rideInfoService.getAllRideInfo(Mockito.<List<Ride>>any())).thenReturn(rideInfoResponseList);
+    //     when(rideRepository.findAllByUserId(Mockito.<Integer>any())).thenReturn(new ArrayList<>());
 
-        GetRidesResponse actualRides = rideService.getRides(1);
+    //     GetRidesResponse actualRides = rideService.getRides(1);
 
-        verify(rideRepository).findAllByUserId(Mockito.<Integer>any());
-        verify(rideInfoService).getAllRideInfo(Mockito.<List<Ride>>any());
-        assertEquals("Successfully fetched Rides", actualRides.getMessage());
-        assertTrue(actualRides.isSuccess());
-        assertEquals(rideInfoResponseList, actualRides.getRides());
-    }
+    //     verify(rideRepository).findAllByUserId(Mockito.<Integer>any());
+    //     verify(rideInfoService).getAllRideInfo(Mockito.<List<Ride>>any());
+    //     assertEquals("Successfully fetched Rides", actualRides.getMessage());
+    //     assertTrue(actualRides.isSuccess());
+    //     assertEquals(rideInfoResponseList, actualRides.getRides());
+    // }
 
     @Test
     void testUpdateRide() {

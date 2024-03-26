@@ -145,7 +145,7 @@ public class RideService {
 
 	public RideDetailProjection getRideDetailProjection(Integer rideId) {
 		List<RideHeaderProjection> rideHeaderProjections=rideRepository.findRideHeaderInfoByRideId(rideId);
-		List<RideInfoProjection> rideInfoProjections=rideRepository.findRideInfoByRideId(rideId)
+		List<RideInfoProjection> rideInfoProjections=rideRepository.findRideInfoByRideId(rideId);
 		return new RideDetailProjection(rideHeaderProjections,rideInfoProjections);	
 
 	}
