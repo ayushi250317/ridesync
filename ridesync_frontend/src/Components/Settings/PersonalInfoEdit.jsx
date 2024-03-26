@@ -9,7 +9,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { API } from "../../sharedComponent/API";
 import { useNavigate } from "react-router-dom"
 import { yupResolver } from "@hookform/resolvers/yup";
