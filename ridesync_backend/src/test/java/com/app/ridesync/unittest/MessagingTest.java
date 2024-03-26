@@ -20,7 +20,7 @@ import com.app.ridesync.services.MessageService;
 @ExtendWith(MockitoExtension.class)
 public class MessagingTest {
 	@Mock
-	private ChatIdentifierRepository chatIdentifierRepository;
+	private ChatIdentifierRepository chatIdentifierIdentifierRepository;
 
 	@InjectMocks
 	private MessageService messageService;
@@ -29,31 +29,31 @@ public class MessagingTest {
 
 	@Test
 	void testGetChatIdentifierLength() {
-		ChatIdentifier chat = new ChatIdentifier();
-		chat.setSenderId(1);
-		chat.setRecipientId(2);
+		ChatIdentifier chatIdentifier = new ChatIdentifier();
+		chatIdentifier.setSenderId(1);
+		chatIdentifier.setRecipientId(2);
 
-		when(chatIdentifierRepository.findBySenderAndRecipientId(chat.getSenderId(),chat.getRecipientId())).thenReturn(null);
+		when(chatIdentifierIdentifierRepository.findBySenderAndRecipientId(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId())).thenReturn(null);
 
 		int expectedLength = 36; // length of UUID
-		int actualLength = messageService.getChatIdentifier(chat).length();
+		int actualLength = messageService.getChatIdentifier(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId()).length();
 
-		verify(chatIdentifierRepository).findBySenderAndRecipientId(chat.getSenderId(),chat.getRecipientId());
+		verify(chatIdentifierIdentifierRepository).findBySenderAndRecipientId(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId());
 
 		assertEquals(expectedLength,actualLength);
 	}
 
 	@Test
 	void testGetChatIdenfier_Valid() {
-		ChatIdentifier chat = new ChatIdentifier();
-		chat.setSenderId(1);
-		chat.setRecipientId(2);
+		ChatIdentifier chatIdentifier= new ChatIdentifier();
+		chatIdentifier.setSenderId(1);
+		chatIdentifier.setRecipientId(2);
 
-		when(chatIdentifierRepository.findBySenderAndRecipientId(chat.getSenderId(),chat.getRecipientId())).thenReturn(null);
+		when(chatIdentifierIdentifierRepository.findBySenderAndRecipientId(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId())).thenReturn(null);
 
-		String generatedUUID = messageService.getChatIdentifier(chat);
+		String generatedUUID = messageService.getChatIdentifier(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId());
 
-		verify(chatIdentifierRepository).findBySenderAndRecipientId(chat.getSenderId(),chat.getRecipientId());
+		verify(chatIdentifierIdentifierRepository).findBySenderAndRecipientId(chatIdentifier.getSenderId(),chatIdentifier.getRecipientId());
 
 		assertTrue(isValidUUID(generatedUUID));
 	}
