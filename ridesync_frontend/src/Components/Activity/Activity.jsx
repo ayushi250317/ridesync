@@ -1,3 +1,4 @@
+/* eslint-disable no-empty-pattern */
 import { Box, CardBody, CardHeader, Flex, Heading, Tab, TabIndicator, TabList, TabPanel, TabPanels, Tabs, useMediaQuery, Text, Card, Divider, Button, Center, Spinner, useToast } from "@chakra-ui/react";
 import BottomNavbar from "../Navbar/BottomNavbar";
 import Navbar from "../Navbar/Navbar";

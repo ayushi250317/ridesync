@@ -45,7 +45,7 @@ const Notification = () => {
             <Text fontSize="3xl" my="3" textAlign="center" ml="5" fontWeight="medium">Notifications</Text>
             <Center borderRadius="2xl" w={["", "", "70%", "50%"]} m="auto" flexDir="column" mt={["", "", "5", "5"]} >
                 <Box w="100%" overflow="auto" h={["90vh", "", "70vh", "70vh"]} mb={["10"]}>
-                    {notificationsArray.length ? notificationsArray.map(elem => <NotificationCard cardAttributes={elem} />) : <Text>No notifications available</Text>}
+                    {notificationsArray.length ? notificationsArray.map(elem => <NotificationCard cardAttributes={elem} />) : <Text textAlign="center">No notifications available</Text>}
                 </Box>
 
 

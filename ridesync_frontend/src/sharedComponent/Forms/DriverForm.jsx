@@ -17,14 +17,14 @@ const DriverForm = ({ onSubmitDriverDetails, loading }) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} style={{ width: "75%" }}>
             <FormControl isInvalid={errors.lNo}>
-                <FormLabel htmlFor='License Number'>License Number</FormLabel>
+                <FormLabel htmlFor='lNo'>License Number</FormLabel>
                 <Input w="100%"
                     id='lNo'
                     placeholder='License Number'
-                    onChange={(e) => setLicenseNo(e.target.value)}
                     {...register('lNo', {
                         required: 'license number is required',
                         minLength: { value: 5, message: 'Minimum length should be 5' },
+                        onChange: (e) => setLicenseNo(e.target.value)
                     })}
                 ></Input>
                 <FormErrorMessage>
@@ -33,13 +33,13 @@ const DriverForm = ({ onSubmitDriverDetails, loading }) => {
             </FormControl>
             <br />
             <FormControl isInvalid={errors.eDate}>
-                <FormLabel htmlFor='Expiry Date'>Expiry Date</FormLabel>
+                <FormLabel htmlFor='eDate'>Expiry Date</FormLabel>
                 <Input w="100%"
                     id='eDate'
                     type="date"
-                    onChange={(e) => setExpiryDate(e.target.value)}
                     {...register('eDate', {
                         required: 'Expiry Date is required',
+                        onChange: (e) => setExpiryDate(e.target.value)
                     })}
                 ></Input>
                 <FormErrorMessage>

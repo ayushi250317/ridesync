@@ -61,11 +61,6 @@ public class RideController {
 		}
 	}
 
-	@GetMapping("/getRide/{userId}")
-	public GetRidesResponse getRide(@PathVariable Integer userId) {
-		return rideService.getRides(userId);
-	}
-
 	@GetMapping("/getRides/{userId}")
 	public ResponseEntity<ApiResponse<List<RideHistoryProjection>>> getRidesForUser(@PathVariable Integer userId) {
 		try {

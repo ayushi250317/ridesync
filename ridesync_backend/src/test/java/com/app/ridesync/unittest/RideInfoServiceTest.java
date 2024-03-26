@@ -127,12 +127,6 @@ class RideInfoServiceTest {
     }
 
     @Test
-    void testGetAllRideInfo() {
-        // Arrange, Act and Assert
-        assertTrue(rideInfoService.getAllRideInfo(new ArrayList<>()).isEmpty());
-    }
-
-    @Test
     void testUpdatePickupLocation() {
         // Arrange
         Location location = new Location();

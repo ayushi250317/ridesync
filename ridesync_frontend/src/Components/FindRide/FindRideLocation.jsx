@@ -1,23 +1,22 @@
+/* eslint-disable no-unused-vars */
 import { Box, Button, Center, Flex, Input, Text, useToast } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
 import Locations from '../../sharedComponent/Maps/Locations'
 import { MdAccessTimeFilled } from "react-icons/md";
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
+import { useNavigate } from 'react-router-dom';
+import { FaCar, FaRegCircle } from 'react-icons/fa';
+import { ImLocation2 } from 'react-icons/im';
 const FindRideLocation = () => {
+    const navigate = useNavigate();
     const toast = useToast();
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const [findRidesResult, setFindRidesResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const [handleReqloading, setHandleReqloading] = useState(false)
     const [reqSent, setReqSent] = useState(false)
-    useEffect(() => {
-        const loggedInUserInfo = JSON.parse(
-            localStorage.getItem("loggedInUserDetails")
-        );
-        if (loggedInUserInfo) {
-            setLoggedInUserDetails(loggedInUserInfo);
-        }
-    }, []);
+
     const [fromAddress, setFromAddress] = useState({
         address: "",
         lat: null,
@@ -29,25 +28,47 @@ const FindRideLocation = () => {
         lng: null
     });
     const [rideTime, setRideTime] = useState("")
+
     console.log({ fromAddress, toAddress, rideTime });
 
-    const handleSubmitFindRide = () => {
+    useEffect(() => {
+        const loggedInUserInfo = JSON.parse(
+            localStorage.getItem("loggedInUserDetails")
+        );
+        if (loggedInUserInfo) {
+            setLoggedInUserDetails(loggedInUserInfo);
+            const searchInfo = JSON.parse(
+                localStorage.getItem("searchInfo")
+            );
+            if (searchInfo && searchInfo !== null) {
+                const hasAllKeys = ["fromAddress", "toAddress", "rideTime"].every(key => Object.keys(searchInfo).includes(key));
+                if (hasAllKeys) {
+                    setFromAddress(searchInfo.fromAddress);
+                    setToAddress(searchInfo.toAddress);
+                    setRideTime(searchInfo.rideTime);
+                    handleSubmitFindRide(searchInfo.fromAddress, searchInfo.toAddress, searchInfo.rideTime, loggedInUserInfo.token);
+                    localStorage.removeItem('searchInfo');
+                }
+            }
+        }
+    }, []);
+    const handleSubmitFindRide = (fromAdd, toAdd, time, token) => {
         const newObj = {
             source: {
-                lat: fromAddress.lat,
-                lng: fromAddress.lng,
+                lat: fromAdd.lat,
+                lng: fromAdd.lng,
             },
             destination: {
-                lat: toAddress.lat,
-                lng: toAddress.lng
+                lat: toAdd.lat,
+                lng: toAdd.lng
             },
-            rideTime: `${rideTime}:00.000000`
+            rideTime: `${time}:00.000000`
         }
         console.log("new obj", newObj);
         setLoading(true)
         setReqSent(true)
         const config = {
-            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
+            headers: { Authorization: `Bearer ${token}` },
         };
         axios.post(`${API}/geo/search`, newObj, config).then(resp => {
             console.log("search ride", resp.data);
@@ -62,6 +83,7 @@ const FindRideLocation = () => {
     }
 
     const handleRequestRide = (rideId, driverId) => {
+        setHandleReqloading(true)
         const newReqObj = {
             estimatedTripStartTime: rideTime,
             lattitude1: fromAddress.lat,
@@ -92,6 +114,7 @@ const FindRideLocation = () => {
         }).catch(err => {
             console.log("err in req ride", err);
         }).finally(() => {
+            setHandleReqloading(false)
         })
 
     }
@@ -105,47 +128,74 @@ const FindRideLocation = () => {
 
             <Flex w="100%" justifyContent="center" alignItems="center" ml="2">
 
-                <Box mr="2">
+                <Box mr="2" >
                     <MdAccessTimeFilled size="24px" />
                 </Box>
                 <Input type='datetime-local' placeholder='Enter start time' w="98%" value={rideTime} onChange={(e) => setRideTime(e.target.value)} />
             </Flex>
-            <Button onClick={handleSubmitFindRide} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
+            <Button onClick={() => { handleSubmitFindRide(fromAddress, toAddress, rideTime, loggedInUserDetails.token) }} mt="6" w={["70%", "70%", "50%", "30%"]} colorScheme='blue' isLoading={loading}>Submit</Button>
         </Center>
 
-        <Box>
+        <Box mb="20">
             {reqSent && findRidesResult.length === 0 ? <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text> :
-                <Box>
+                <Box w="100%"  >
                     {reqSent && <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text>}
                     {findRidesResult.map(rides => {
-                        return <Box border="1px solid lightgray" borderRadius="xl" m={["4", "4", "8", "10"]} p="5" boxShadow="xl">
-                            <Flex justifyContent="space-between">
-                                <Box>
+                        return <Box border="1px solid #D4D4D4" borderRadius="xl" my="5" p={["4", "4", "5", "6"]} boxShadow="xl" >
+                            <Box >
+                                <Flex justifyContent="space-between">
 
+
+                                    <Text fontWeight="bold">{`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} at ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
                                     <Text>
-
-                                        Start Location: {rides.startLocationAddress}
+                                        {rides.seatsAvailable} seats left - <span style={{ color: "blue" }}>
+                                            ${rides.fare}
+                                        </span>
                                     </Text>
-                                    <Text>
+
+                                </Flex>
+                                <Flex alignItems="center" my="2">
+                                    <FaRegCircle size="15px" color='blue' />
+
+                                    <Text className='mx-2'>
+                                        {rides.startLocationAddress}
+                                    </Text>
+                                </Flex>
+                                <Flex alignItems="center" my="2" ml="-1">
+
+                                    <ImLocation2 size="20px" color='green' />
+
+                                    <Text className='mx-2'>
+                                        {rides.endLocationAddress}
+                                    </Text>
+                                </Flex>
+                                <Flex alignItems="center" my="2" ml="-1">
+
+
+                                    <Text className='mx-2'>
+                                        {rides.rideVehicle}
+                                    </Text>
+                                    <FaCar size="20px" />
+                                </Flex>
+                                {/* <Text>
                                         End Location: {rides.endLocationAddress}
-                                    </Text>
-                                    <Text>Start Date: {`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
-                                    <Text>
-                                        Seat available : {rides.seatsAvailable}
-                                    </Text>
-                                </Box>
+                                    </Text> */}
 
-                            </Flex>
-
-                            <Center justifyContent="space-between">
-
-
+                                {/* 
                                 <Text>
                                     Fare: ${rides.fare}
-                                </Text>
+                                </Text> */}
 
-                                <Button colorScheme='green' isDisabled={!rides.enableRequestRide} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
-                            </Center>
+                            </Box>
+                            <Flex justifyContent="flex-end" mt="1">
+                                <Button colorScheme='green' mr="3" isDisabled={!rides.enableRequestRide || loading} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
+                                <Button colorScheme='blue'
+                                    onClick={() => {
+                                        localStorage.setItem('searchInfo', JSON.stringify({ fromAddress, toAddress, rideTime }));
+                                        navigate("/ride_info", { state: { rideId: rides.rideId, isDriver: false } })
+                                    }}>View Ride
+                                </Button>
+                            </Flex>
                         </Box>
                     })}
                 </Box>

@@ -3,11 +3,9 @@
 /* eslint-disable no-unused-vars */
 import {
     Box,
-    Button,
     Center,
     Flex,
     IconButton,
-    SkeletonText,
     Spinner,
     Text,
 } from '@chakra-ui/react'
@@ -167,7 +165,7 @@ const LiveLocationTracking = () => {
 
             navigator.geolocation.getCurrentPosition(success, error, options);
         }
-        const interval = setInterval(setDriverLocation, 20000);
+        const interval = setInterval(setDriverLocation, 5000);
         return () => {
             clearInterval(interval);
         };
