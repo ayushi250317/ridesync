@@ -9,15 +9,14 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.app.ridesync.dto.requests.MessageHistoryRequest;
 import com.app.ridesync.dto.responses.ApiResponse;
-import com.app.ridesync.entities.ChatIdentifier;
 import com.app.ridesync.entities.Message;
 import com.app.ridesync.projections.MessageProjection;
+import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.MessageService;
 
 @RestController
@@ -25,23 +24,27 @@ import com.app.ridesync.services.MessageService;
 @RequestMapping(path = "api/v1/message")
 public class MessageController {
 	private MessageService messageService;
-
+	private JwtService jwtService;
+	
 	@Autowired
-	public MessageController(MessageService messageService) {
+	public MessageController(MessageService messageService, JwtService jwtService) {
 		this.messageService = messageService;
-	}
-
+		this.jwtService = jwtService;
+	}	
+	
 	@MessageMapping("/send/{channelIdentifier}")
-	public void sendMessage(@PathVariable String channelIdentifier, Message message) {
+	public void sendMessage(@RequestHeader("Authorization") String jwtToken, @PathVariable String channelIdentifier, Message message){
+		message.setSenderId(jwtService.extractUserId(jwtToken.substring(7)));
+		
 		messageService.persistAndSendMessageToBroker(channelIdentifier, message);
 	}
-
-	@GetMapping("/chatIdentifier")
-	public ResponseEntity<ApiResponse<String>> getChatIdentifier(@RequestBody ChatIdentifier chat) {
+	
+	@GetMapping("/chatIdentifier/{recipientId}")
+	public ResponseEntity<ApiResponse<String>> getChatIdentifier(@RequestHeader("Authorization") String jwtToken, @PathVariable Integer recipientId) {
 		try {
-			String chatIdentifer = messageService.getChatIdentifier(chat);
-			ApiResponse<String> response = new ApiResponse<>(chatIdentifer, true,
-					"Chat Identifier was retrieved successfully");
+			Integer senderId = jwtService.extractUserId(jwtToken.substring(7));
+			String chatIdentifer = messageService.getChatIdentifier(senderId, recipientId);
+			
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(response);
 
@@ -52,10 +55,9 @@ public class MessageController {
 					.body(response);
 		}
 	}
-
-	@GetMapping("/messages/{recipientId}")
-	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesByRecipient(
-			@PathVariable int recipientId) {
+	
+/*	@GetMapping("/messages/{recipientId}")
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesByRecipient(@PathVariable Integer recipientId) {
 		try {
 			List<MessageProjection> messages = messageService.getChatMessagesByRecipientId(recipientId);
 			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(messages, true,
@@ -69,17 +71,14 @@ public class MessageController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
 					.body(response);
 		}
-	}
-
-	@GetMapping("/messageHistory")
-	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(
-			@RequestBody MessageHistoryRequest messageHistoryRequest) {
+	} */
+	
+	@GetMapping("/messageHistory/{recipientId}")
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(@RequestHeader("Authorization") String jwtToken, @PathVariable Integer recipientId) {
 		try {
-			Integer senderId=messageHistoryRequest.senderId();
-			Integer recepientId=messageHistoryRequest.recipientId();
-			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(senderId,recepientId);
-			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(messages, true,
-					"Chat Messages were retrieved successfully");
+			Integer senderId = jwtService.extractUserId(jwtToken.substring(7));
+			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(senderId, recipientId);
+			
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(response);
 
