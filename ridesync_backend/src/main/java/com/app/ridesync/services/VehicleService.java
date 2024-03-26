@@ -4,12 +4,9 @@ package com.app.ridesync.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.app.ridesync.dto.requests.DocumentInput;
 import com.app.ridesync.dto.requests.VehicleInput;
-import com.app.ridesync.dto.responses.DocumentResponse;
 import com.app.ridesync.dto.responses.VehicleResponse;
 import com.app.ridesync.dto.responses.GetVehicleResponse;
-import com.app.ridesync.entities.Document;
 import com.app.ridesync.entities.Vehicle;
 import com.app.ridesync.repositories.VehicleRepository;
 
@@ -23,7 +20,13 @@ public class VehicleService {
 		VehicleResponse res = new VehicleResponse();
 		
 		try {
-		Vehicle vehicle = new Vehicle(input.getRegNo(), input.getDocumentId(), input.getModel(), input.getMake(), input.getType(), input.getUserId());
+		Vehicle vehicle = new Vehicle();
+		vehicle.setRegNo(input.getRegNo());
+		vehicle.setDocumentId(input.getDocumentId());
+		vehicle.setModel(input.getModel());
+		vehicle.setMake(input.getMake());
+		vehicle.setType(input.getType());
+		vehicle.setUserId(input.getUserId());
 		Vehicle response = vehicleRepository.save(vehicle); 
 		
 		res.setVehicle(response);

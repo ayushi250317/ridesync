@@ -26,13 +26,13 @@ public class Notification {
     private Integer readFlag;
 
 
-    public Notification(LocalDateTime timestamp, Integer userId, String message, NotificationType notificationType, Integer contentId, Integer read) {
-        super();
-        this.timeStamp = timestamp;
-        this.userId = userId;
-        this.contentId = contentId;
-        this.message = message;
-        this.notificationType = notificationType;
-        this.readFlag = read;
-    }
+    // public Notification(LocalDateTime timestamp, Integer userId, String message, NotificationType notificationType, Integer contentId, Integer read) {
+    //     super();
+    //     this.timeStamp = timestamp;
+    //     this.userId = userId;
+    //     this.contentId = contentId;
+    //     this.message = message;
+    //     this.notificationType = notificationType;
+    //     this.readFlag = read;
+    // }
 }

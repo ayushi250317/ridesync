@@ -40,14 +40,19 @@ public class RideRequestService {
         public RideRequestResponse requestRide(String jwtToken, RideRequest rideRequest) {
                 jwtToken = jwtToken.substring(7);
                 Integer riderId=jwtService.extractUserId(jwtToken);
-                Location startLocation = locationService.addLocation(new Location(rideRequest.getLattitude1(),
-                rideRequest.getLongitude1(),
-                rideRequest.getLandmark1(),
-                rideRequest.getAddress1()));
-                Location endLocation = locationService.addLocation(new Location(rideRequest.getLattitude2(),
-                rideRequest.getLongitude2(),
-                rideRequest.getLandmark2(),
-                rideRequest.getAddress2()));
+                Location startLocation = new Location();
+                startLocation.setAddress(rideRequest.getAddress1());
+                startLocation.setLandmark(rideRequest.getLandmark1());
+                startLocation.setLattitude(rideRequest.getLattitude1());
+                startLocation.setLongitude(rideRequest.getLongitude1());
+                startLocation=locationService.addLocation(startLocation);
+
+                Location endLocation = new Location();
+                endLocation.setAddress(rideRequest.getAddress2());
+                endLocation.setLandmark(rideRequest.getLandmark2());
+                endLocation.setLattitude(rideRequest.getLattitude2());
+                endLocation.setLongitude(rideRequest.getLongitude2());
+                endLocation=locationService.addLocation(endLocation);
                 
                 RideRequestInfo rideRequestInfo = RideRequestInfo.builder()
                 .rideId(rideRequest.getRideId())
@@ -86,7 +91,9 @@ public class RideRequestService {
                 User driver=userRepository.findByUserId(rideRequestInfo.getDriverId());
                 if(requestStatus.equals("ACCEPTED")){
                         rideRequestInfo.setRequestStatus(RequestStatus.ACCEPTED);
-                        RideInfo driverRideInfo=rideInfoRepository.findByRideIdAndUserId(rideRequestInfo.getRideId(),rideRequestInfo.getDriverId());
+                        Integer rideId=rideRequestInfo.getRideId();
+                        Integer driverId=rideRequestInfo.getDriverId();
+                        RideInfo driverRideInfo=rideInfoRepository.findByRideIdAndUserId(rideId,driverId);
                         RideInfo rideInfo= RideInfo.builder()
                         .rideId(rideRequestInfo.getRideId())
                         .userId(rideRequestInfo.getRiderId())

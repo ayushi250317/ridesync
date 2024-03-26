@@ -43,8 +43,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.validateRequest(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -55,8 +57,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.authenticate(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -67,8 +71,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.forgotPassword(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -79,8 +85,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.resetPassword(id, token));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -91,8 +99,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.verifyEmail(id, email));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -102,8 +112,10 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.setNewPassword(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
@@ -113,12 +125,13 @@ public class AuthenticationController {
             @RequestBody RegisterRequest request) {
         try {
             Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+            ApiResponse<User> response = new ApiResponse<User>(service.updateUserDetails(request, userId), true,
+                    "Result set was retrieved successfully");
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiResponse<>(service.updateUserDetails(request, userId), true,
-                            "Result set was retrieved successfully"));
+                    .body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(null, false, "ERROR: " + e.getMessage()));
+            ApiResponse<User> response = new ApiResponse<>(null, false, "ERROR: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }

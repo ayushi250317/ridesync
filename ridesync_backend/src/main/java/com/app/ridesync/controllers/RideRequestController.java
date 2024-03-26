@@ -26,22 +26,28 @@ public class RideRequestController {
     public ResponseEntity<RideRequestResponse> addRide(@RequestHeader("Authorization") String jwtToken,
             @RequestBody RideRequest input) {
         try {
-            return ResponseEntity.ok(rideRequestService.requestRide(jwtToken, input));
+            RideRequestResponse response = rideRequestService.requestRide(jwtToken, input);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
+            RideRequestResponse response = RideRequestResponse.builder().success(false).message(e.getMessage()).build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(RideRequestResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
     @GetMapping("/getRideRequest")
     public ResponseEntity<ApiResponse<List<RideRequestProjection>>> getRide(@RequestParam Integer rideId) {
-      try {
+        try {
             List<RideRequestProjection> rides = rideRequestService.getRides(rideId);
+            ApiResponse<List<RideRequestProjection>> response = new ApiResponse<>(rides, true,
+                    "Result set was retrieved successfully");
             return ResponseEntity.status(HttpStatus.OK)
-								 .body(new ApiResponse<>(rides, true, "Result set was retrieved successfully"));
+                    .body(response);
         } catch (Exception e) {
-           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-							 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error: " + e.getMessage())); 
+            ApiResponse<List<RideRequestProjection>> response = new ApiResponse<>(null, false,
+                    "Result set retrieval failed with the following error: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(response);
         }
     }
 
@@ -50,10 +56,12 @@ public class RideRequestController {
     public ResponseEntity<RideRequestResponse> updateRideRequest(@RequestHeader("Authorization") String jwtToken,
             @PathVariable Integer id, @RequestBody RideRequest request) {
         try {
-            return ResponseEntity.ok(rideRequestService.updateRide(jwtToken, id, request));
+            RideRequestResponse response = rideRequestService.updateRide(jwtToken, id, request);
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
+            RideRequestResponse response = RideRequestResponse.builder().success(false).message(e.getMessage()).build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(RideRequestResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 }

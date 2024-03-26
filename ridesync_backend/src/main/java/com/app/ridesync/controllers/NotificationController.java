@@ -2,7 +2,6 @@ package com.app.ridesync.controllers;
 
 import com.app.ridesync.dto.responses.ApiResponse;
 import com.app.ridesync.entities.Notification;
-import com.app.ridesync.projections.RideHistoryProjection;
 import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.NotificationService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/notification")
 @RestController
 @RequiredArgsConstructor
@@ -26,15 +25,18 @@ public class NotificationController {
     private JwtService jwtService;
 
     @GetMapping("/getNotifications")
-    public ResponseEntity<ApiResponse<List<Notification>>> getNotifications(@RequestHeader("Authorization") String jwtToken){
+    public ResponseEntity<ApiResponse<List<Notification>>> getNotifications(
+            @RequestHeader("Authorization") String jwtToken) {
         try {
             Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-
+            ApiResponse<List<Notification>> response = new ApiResponse<>(notificationService.getNotification(userId),
+                    true, "Result set was retrieved successfully");
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiResponse<>(notificationService.getNotification(userId), true, "Result set was retrieved successfully"));
-        }catch(Exception e){
+                    .body(response);
+        } catch (Exception e) {
+            ApiResponse<List<Notification>> response = new ApiResponse<>(null, false, "ERROR: " + e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(null, false, "ERROR: " + e.getMessage()));
+                    .body(response);
         }
     }
 }

@@ -1,12 +1,14 @@
 package com.app.ridesync.config;
 
 import java.io.IOException;
+import java.util.Collection;
 
 import com.app.ridesync.entities.User;
 import com.app.ridesync.repositories.UserRepository;
 import com.app.ridesync.security.UserSecurity;
 import com.app.ridesync.services.JwtService;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -48,9 +50,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
         if(userId!=null && SecurityContextHolder.getContext().getAuthentication()==null) {
             User user=userRepository.findByUserId(userId);
             UserSecurity userSecurity=new UserSecurity(user);
+            String email=user.getEmail();
+            Collection<? extends GrantedAuthority> authorities=userSecurity.getAuthorities();
             if(jwtService.isTokenValid(jwt, user)) {
                 UsernamePasswordAuthenticationToken authToken= new UsernamePasswordAuthenticationToken
-                        (user.getEmail(), null,userSecurity.getAuthorities());
+                        (email,null,authorities);
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }

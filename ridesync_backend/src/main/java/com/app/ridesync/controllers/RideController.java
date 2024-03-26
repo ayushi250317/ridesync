@@ -22,8 +22,7 @@ import com.app.ridesync.services.RideService;
 
 import lombok.RequiredArgsConstructor;
 
-
-@CrossOrigin(origins="*")
+@CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/ride")
 @RestController
 @RequiredArgsConstructor
@@ -36,7 +35,6 @@ public class RideController {
 	@Autowired
 	private JwtService jwtService;
 
-
 	@PostMapping("/addRide")
 	public RideResponse addRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
 
@@ -45,22 +43,26 @@ public class RideController {
 		return rideService.addRide(input);
 	}
 
-	//only updates start time, description, seats available,vehicle Id
+	// only updates start time, description, seats available,vehicle Id
 	@PostMapping("/updateRide")
-	public ResponseEntity<ApiResponse<RideResponse>> updateRide(@RequestHeader("Authorization") String jwtToken, @RequestBody RideInput input) {
+	public ResponseEntity<ApiResponse<RideResponse>> updateRide(@RequestHeader("Authorization") String jwtToken,
+			@RequestBody RideInput input) {
 		try {
 			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 			input.setUserId(userId);
-		}catch(Exception e) {
+			ApiResponse<RideResponse> response = new ApiResponse<>(rideService.updateRide(input), true,
+					"Result set was retrieved successfully");
+			return ResponseEntity.status(HttpStatus.OK)
+					.body(response);
+		} catch (Exception e) {
+			ApiResponse<RideResponse> response = new ApiResponse<>(null, false, "ERROR: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "ERROR: "+e.getMessage()));
+					.body(response);
 		}
-		return ResponseEntity.status(HttpStatus.OK)
-				.body(new ApiResponse<>(rideService.updateRide(input), true, "Result set was retrieved successfully"));
 	}
 
 	@GetMapping("/getRide/{userId}")
-	public GetRidesResponse getRide(@PathVariable Integer userId){	
+	public GetRidesResponse getRide(@PathVariable Integer userId) {
 		return rideService.getRides(userId);
 	}
 
@@ -68,81 +70,99 @@ public class RideController {
 	public ResponseEntity<ApiResponse<List<RideHistoryProjection>>> getRidesForUser(@PathVariable Integer userId) {
 		try {
 			List<RideHistoryProjection> rideHistory = rideService.getRideHistoryProjectionByUserId(userId);
+			ApiResponse<List<RideHistoryProjection>> response = new ApiResponse<>(rideHistory, true,
+					"Result set was retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(new ApiResponse<>(rideHistory, true, "Result set was retrieved successfully"));
+					.body(response);
 
-		}catch (Exception e){
+		} catch (Exception e) {
+			ApiResponse<List<RideHistoryProjection>> response = new ApiResponse<>(null, false,
+					"Result set retrieval failed with the following error " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
+					.body(response);
 		}
 	}
 
-
 	@PutMapping("/updatePickupLocation")
-	public ResponseEntity<ApiResponse<RideInfoResponse>> updatePickupLocation(@RequestHeader("Authorization") String jwtToken, @RequestBody PickupLocationRequest input) {
+	public ResponseEntity<ApiResponse<RideInfoResponse>> updatePickupLocation(
+			@RequestHeader("Authorization") String jwtToken, @RequestBody PickupLocationRequest input) {
 		try {
 			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 			RideInfoResponse res = rideInfoService.updatePickupLocation(input.getRideId(), userId, input.getLocation());
-
+			ApiResponse<RideInfoResponse> response = new ApiResponse<>(res, true, "Update successful");
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ApiResponse<>(res, true, "Update successful"));
-		}catch(Exception e){
+					.body(response);
+		} catch (Exception e) {
+			ApiResponse<RideInfoResponse> response = new ApiResponse<>(null, false, "Update Failed!");
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "Update Failed!"));
+					.body(response);
 		}
-		}
+	}
 
 	@GetMapping("/getAllTripMembers/{rideId}")
-	public ResponseEntity<ApiResponse<List<RideInfoResponse>>> getAllTripDetails(@PathVariable Integer rideId){
-	try {
+	public ResponseEntity<ApiResponse<List<RideInfoResponse>>> getAllTripDetails(@PathVariable Integer rideId) {
+		try {
 			List<RideInfoResponse> res = rideInfoService.getAllMembers(rideId);
+			ApiResponse<List<RideInfoResponse>> response = new ApiResponse<>(res, true, "Fetched successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ApiResponse<>(res, true, "Fetched successfully"));
-		} catch(Exception e) {
+					.body(response);
+		} catch (Exception e) {
+			ApiResponse<List<RideInfoResponse>> response = new ApiResponse<>(null, false,
+					"Fetch Failed with the following error:" + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "Fetch Failed with the following error:"+e.getMessage()));
+					.body(response);
 		}
-    }
+	}
 
-	
 	@GetMapping("/getRideDetail/{rideId}")
 	public ResponseEntity<ApiResponse<RideDetailProjection>> getRideDetail(@PathVariable Integer rideId) {
 		try {
 			RideDetailProjection rideHistory = rideService.getRideDetailProjection(rideId);
+			ApiResponse<RideDetailProjection> response = new ApiResponse<>(rideHistory, true,
+					"Result set was retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(new ApiResponse<>(rideHistory, true, "Result set was retrieved successfully"));
+					.body(response);
 
-		}catch (Exception e){
+		} catch (Exception e) {
+			ApiResponse<RideDetailProjection> response = new ApiResponse<>(null, false,
+					"Result set retrieval failed with the following error " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
+					.body(response);
 		}
 	}
 
 	@PutMapping("/updateRideStatus")
-	public ResponseEntity<ApiResponse<Object>> updateRideStatus(@RequestHeader("Authorization") String jwtToken, @RequestBody RideStatusUpdateRequest input){
+	public ResponseEntity<ApiResponse<Object>> updateRideStatus(@RequestHeader("Authorization") String jwtToken,
+			@RequestBody RideStatusUpdateRequest input) {
 		try {
 			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 			rideService.updateStatus(input.getRideId(), userId, input.getRideStatus());
+			ApiResponse<Object> response = new ApiResponse<>(true, true, "Update Successful");
 			return ResponseEntity.status(HttpStatus.OK)
-					.body(new ApiResponse<>(true, true, "Update Successful"));
+					.body(response);
 		} catch (Exception e) {
+			ApiResponse<Object> response = new ApiResponse<>(null, false,
+					"Update failed with the following error: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(new ApiResponse<>(null, false, "Update failed with the following error: " + e.getMessage()));
+					.body(response);
 		}
 	}
 
 	@GetMapping("/getDriverLocation/{rideId}")
 	public ResponseEntity<ApiResponse<RideInfoResponse>> getRiderLocation(@PathVariable Integer rideId) {
 		try {
-			RideInfoResponse rideInfoResponse=rideInfoService.getDriverLocation(rideId);
+			RideInfoResponse rideInfoResponse = rideInfoService.getDriverLocation(rideId);
+			ApiResponse<RideInfoResponse> response = new ApiResponse<>(rideInfoResponse, true,
+					"Result set was retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-								 .body(new ApiResponse<>(rideInfoResponse, true, "Result set was retrieved successfully"));
+					.body(response);
 
-		}catch (Exception e){
+		} catch (Exception e) {
+			ApiResponse<RideInfoResponse> response = new ApiResponse<>(null, false,
+					"Result set retrieval failed with the following error " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-								 .body(new ApiResponse<>(null, false, "Result set retrieval failed with the following error " + e.getMessage()));	
+					.body(response);
 		}
 	}
 
 }
-

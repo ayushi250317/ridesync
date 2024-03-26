@@ -29,13 +29,13 @@ public class Vehicle{
 	private String type;
 	private Integer userId;
 	
-	public Vehicle(String regNo, Integer documentId, String model, String make, String type, Integer userId) {
-		this.regNo = regNo;
-		this.documentId = documentId;
-		this.model = model;
-		this.make = make;
-		this.type = type;
-		this.userId = userId;
-	}
+	// public Vehicle(String regNo, Integer documentId, String model, String make, String type, Integer userId) {
+	// 	this.regNo = regNo;
+	// 	this.documentId = documentId;
+	// 	this.model = model;
+	// 	this.make = make;
+	// 	this.type = type;
+	// 	this.userId = userId;
+	// }
 	
 }

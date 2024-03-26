@@ -35,7 +35,6 @@ class DocumentControllerTest {
         DocumentInput documentInput = new DocumentInput();
         documentInput.setDocumentId(1);
         documentInput.setDocumentType("Document Type");
-//        documentInput.setExpiryDate(LocalDate.of(1970, 1, 1));
         documentInput.setUserDocumentID("User Document ID");
         documentInput.setUserId(1);
         String content = (new ObjectMapper()).writeValueAsString(documentInput);
@@ -68,7 +67,6 @@ class DocumentControllerTest {
         DocumentInput documentInput = new DocumentInput();
         documentInput.setDocumentId(1);
         documentInput.setDocumentType("Document Type");
-//        documentInput.setExpiryDate(Date);
         documentInput.setUserDocumentID("User Document ID");
         documentInput.setUserId(1);
         String content = (new ObjectMapper()).writeValueAsString(documentInput);

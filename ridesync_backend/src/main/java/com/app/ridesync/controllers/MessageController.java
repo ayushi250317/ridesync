@@ -29,52 +29,65 @@ public class MessageController {
 	@Autowired
 	public MessageController(MessageService messageService) {
 		this.messageService = messageService;
-	}	
-	
+	}
+
 	@MessageMapping("/send/{channelIdentifier}")
-	public void sendMessage(@PathVariable String channelIdentifier, Message message){
+	public void sendMessage(@PathVariable String channelIdentifier, Message message) {
 		messageService.persistAndSendMessageToBroker(channelIdentifier, message);
 	}
-	
+
 	@GetMapping("/chatIdentifier")
 	public ResponseEntity<ApiResponse<String>> getChatIdentifier(@RequestBody ChatIdentifier chat) {
 		try {
 			String chatIdentifer = messageService.getChatIdentifier(chat);
-			
+			ApiResponse<String> response = new ApiResponse<>(chatIdentifer, true,
+					"Chat Identifier was retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-					 .body(new ApiResponse<>(chatIdentifer, true, "Chat Identifier was retrieved successfully"));
-			
-		}catch(Exception e) {
+					.body(response);
+
+		} catch (Exception e) {
+			ApiResponse<String> response = new ApiResponse<>(null, false,
+					"Chat Identifier retrieval failed with the following error: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					 .body(new ApiResponse<>(null, false, "Chat Identifier retrieval failed with the following error: " + e.getMessage()));	
+					.body(response);
 		}
 	}
-	
+
 	@GetMapping("/messages/{recipientId}")
-	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesByRecipient(@PathVariable int recipientId) {
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesByRecipient(
+			@PathVariable int recipientId) {
 		try {
 			List<MessageProjection> messages = messageService.getChatMessagesByRecipientId(recipientId);
-			
+			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(messages, true,
+					"Chat Messages were retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-					 .body(new ApiResponse<>(messages, true, "Chat Messages were retrieved successfully"));
-			
-		}catch(Exception e) {
+					.body(response);
+
+		} catch (Exception e) {
+			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(null, false,
+					"Chat Message retrieval failed with the following error: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					 .body(new ApiResponse<>(null, false, "Chat Message retrieval failed with the following error: " + e.getMessage()));	
+					.body(response);
 		}
-	} 
-	
+	}
+
 	@GetMapping("/messageHistory")
-	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(@RequestBody MessageHistoryRequest messageHistoryRequest) {
+	public ResponseEntity<ApiResponse<List<MessageProjection>>> getChatMessagesBySenderAndRecipient(
+			@RequestBody MessageHistoryRequest messageHistoryRequest) {
 		try {
-			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(messageHistoryRequest.senderId(), messageHistoryRequest.recipientId());
-			
+			Integer senderId=messageHistoryRequest.senderId();
+			Integer recepientId=messageHistoryRequest.recipientId();
+			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(senderId,recepientId);
+			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(messages, true,
+					"Chat Messages were retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
-					 .body(new ApiResponse<>(messages, true, "Chat Messages were retrieved successfully"));
-			
-		}catch(Exception e) {
+					.body(response);
+
+		} catch (Exception e) {
+			ApiResponse<List<MessageProjection>> response = new ApiResponse<>(null, false,
+					"Chat Message retrieval failed with the following error: " + e.getMessage());
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					 .body(new ApiResponse<>(null, false, "Chat Message retrieval failed with the following error: " + e.getMessage()));	
+					.body(response);
 		}
-	} 
+	}
 }
