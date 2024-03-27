@@ -70,7 +70,7 @@ public class MessagingTest {
 		String requestBody = objectMapper.writeValueAsString(chat);
 
 		MvcResult result = mvc
-				.perform(get("/api/v1/message/chatIdentifier").contentType(MediaType.APPLICATION_JSON)
+				.perform(get("/api/v1/message/chatIdentifier/"+user.getUserId()).contentType(MediaType.APPLICATION_JSON)
 						.header(HttpHeaders.AUTHORIZATION, "Bearer " + BEARER_TOKEN).content(requestBody))
 				.andExpect(status().isOk()).andReturn();
 

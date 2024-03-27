@@ -1,9 +1,6 @@
 package com.app.ridesync.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -15,6 +12,7 @@ import com.app.ridesync.entities.Vehicle;
 import com.app.ridesync.repositories.VehicleRepository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.app.ridesync.services.VehicleService;
 import org.junit.jupiter.api.Test;
@@ -48,13 +46,16 @@ class VehicleServiceTest {
         vehicle.setUserId(1);
         vehicle.setVehicleId(1);
         when(vehicleRepository.save(Mockito.<Vehicle>any())).thenReturn(vehicle);
-
+        VehicleResponse expectedVehicleResponse=VehicleResponse.builder()
+                                                .message("Vehicle inserted Successfully")
+                                                .success(true)
+                                                .vehicle(vehicle)
+                                                .build();
         VehicleResponse actualAddVehicleResult = vehicleService.addVehicle(new VehicleInput());
 
         verify(vehicleRepository).save(Mockito.<Vehicle>any());
-        assertEquals("Vehicle inserted Successfully", actualAddVehicleResult.getMessage());
-        assertTrue(actualAddVehicleResult.isSuccess());
-        assertSame(vehicle, actualAddVehicleResult.getVehicle());
+        assertEquals(expectedVehicleResponse, actualAddVehicleResult);
+      
     }
 
 
@@ -65,20 +66,25 @@ class VehicleServiceTest {
         assertEquals(
                 "java.lang.NullPointerException: Cannot invoke \"com.app.ridesync.dto.requests.VehicleInput.getRegNo()\""+ " because \"input\" is null",
                 actualAddVehicleResult.getMessage());
-        assertFalse(actualAddVehicleResult.isSuccess());
     }
 
 
     @Test
     void getVehiclesByUserIdTest() {
-        when(vehicleRepository.findByUserId(Mockito.<Integer>any())).thenReturn(new ArrayList<>());
-
+        Vehicle vehicle=new Vehicle();
+        List<Vehicle> vehicles=new ArrayList<>();
+        vehicles.add(vehicle);
+        when(vehicleRepository.findByUserId(Mockito.<Integer>any())).thenReturn(vehicles);
+        GetVehicleResponse expectedReponse=GetVehicleResponse
+                                        .builder()
+                                        .message("Vehicles Fetched Successfully")
+                                        .vehicles(vehicles)
+                                        .success(true)
+                                        .build();
         GetVehicleResponse actualVehiclesByUserId = vehicleService.getVehiclesByUserId(1);
 
         verify(vehicleRepository).findByUserId(Mockito.<Integer>any());
-        assertEquals("Vehicles Fetched Successfully", actualVehiclesByUserId.getMessage());
-        assertTrue(actualVehiclesByUserId.isSuccess());
-        assertTrue(actualVehiclesByUserId.getVehicles().isEmpty());
+        assertEquals(expectedReponse, actualVehiclesByUserId);
     }
 
 
@@ -95,25 +101,25 @@ class VehicleServiceTest {
 
         when(vehicleRepository.save(Mockito.<Vehicle>any())).thenReturn(vehicle);
         when(vehicleRepository.findByVehicleId(Mockito.<Integer>any())).thenReturn(vehicle);
-
+        VehicleResponse expectedVehicleResponse=VehicleResponse.builder()
+                                                .message("Updated Selected Vehicle Successfully")
+                                                .vehicle(vehicle)
+                                                .success(true)
+                                                .build();
         VehicleResponse actualUpdateVehicleByIdResult = vehicleService.updateVehicleById(new VehicleInput());
 
         verify(vehicleRepository).findByVehicleId(Mockito.<Integer>any());
         verify(vehicleRepository).save(Mockito.<Vehicle>any());
-        assertEquals("Updated Selected Vehicle Successfully", actualUpdateVehicleByIdResult.getMessage());
-        assertTrue(actualUpdateVehicleByIdResult.isSuccess());
-        assertSame(vehicle, actualUpdateVehicleByIdResult.getVehicle());
+        assertEquals(expectedVehicleResponse, actualUpdateVehicleByIdResult);
     }
 
 
     @Test
     void updateVehicleByIdFailedTest() {
         VehicleResponse actualUpdateVehicleByIdResult = vehicleService.updateVehicleById(null);
-
         assertEquals(
                 "java.lang.NullPointerException: Cannot invoke \"com.app.ridesync.dto.requests.VehicleInput.getVehicleId()\""+ " because \"input\" is null",
                 actualUpdateVehicleByIdResult.getMessage());
-        assertFalse(actualUpdateVehicleByIdResult.isSuccess());
     }
 
 
@@ -129,13 +135,15 @@ class VehicleServiceTest {
         vehicle.setVehicleId(1);
         when(vehicleRepository.findByVehicleId(Mockito.<Integer>any())).thenReturn(vehicle);
         doNothing().when(vehicleRepository).delete(Mockito.<Vehicle>any());
-
+        VehicleResponse expectedVehicleResponse=VehicleResponse.builder()
+                                            .message("Deleted Selected Vehicle Successfully")
+                                            .vehicle(vehicle)
+                                            .success(true)
+                                            .build();
         VehicleResponse actualDeleteVehicleResult = vehicleService.deleteVehicle(1);
 
         verify(vehicleRepository).findByVehicleId(Mockito.<Integer>any());
         verify(vehicleRepository).delete(Mockito.<Vehicle>any());
-        assertEquals("Deleted Selected Vehicle Successfully", actualDeleteVehicleResult.getMessage());
-        assertTrue(actualDeleteVehicleResult.isSuccess());
-        assertSame(vehicle, actualDeleteVehicleResult.getVehicle());
+       assertEquals(expectedVehicleResponse, actualDeleteVehicleResult);
     }
 }

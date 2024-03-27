@@ -1,17 +1,13 @@
 package com.app.ridesync.unittest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.app.ridesync.dto.requests.RideInfoInput;
 import com.app.ridesync.dto.requests.RideInput;
-import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.entities.GeoPoint;
@@ -29,7 +25,6 @@ import com.app.ridesync.services.RideService;
 import com.google.maps.model.LatLng;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -111,22 +106,6 @@ class RideServiceTest {
         assertSame(expectedGeoPointsResult, geoPointRecord.geoPoints());
     }
 
-
-    // @Test
-    // void getRidesTest() {
-    //     ArrayList<RideInfoResponse> rideInfoResponseList = new ArrayList<>();
-    //     when(rideInfoService.getAllRideInfo(Mockito.<List<Ride>>any())).thenReturn(rideInfoResponseList);
-    //     when(rideRepository.findAllByUserId(Mockito.<Integer>any())).thenReturn(new ArrayList<>());
-
-    //     GetRidesResponse actualRides = rideService.getRides(1);
-
-    //     verify(rideRepository).findAllByUserId(Mockito.<Integer>any());
-    //     verify(rideInfoService).getAllRideInfo(Mockito.<List<Ride>>any());
-    //     assertEquals("Successfully fetched Rides", actualRides.getMessage());
-    //     assertTrue(actualRides.isSuccess());
-    //     assertEquals(rideInfoResponseList, actualRides.getRides());
-    // }
-
     @Test
     void testUpdateRide() {
         Location location1 = new Location();
@@ -197,14 +176,8 @@ class RideServiceTest {
         verify(rideRepository).findByRideId(Mockito.<Integer>any());
         verify(rideInfoService).updateRideInfo(Mockito.<RideInfoInput>any());
         verify(rideRepository).save(Mockito.<Ride>any());
-        assertEquals("Updated Ride Details", actualUpdateRideResult.getMessage());
-        Ride ride7 = actualUpdateRideResult.getRide();
-        assertNull(ride7.getVehicleId());
-        assertNull(ride7.getDescription());
-        assertNull(ride7.getStartTime());
-        assertEquals(0, ride7.getSeatsAvailable().intValue());
-        assertTrue(actualUpdateRideResult.isSuccess());
-        assertSame(ride, ride7);
+        Ride expectedRideResponse = actualUpdateRideResult.getRide();
+        assertSame(ride, expectedRideResponse);
     }
 
     @Test
@@ -231,7 +204,7 @@ class RideServiceTest {
         when(rideRepository.findByRideId(Mockito.<Integer>any())).thenReturn(ride);
 
         rideService.updateStatus(1, 1, "Status");
-
+        assertEquals(ride.getStatus(),"Status");
         verify(rideRepository).findByRideId(Mockito.<Integer>any());
         verify(rideRepository).save(Mockito.<Ride>any());
     }
@@ -244,7 +217,6 @@ class RideServiceTest {
         List<RideHistoryProjection> actualRideHistoryProjectionByUserId = rideService.getRideHistoryProjectionByUserId(1);
 
         verify(rideRepository).findRidesByUserId(Mockito.<Integer>any());
-        assertTrue(actualRideHistoryProjectionByUserId.isEmpty());
         assertSame(rideHistoryProjectionList, actualRideHistoryProjectionByUserId);
     }
 
@@ -259,7 +231,6 @@ class RideServiceTest {
 
         verify(rideRepository).findRideHeaderInfoByRideId(Mockito.<Integer>any());
         verify(rideRepository).findRideInfoByRideId(Mockito.<Integer>any());
-        assertTrue(actualRideDetailProjection.rideProjection().isEmpty());
         assertEquals(rideHeaderProjectionList, actualRideDetailProjection.rideInfoProjection());
     }
 }

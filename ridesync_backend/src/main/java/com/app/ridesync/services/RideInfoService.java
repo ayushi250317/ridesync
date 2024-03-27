@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.app.ridesync.dto.requests.RideInfoInput;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.entities.Location;
-import com.app.ridesync.entities.Ride;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.repositories.RideInfoRepository;
 
@@ -24,19 +23,36 @@ public class RideInfoService {
 	public RideInfoResponse addRideInfo(RideInfoInput riInput) { // format for data that includes location.
 		RideInfoResponse res = new RideInfoResponse();
 
-		Location location1=new Location();
-		location1.setAddress(riInput.getAddress1());
-		location1.setLandmark(riInput.getLandmark1());
-		location1.setLattitude(riInput.getLattitude1());
-		location1.setLongitude(riInput.getLongitude1());
-		res.setLocation1(locationService.addLocation(location1));
+		// Location location1=new Location();
+		// location1.setAddress(riInput.getAddress1());
+		// location1.setLandmark(riInput.getLandmark1());
+		// location1.setLattitude(riInput.getLattitude1());
+		// location1.setLongitude(riInput.getLongitude1());
+		// res.setLocation1(locationService.addLocation(location1));
 
-		Location location2=new Location();
-		location2.setAddress(riInput.getAddress2());
-		location2.setLandmark(riInput.getLandmark2());
-		location2.setLattitude(riInput.getLattitude2());
-		location2.setLongitude(riInput.getLongitude2());
-		res.setLocation2(locationService.addLocation(location2));
+		// Location location2=new Location();
+		// location2.setAddress(riInput.getAddress2());
+		// location2.setLandmark(riInput.getLandmark2());
+		// location2.setLattitude(riInput.getLattitude2());
+		// location2.setLongitude(riInput.getLongitude2());
+		// res.setLocation2(locationService.addLocation(location2));
+
+		res.setLocation1(locationService.addLocation(new Location(
+								 riInput.getLattitude1(),
+								 riInput.getLongitude1(),
+								 riInput.getLandmark1(),
+								 riInput.getAddress1()
+								 )));
+		
+				
+		//add location 2
+		res.setLocation2(locationService.addLocation(new Location(
+				 riInput.getLattitude2(),
+				 riInput.getLongitude2(),
+				 riInput.getLandmark2(),
+				 riInput.getAddress2()
+				 )));
+
 
 		// this is a dummy entry in the location table that will be created for rider
 		// pickup points.
@@ -52,6 +68,7 @@ public class RideInfoService {
 		rideInfo.setUserId(riInput.getUserId());
 		rideInfo.setStartLocationId(res.getLocation1().getLocationId());
 		rideInfo.setEndLocationId(res.getLocation2().getLocationId());
+		rideInfo.setDriver(true);
 		rideInfo.setActive(true);
 		rideInfo.setFare(riInput.getFare());
 		rideInfo.setComments(riInput.getComments());

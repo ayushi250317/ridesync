@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.ApiResponse;
-import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.projections.RideDetailProjection;
 import com.app.ridesync.projections.RideHistoryProjection;

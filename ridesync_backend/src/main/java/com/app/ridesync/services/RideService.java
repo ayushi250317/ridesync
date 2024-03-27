@@ -1,6 +1,5 @@
 package com.app.ridesync.services;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -9,8 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.app.ridesync.dto.requests.RideInfoInput;
 import com.app.ridesync.dto.requests.RideInput;
-import com.app.ridesync.dto.responses.GetRidesResponse;
-import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.entities.Ride;
 import com.app.ridesync.projections.RideDetailProjection;

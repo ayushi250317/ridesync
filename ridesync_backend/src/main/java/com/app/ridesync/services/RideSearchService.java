@@ -18,12 +18,12 @@ import com.mapbox.turf.TurfClassification;
 import com.mapbox.turf.TurfMeasurement;
 
 @Service
-public class RideSearchService {	
+public class RideSearchService {
 	private final GeoPointRepository geoPointRepo;
 	private final RideRepository rideRepository;
 
 	private static final float WITHIN_LIMIT = 1.5f;
-	private List<Integer>filteredRides; 
+	private List<Integer> filteredRides;
 
 	@Autowired
 	public RideSearchService(GeoPointRepository geoPointRepo, RideRepository rideRepository) {
@@ -31,42 +31,45 @@ public class RideSearchService {
 		this.rideRepository = rideRepository;
 	}
 
-	public  List<SearchResultProjection> findRides(Integer userId, LatLng source, LatLng destination, LocalDateTime rideTime) {
+	public List<SearchResultProjection> findRides(Integer userId, LatLng source, LatLng destination,
+			LocalDateTime rideTime) {
 		return filterRides(geoPointRepo.findAll(),
-				Point.fromLngLat(source.lng,source.lat),
-				Point.fromLngLat(destination.lng,destination.lat),
+				Point.fromLngLat(source.lng, source.lat),
+				Point.fromLngLat(destination.lng, destination.lat),
 				rideTime,
 				userId);
 
 	}
 
-	private  List<SearchResultProjection> filterRides(List<GeoPoint> geoPoints, Point source, Point destination, LocalDateTime rideTime, Integer userId) {
+	private List<SearchResultProjection> filterRides(List<GeoPoint> geoPoints, Point source, Point destination,
+			LocalDateTime rideTime, Integer userId) {
 		filteredRides = new ArrayList<>();
-		
-		for(GeoPoint geoPoint : geoPoints) {
+
+		for (GeoPoint geoPoint : geoPoints) {
 			List<Point> points = geoPoint.getGeoPointRecord()
 					.getGeoPoints()
 					.stream()
-					.map(latLng ->  Point.fromLngLat(latLng.lng,latLng.lat))
+					.map(latLng -> Point.fromLngLat(latLng.lng, latLng.lat))
 					.collect(Collectors.toList());
 
 			Point nearestPointToSource = TurfClassification.nearestPoint(source, points);
 			Point nearestPointToDestination = TurfClassification.nearestPoint(destination, points);
 
-			if(isValid(nearestPointToSource, nearestPointToDestination, source, destination))
+			if (isValid(nearestPointToSource, nearestPointToDestination, source, destination))
 				filteredRides.add(geoPoint.getRide().getRideId());
-			
+
 		}
 
 		return findRideDetailsByFilteredRideIds(filteredRides, rideTime, userId);
 	}
-	
 
-	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime, Integer userId) {
-		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12), userId);		
+	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime,
+			Integer userId) {
+		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12), userId);
 	}
 
 	private boolean isValid(Point foundSrc, Point foundDes, Point src, Point des) {
-		return TurfMeasurement.distance(foundSrc, src) < WITHIN_LIMIT && TurfMeasurement.distance(foundDes, des) < WITHIN_LIMIT;
+		return TurfMeasurement.distance(foundSrc, src) < WITHIN_LIMIT
+				&& TurfMeasurement.distance(foundDes, des) < WITHIN_LIMIT;
 	}
 }

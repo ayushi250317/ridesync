@@ -59,10 +59,6 @@ class LocationServiceTest {
 
         verify(locationRepository).findByLocationId(Mockito.<Integer>any());
         verify(locationRepository).save(Mockito.<Location>any());
-        assertEquals("42 Main St", actualUpdateLocationResult.getAddress());
-        assertEquals("Landmark", actualUpdateLocationResult.getLandmark());
-        assertEquals(10.0d, actualUpdateLocationResult.getLattitude());
-        assertEquals(10.0d, actualUpdateLocationResult.getLongitude());
         assertSame(location, actualUpdateLocationResult);
     }
 

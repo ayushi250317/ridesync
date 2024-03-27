@@ -1,5 +1,7 @@
 package com.app.ridesync.unittest;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -18,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.app.ridesync.entities.GeoPoint;
 import com.app.ridesync.entities.GeoPointRecord;
 import com.app.ridesync.entities.Ride;
+import com.app.ridesync.projections.SearchResultProjection;
 import com.app.ridesync.repositories.GeoPointRepository;
 import com.app.ridesync.repositories.RideRepository;
 import com.app.ridesync.services.RideSearchService;
@@ -63,8 +66,8 @@ public class SearchTest {
 		when(geoPointRepository.findAll()).thenReturn(List.of(geoPoint));
 		when(rideRepository.findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12),userId)).thenReturn(List.of());
 
-		rideSearchService.findRides(userId,source,destination,rideTime);
-
+		List<SearchResultProjection> rides=rideSearchService.findRides(userId,source,destination,rideTime);
+		assertNotNull(rides);
 		verify(geoPointRepository).findAll();
 		verify(rideRepository).findRideDetailsByRideIds(List.of(1),rideTime,rideTime.plusHours(12),userId);
 
@@ -79,8 +82,8 @@ public class SearchTest {
 		when(geoPointRepository.findAll()).thenReturn(List.of(geoPoint));
 		when(rideRepository.findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12),userId)).thenReturn(List.of());
 
-		rideSearchService.findRides(userId, source,destination,rideTime);
-
+		List<SearchResultProjection> rides=rideSearchService.findRides(userId, source,destination,rideTime);
+		assertTrue(rides.isEmpty());
 		verify(rideRepository).findRideDetailsByRideIds(List.of(),rideTime,rideTime.plusHours(12),userId);
 
 	}

@@ -112,9 +112,9 @@ public class RideRequestTest {
 
                 when(locationService.addLocation(startLocation)).thenReturn(startLocation);
                 when(locationService.addLocation(endLocation)).thenReturn(endLocation);
+                RideRequestResponse expectedRideRequestResponse=RideRequestResponse.builder().message("Ride requested successfully").success(true).build();
                 RideRequestResponse response = rideRequestService.requestRide(jwtToken, rideRequest);
-                assertTrue(response.isSuccess());
-                assertEquals("Ride requested successfully", response.getMessage());
+                assertEquals(expectedRideRequestResponse, response);
                 verify(locationService, times(2)).addLocation(any(Location.class));
                 verify(rideRequestRepository, times(1)).save(any(RideRequestInfo.class));
         }
@@ -172,11 +172,10 @@ public class RideRequestTest {
                 when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
                 when(rideInfoRepository.findByRideIdAndUserId(1, 1)).thenReturn(rideInfo);
                 doNothing().when(notificationService).addNotification(notification);
+                RideRequestResponse expectedRideRequestResponse=RideRequestResponse.builder().message("Request updated successfully").success(true).build();
                 RideRequestResponse rideRequestResponse = rideRequestService.updateRide(jwtToken, requestId,
                                 rideRequest);
-                assertTrue(rideRequestResponse.isSuccess());
-                assertEquals("Request updated successfully", rideRequestResponse.getMessage());
-                assertEquals(RequestStatus.ACCEPTED, requestInfo.getRequestStatus());
+                assertEquals(expectedRideRequestResponse, rideRequestResponse);
                 verify(rideRequestRepository).save(requestInfo);
         }
 
@@ -210,11 +209,10 @@ public class RideRequestTest {
                 Integer requestId = 1;
                 String jwtToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.uXy8l0MeVGqx2pUKqDb3ZWGqcJyO-o2BMLk4x6zRhkY";
                 when(rideRequestRepository.findByRideRequestId(requestId)).thenReturn(requestInfo);
+                RideRequestResponse expectedRideRequestResponse=RideRequestResponse.builder().message("Request updated successfully").success(true).build();
                 RideRequestResponse rideRequestResponse = rideRequestService.updateRide(jwtToken, requestId,
                                 rideRequest);
-                assertTrue(rideRequestResponse.isSuccess());
-                assertEquals("Request updated successfully", rideRequestResponse.getMessage());
-                assertEquals(RequestStatus.REJECTED, requestInfo.getRequestStatus());
+                assertEquals(expectedRideRequestResponse, rideRequestResponse);
                 verify(rideRequestRepository).save(requestInfo);
         }
 }

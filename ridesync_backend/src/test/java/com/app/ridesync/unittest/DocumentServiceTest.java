@@ -1,5 +1,6 @@
 package com.app.ridesync.unittest;
 
+import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertSame;
@@ -20,6 +21,7 @@ import java.util.ArrayList;
 import com.app.ridesync.services.DocumentService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -48,37 +50,40 @@ class DocumentServiceTest {
         document.setUserId(1);
         when(documentRepository.save(Mockito.<Document>any())).thenReturn(document);
 
-
+        DocumentResponse expectedDocumentResponse=DocumentResponse.builder()
+                                    .message("Document inserted Successfully")
+                                    .success(true)
+                                    .document(document)
+                                    .build();
         DocumentResponse actualAddDocumentResult = documentService.addDocument(new DocumentInput());
 
         verify(documentRepository).save(Mockito.<Document>any());
-        assertEquals("Document inserted Successfully", actualAddDocumentResult.getMessage());
-        assertTrue(actualAddDocumentResult.isSuccess());
-        assertSame(document, actualAddDocumentResult.getDocument());
+        assertEquals(expectedDocumentResponse, actualAddDocumentResult);
     }
 
 
     @Test
     void addDocumentFailedTest() {
-        DocumentResponse actualAddDocumentResult = documentService.addDocument(null);
-
-        assertEquals(
-                "java.lang.NullPointerException: Cannot invoke \"com.app.ridesync.dto.requests.DocumentInput.getUserDocumentID" + "()\" because \"input\" is null",
+    DocumentResponse actualAddDocumentResult = documentService.addDocument(null);  
+    assertEquals(
+               "java.lang.NullPointerException: Cannot invoke \"com.app.ridesync.dto.requests.DocumentInput.getUserDocumentID" + "()\" because \"input\" is null",
                 actualAddDocumentResult.getMessage());
-        assertFalse(actualAddDocumentResult.isSuccess());
+
     }
 
 
     @Test
     void getDocumentsByUserIdTest() {
         when(documentRepository.findByUserId(Mockito.<Integer>any())).thenReturn(new ArrayList<>());
-
+        GetDocumentResponse expectedGetDocumentResponse=GetDocumentResponse.builder()
+                            .message("Documents Fetched Successfully")
+                            .success(true)
+                            .documents(new ArrayList<>())
+                            .build();
         GetDocumentResponse actualDocumentsByUserId = documentService.getDocumentsByUserId(1);
 
         verify(documentRepository).findByUserId(Mockito.<Integer>any());
-        assertEquals("Documents Fetched Successfully", actualDocumentsByUserId.getMessage());
-        assertTrue(actualDocumentsByUserId.isSuccess());
-        assertTrue(actualDocumentsByUserId.getDocuments().isEmpty());
+        assertEquals(expectedGetDocumentResponse, actualDocumentsByUserId);
     }
 
 
@@ -93,14 +98,16 @@ class DocumentServiceTest {
 
         when(documentRepository.save(Mockito.<Document>any())).thenReturn(document);
         when(documentRepository.findByDocumentId(Mockito.<Integer>any())).thenReturn(document);
-
+        DocumentResponse expectedDocumentResponse=DocumentResponse.builder()
+                                                .message("Updated Selected Document Successfully")
+                                                .document(document)
+                                                .success(true)
+                                                .build();
         DocumentResponse actualUpdateDocumentByDocIdResult = documentService.updateDocumentByDocId(new DocumentInput());
 
         verify(documentRepository).findByDocumentId(Mockito.<Integer>any());
         verify(documentRepository).save(Mockito.<Document>any());
-        assertEquals("Updated Selected Document Successfully", actualUpdateDocumentByDocIdResult.getMessage());
-        assertTrue(actualUpdateDocumentByDocIdResult.isSuccess());
-        assertSame(document, actualUpdateDocumentByDocIdResult.getDocument());
+        assertEquals(expectedDocumentResponse, actualUpdateDocumentByDocIdResult);
     }
 
 
@@ -112,7 +119,6 @@ class DocumentServiceTest {
                 "java.lang.NullPointerException: Cannot invoke \"com.app.ridesync.dto.requests.DocumentInput.getDocumentId()\""
                         + " because \"input\" is null",
                 actualUpdateDocumentByDocIdResult.getMessage());
-        assertFalse(actualUpdateDocumentByDocIdResult.isSuccess());
     }
 
 
@@ -126,13 +132,15 @@ class DocumentServiceTest {
         document.setUserId(1);
         when(documentRepository.findByDocumentId(Mockito.<Integer>any())).thenReturn(document);
         doNothing().when(documentRepository).delete(Mockito.<Document>any());
-
+        DocumentResponse expecDocumentResponse=DocumentResponse.builder()
+                                                .message("Deleted Selected Document Successfully")
+                                                .success(true)
+                                                .document(document)
+                                                .build();
         DocumentResponse actualDeleteDocumentResult = documentService.deleteDocument(1);
 
         verify(documentRepository).findByDocumentId(Mockito.<Integer>any());
         verify(documentRepository).delete(Mockito.<Document>any());
-        assertEquals("Deleted Selected Document Successfully", actualDeleteDocumentResult.getMessage());
-        assertTrue(actualDeleteDocumentResult.isSuccess());
-        assertSame(document, actualDeleteDocumentResult.getDocument());
+       assertEquals(expecDocumentResponse, actualDeleteDocumentResult);
     }
 }

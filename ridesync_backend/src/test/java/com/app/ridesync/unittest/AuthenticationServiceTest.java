@@ -119,13 +119,18 @@ class AuthenticationServiceTest {
                 .address("Test Address")
                 .phoneNumber("7828828381")
                 .build();
+        user.setPassword(null);
+        AuthenticationResponse expectedAuthenticationResponse = AuthenticationResponse.builder()
+                .message("Registration Successful")
+                .user(user)
+                .success(true)
+                .build();
         when(userRepository.findByEmail(request.getEmail())).thenReturn(null);
         when(userRepository.save(any(User.class))).thenReturn(user);
         doNothing().when(javaMailSender).send(any(MimeMessage.class));
         when(javaMailSender.createMimeMessage()).thenReturn(mimeMessage);
         AuthenticationResponse response = authenticationService.validateRequest(request);
-        assertEquals("Registration Successful", response.getMessage());
-        assertTrue(response.isSuccess());
+        assertEquals(expectedAuthenticationResponse, response);
         verify(javaMailSender).send(mimeMessage);
     }
 
@@ -246,11 +251,11 @@ class AuthenticationServiceTest {
         AuthenticationRequest authenticationRequest = AuthenticationRequest.builder()
                 .email("testuser@gmail.com")
                 .build();
+        AuthenticationResponse expectedAuthenticationResponse=AuthenticationResponse.builder().message("email sent successfully").success(true).build();
         String resetToken = "mockedResetToken";
         when(jwtService.generateToken(user)).thenReturn(resetToken);
         AuthenticationResponse authenticationResponse = authenticationService.forgotPassword(authenticationRequest);
-        assertEquals("email sent successfully", authenticationResponse.getMessage());
-        assertTrue(authenticationResponse.isSuccess());
+       assertEquals(expectedAuthenticationResponse, authenticationResponse);
         verify(javaMailSender).send(any(MimeMessage.class));
     }
 
@@ -260,9 +265,9 @@ class AuthenticationServiceTest {
                 .email("testuser@gmail.com")
                 .build();
         when(userRepository.findByEmail(authenticationRequest.getEmail())).thenReturn(null);
+        AuthenticationResponse expectedAuthenticationResponse=AuthenticationResponse.builder().message("Email do not exist").build();
         AuthenticationResponse authenticationResponse = authenticationService.forgotPassword(authenticationRequest);
-        assertEquals("Email do not exist", authenticationResponse.getMessage());
-        assertFalse(authenticationResponse.isSuccess());
+       assertEquals(expectedAuthenticationResponse, authenticationResponse);
     }
 
     @Test

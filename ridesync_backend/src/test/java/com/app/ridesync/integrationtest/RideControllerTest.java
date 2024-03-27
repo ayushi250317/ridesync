@@ -4,7 +4,6 @@ import com.app.ridesync.controllers.RideController;
 import com.app.ridesync.dto.requests.PickupLocationRequest;
 import com.app.ridesync.dto.requests.RideInput;
 import com.app.ridesync.dto.responses.ApiResponse;
-import com.app.ridesync.dto.responses.GetRidesResponse;
 import com.app.ridesync.dto.responses.RideInfoResponse;
 import com.app.ridesync.dto.responses.RideResponse;
 import com.app.ridesync.entities.*;
@@ -64,13 +63,6 @@ public class RideControllerTest {
         Assert.assertEquals(new ResponseEntity<ApiResponse<RideResponse>>(new ApiResponse<RideResponse>(new RideResponse(new Ride(0, LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0), "status", "description", Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), new GeoPoint(Integer.valueOf(0), new GeoPointRecord(List.of(new LatLng(0d, 0d))), null)), new RideInfoResponse(new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new RideInfo(Integer.valueOf(0), Integer.valueOf(0), true, Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), true, 0d, Integer.valueOf(0), "comments", LocalTime.of(19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0)), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address")), "message", true), true, "Result set was retrieved successfully"), null, 200), result);
     }
 
-    // @Test
-    // public void getRideTest() throws Exception {
-    //     when(rideService.getRides(anyInt())).thenReturn(new GetRidesResponse(List.of(new RideResponse(new Ride(0, LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0), "status", "description", Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), new GeoPoint(Integer.valueOf(0), new GeoPointRecord(List.of(new LatLng(0d, 0d))), null)), new RideInfoResponse(new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new RideInfo(Integer.valueOf(0), Integer.valueOf(0), true, Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), true, 0d, Integer.valueOf(0), "comments", LocalTime.of(19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0)), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address")), "message", true)), "message", true));
-
-    //     GetRidesResponse result = rideController.getRide(Integer.valueOf(0));
-    //     Assert.assertEquals(new GetRidesResponse(List.of(new RideResponse(new Ride(0, LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0), "status", "description", Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), new GeoPoint(Integer.valueOf(0), new GeoPointRecord(List.of(new LatLng(0d, 0d))), null)), new RideInfoResponse(new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address"), new RideInfo(Integer.valueOf(0), Integer.valueOf(0), true, Integer.valueOf(0), Integer.valueOf(0), Integer.valueOf(0), true, 0d, Integer.valueOf(0), "comments", LocalTime.of(19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), LocalDateTime.of(2024, Month.MARCH, 23, 19, 20, 37), Integer.valueOf(0)), new Location(Integer.valueOf(0), 0d, 0d, "landmark", "address")), "message", true)), "message", true), result);
-    // }
 
     @Test
     public void getRidesForUserTest() throws Exception {

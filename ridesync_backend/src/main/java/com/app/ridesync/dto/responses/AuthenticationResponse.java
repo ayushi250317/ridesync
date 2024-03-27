@@ -8,15 +8,17 @@ import com.app.ridesync.entities.Vehicle;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
+import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@Data
 public class AuthenticationResponse {
     private String token;
     private User user;
@@ -25,19 +27,4 @@ public class AuthenticationResponse {
     private String message;
     private boolean success;
 
-    public String getToken() {
-        return token;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public boolean isSuccess() {
-        return success;
-    }
 }

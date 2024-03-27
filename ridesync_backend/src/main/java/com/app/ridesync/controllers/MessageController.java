@@ -44,7 +44,7 @@ public class MessageController {
 		try {
 			Integer senderId = jwtService.extractUserId(jwtToken.substring(7));
 			String chatIdentifer = messageService.getChatIdentifier(senderId, recipientId);
-			
+			ApiResponse<String> response =new ApiResponse<>(chatIdentifer, true, "Chat Identifier was retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(response);
 
@@ -78,7 +78,7 @@ public class MessageController {
 		try {
 			Integer senderId = jwtService.extractUserId(jwtToken.substring(7));
 			List<MessageProjection> messages = messageService.getChatMessagesBySenderAndRecipientId(senderId, recipientId);
-			
+			ApiResponse<List<MessageProjection>> response=new ApiResponse<>(messages, true, "Chat Messages were retrieved successfully");
 			return ResponseEntity.status(HttpStatus.OK)
 					.body(response);
 

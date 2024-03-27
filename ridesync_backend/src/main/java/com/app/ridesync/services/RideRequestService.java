@@ -45,14 +45,14 @@ public class RideRequestService {
                 startLocation.setLandmark(rideRequest.getLandmark1());
                 startLocation.setLattitude(rideRequest.getLattitude1());
                 startLocation.setLongitude(rideRequest.getLongitude1());
-                startLocation=locationService.addLocation(startLocation);
+                locationService.addLocation(startLocation);
 
                 Location endLocation = new Location();
                 endLocation.setAddress(rideRequest.getAddress2());
                 endLocation.setLandmark(rideRequest.getLandmark2());
                 endLocation.setLattitude(rideRequest.getLattitude2());
                 endLocation.setLongitude(rideRequest.getLongitude2());
-                endLocation=locationService.addLocation(endLocation);
+                locationService.addLocation(endLocation);
                 
                 RideRequestInfo rideRequestInfo = RideRequestInfo.builder()
                 .rideId(rideRequest.getRideId())
