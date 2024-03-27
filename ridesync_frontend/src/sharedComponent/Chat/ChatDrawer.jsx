@@ -123,7 +123,7 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
                         </VStack>
                     </DrawerBody>
 
-                    <DrawerFooter borderTopWidth="1px" mb="4">
+                    <DrawerFooter borderTopWidth="1px" mb="3">
                         <Input
                             placeholder="Type a message..."
                             value={inputValue}

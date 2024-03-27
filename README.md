@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./ridesync_frontend//public/ridesyncNewLogo.png" alt="Image Description" width="300" height="180">
+    <img src="./ridesync_frontend/public/ridesyncNewLogo.png" alt="Image Description" width="300" height="180">
 </p>
 
 # Ridesync
@@ -39,16 +39,19 @@ Ridesync is a ride-sharing application designed to connect riders and drivers se
 - axios
 - react
 - moment
+- stompjs
 - tailwind
 - chakra-ui
 - react-dom
 - react-icons
+- sockjs-client
 - react-scripts
 - framer-motion
 - react-hook-form
 - react-router-dom
 - react-google-maps
 - googlemaps/polyline-codec
+
 - react-google-places-autocomplete
 
 ##### Dev Dependencies
@@ -90,33 +93,49 @@ Ridesync facilitates a simple and efficient process for both riders and drivers.
 
 - User Roles: Ridesync caters to two main user roles: rider and driver.
 
-  ![Screenshot 1](/ridesync_frontend//public/login.png)
-  ![Screenshot 2](/ridesync_frontend//public/registration.png)
+  ![Screenshot 1](/ridesync_frontend/public/login.png)
+  ![Screenshot 2](/ridesync_frontend/public/registration.png)
 
 - Driver Registration: Drivers can easily register by providing necessary documents such as license details and vehicle registration.
-  ![Screenshot 3](/ridesync_frontend//public/documentreg.png)
-  ![Screenshot 4](/ridesync_frontend//public/Vehicleregistration.png)
+  ![Screenshot 3](/ridesync_frontend/public/documentreg.png)
+  ![Screenshot 4](/ridesync_frontend/public/Vehicleregistration.png)
 - Ride Posting: Drivers can post available rides specifying start location, end location, start time, and fare.
-  ![Screenshot 5](/ridesync_frontend//public/postride.png)
-  ![Screenshot 6](/ridesync_frontend//public/postride2.png)
+  ![Screenshot 5](/ridesync_frontend/public/postride.png)
+  ![Screenshot 6](/ridesync_frontend/public/postride2.png)
 - Ride Request: Riders can search for rides based on driver proximity and request rides accordingly.
 - Find Ride: Riders can find ride by entering their start location, end location and start time which returns all the available rides.
-  ![Screenshot 7](/ridesync_frontend//public/findride.png)
+  ![Screenshot 7](/ridesync_frontend/public/findride.png)
 - Activity Section: The app includes an activity section with three tabs: current, upcoming, and completed rides, providing users with a comprehensive view of their ride history.
-  ![Screenshot 8](/ridesync_frontend//public/activitySection.png)
+
+- ##### Upcoming ride
+
+![Screenshot 8](/ridesync_frontend/public/activity.png)
+
+- ##### Current ride
+
+![Screenshot 9](/ridesync_frontend/public/activitySectionCurrent.png)
+
+- ##### Past ride
+
+![Screenshot 10](/ridesync_frontend/public/activitySectionPast.png)
 
 - Ride Acceptance: Drivers have the option to accept or reject ride requests from riders.
 
-  ![Screenshot 9](/ridesync_frontend//public/rideinfo.png)
-  ![Screenshot 10](/ridesync_frontend//public/rideinfoRideAccepted.png)
+- ##### Get all rides
+
+  ![Screenshot 9](/ridesync_frontend/public/rideinfo.png)
+
+- ##### Accept ride
+
+  ![Screenshot 10](/ridesync_frontend/public/rideinfoRideAccepted.png)
 
 - Live Location Tracking: Ridesync features live location tracking, allowing riders to monitor the real-time location of drivers and drivers to track the pickup location of riders.
-  ![Screenshot 11](/ridesync_frontend//public/live%20locationtracking.png)
+  ![Screenshot 11](/ridesync_frontend/public/livelocationtracking.png)
 
 - Notification System: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
   ![Screenshot 12](/ridesync_frontend/public/notifications.png)
 - Chatting: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
-  ![Screenshot 13](/ridesync_frontend//public/notifications.png)
+  ![Screenshot 13](/ridesync_frontend/public/Chat.png)
 
 ##### Driver Perspective
 
