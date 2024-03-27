@@ -25,7 +25,6 @@ import com.app.ridesync.services.JwtService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
-
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
@@ -40,57 +39,86 @@ public class AuthenticationController {
     @PostMapping("/register")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> register(
-            @RequestBody RegisterRequest request
-    ) throws MessagingException{
-        return ResponseEntity.ok(service.validateRequest(request));
+            @RequestBody RegisterRequest request) throws MessagingException {
+        try {
+            return ResponseEntity.ok(service.validateRequest(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
     }
 
     @PostMapping("/authenticate")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> authenticate(
-            @RequestBody AuthenticationRequest request
-    ){
-        return ResponseEntity.ok(service.authenticate(request));
+            @RequestBody AuthenticationRequest request) {
+        try {
+            return ResponseEntity.ok(service.authenticate(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
     }
 
     @PostMapping("/forgotPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> forgotPassword(
-            @RequestBody AuthenticationRequest request
-    ) throws MessagingException {
-        return ResponseEntity.ok(service.forgotPassword(request));
+            @RequestBody AuthenticationRequest request) throws MessagingException {
+        try {
+            return ResponseEntity.ok(service.forgotPassword(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
     }
 
     @GetMapping("/resetPassword")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<AuthenticationResponse> resetPassword
-    (@RequestParam String token,
-     @RequestParam Integer id
-    ){
-        return ResponseEntity.ok(service.resetPassword(id,token));
-}
+    public ResponseEntity<AuthenticationResponse> resetPassword(@RequestParam String token,
+            @RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(service.resetPassword(id, token));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
+    }
 
     @GetMapping("/verifyEmail")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<AuthenticationResponse> verifyEmail
-    (@RequestParam String email,
-     @RequestParam Integer id
-    ){
-        return ResponseEntity.ok(service.verifyEmail(id,email));  
+    public ResponseEntity<AuthenticationResponse> verifyEmail(@RequestParam String email,
+            @RequestParam Integer id) {
+        try {
+            return ResponseEntity.ok(service.verifyEmail(id, email));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
     }
 
     @PostMapping("/newPassword")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request)
-   {    
-    return ResponseEntity.ok(service.setNewPassword(request));
+    public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request) {
+        try {
+            return ResponseEntity.ok(service.setNewPassword(request));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+        }
     }
 
     @PutMapping("/updateUser")
     @CrossOrigin(origins = "*")
-    public ResponseEntity<ApiResponse<User>> updateUserDetails(@RequestHeader("Authorization") String jwtToken, @RequestBody RegisterRequest request){
-        Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(new ApiResponse<>(service.updateUserDetails(request, userId), true, "Result set was retrieved successfully"));
+    public ResponseEntity<ApiResponse<User>> updateUserDetails(@RequestHeader("Authorization") String jwtToken,
+            @RequestBody RegisterRequest request) {
+        try {
+            Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(new ApiResponse<>(service.updateUserDetails(request, userId), true,
+                            "Result set was retrieved successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(new ApiResponse<>(null, false, "ERROR: " + e.getMessage()));
+        }
     }
 }
