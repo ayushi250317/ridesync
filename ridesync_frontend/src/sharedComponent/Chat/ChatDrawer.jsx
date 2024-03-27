@@ -20,8 +20,9 @@ import axios from 'axios';
 import SockJS from 'sockjs-client';
 import { Stomp } from '@stomp/stompjs';
 import { API } from '../API';
+import { dateAndTimeInString } from '../Utils';
 
-const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
+const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [chatIdentifier, setChatIdentifier] = useState(null);
@@ -34,9 +35,7 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
     useEffect(() => {
         setIsLoading(true);
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
-        console.log(loggedInUserInfo)
         setLoggedInUserDetails(loggedInUserInfo);
-        console.log(loggedInUserInfo)
         const asyncFunction = async () => {
             try {
                 if (isOpen) {
@@ -46,7 +45,6 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
                     };
                     const chatIdentifierResponse = await axios.get(`${API}/message/chatIdentifier/${chatPartnerId}`, config);
                     if (chatIdentifierResponse.data.success) {
-                        console.log(chatIdentifierResponse);
                         setChatIdentifier(chatIdentifierResponse.data.responseObject);
                         const messageHistoryResponse = await axios.get(`${API}/message/messageHistory/${chatPartnerId}`, config);
                         setMessages(messageHistoryResponse.data.responseObject);
@@ -89,16 +87,15 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
     const subscribe = (chatIdentifier) => {
         var chatUrl = API.replace('/api/v1', '');
         stompClient.current.subscribe(`/queue/messages/${chatIdentifier}`, (message) => {
-            console.log(message)
-            setMessages((prevMessage) => [...prevMessage, message.body.message]);
+            const jsonString = Object.keys(message._binaryBody).map(key => String.fromCharCode(message._binaryBody[key])).join('');
+            const jsonObject = JSON.parse(jsonString);
+            setMessages((prevMessage) => [...prevMessage, jsonObject]);
         });
     }
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            var chatUrl = API.replace('/api/v1', '');
-            console.log(Date.now())
-            const message = { sentTime: new Date().toISOString(), message: inputValue, senderId: loggedInUserDetails.user.userId,recipientId: chatPartnerId };
+            const message = { sentTime: new Date().toISOString(), message: inputValue, senderId: loggedInUserDetails.user.userId, recipientId: chatPartnerId, chatIdentifier };
             stompClient.current.send(`/app/send/${chatIdentifier}`, {}, JSON.stringify(message));
             setInputValue('');
         }
@@ -112,18 +109,21 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
             <DrawerOverlay />
             <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader>Chat</DrawerHeader>
+                <DrawerHeader>Chat with{' ' + chatPartnerName}</DrawerHeader>
                 {isLoading ? <Center h="80vh">
                     <Spinner size='xl' />
                 </Center> : <>
                     <DrawerBody>
                         <VStack align="stretch" spacing={4} overflowY="auto">
                             {messages.map((message) => (
-                                <HStack key={message.id} justifyContent={message.sender === 'user' ? 'flex-end' : 'flex-start'}>
-                                    <Text p={2} bg={message.sender === 'user' ? 'blue.200' : 'green.200'} borderRadius="lg">
-                                        {message.message}
-                                    </Text>
-                                </HStack>
+                                <VStack key={message.id} align={message.senderId !== chatPartnerId ? 'flex-end' : 'flex-start'} spacing={0}>
+                                    <HStack key={message.id} justifyContent={message.senderId !== chatPartnerId ? 'flex-end' : 'flex-start'}>
+                                        <Text p={2} bg={message.senderId !== chatPartnerId ? 'blue.200' : 'green.200'} borderRadius="lg">
+                                            {message.message}
+                                        </Text>
+                                    </HStack>
+                                    <Text fontSize="sm" color="gray.500">{dateAndTimeInString(message.sentTime)}</Text>
+                                </VStack>
                             ))}
                         </VStack>
                     </DrawerBody>

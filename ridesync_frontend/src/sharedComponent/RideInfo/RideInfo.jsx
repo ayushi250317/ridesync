@@ -36,7 +36,7 @@ const Activity = ({ route }) => {
     const [directionsResponse, setDirectionsResponse] = useState(null);
     const [markers, setMarkers] = useState([]);
     const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
-    const [chatUserId, setchatUserId] = useState(null);
+    const [chatUser, setchatUser] = useState({ riderId: null, riderName: null });
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
         if (loggedInUserInfo) {
@@ -160,7 +160,6 @@ const Activity = ({ route }) => {
     const actions = [
         { icon: FiCheck, label: 'Accept', tooltipLabel: 'Accept', colorScheme: 'blue', onClick: handleActionClick },
         { icon: FiX, label: 'Reject', tooltipLabel: 'Reject', colorScheme: 'red', onClick: handleActionClick },
-        { icon: FiMoreVertical, label: 'More', tooltipLabel: 'More actions', colorScheme: 'gray', onClick: handleActionClick },
     ];
 
     const RiderFooter = ({ isDriverCard, isDriver, riderInfo, index }) => {
@@ -172,7 +171,7 @@ const Activity = ({ route }) => {
             return (<Flex>
                 <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
                     toggleChatDrawer();
-                    setchatUserId(riderInfo.riderId);
+                    setchatUser({ riderId: riderInfo.riderId, riderName: riderInfo.riderName });
                 }}>
                     {isMobile ? '' : 'chat'}
                 </Button>
@@ -182,7 +181,7 @@ const Activity = ({ route }) => {
                 <Stack direction='row' spacing={1}>
                     <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
                         toggleChatDrawer();
-                        setchatUserId(riderInfo.riderId);
+                        setchatUser({ riderId: riderInfo.riderId, riderName: riderInfo.riderName });
                     }}>
                         {isMobile ? '' : 'chat'}
                     </Button>
@@ -322,7 +321,7 @@ const Activity = ({ route }) => {
                         </SimpleGrid>
                     </Flex>
                     <Flex h="100%" w="100%" flexDir="column">
-                        <Text fontWeight={500} fontSize="lg" mr={1} mb={1}>Map: </Text>
+                        <Text fontWeight={500} fontSize="lg" mr={1} mb={1}>Route Plan: </Text>
                         <Box h='400px' w='100%' mb={5}>
 
                             <GoogleMap
@@ -366,7 +365,8 @@ const Activity = ({ route }) => {
                 <ChatDrawer
                     isOpen={isChatDrawerOpen}
                     onClose={toggleChatDrawer}
-                    chatPartnerId={chatUserId}
+                    chatPartnerId={chatUser.riderId}
+                    chatPartnerName={chatUser.riderName}
                 />
             </>
         )

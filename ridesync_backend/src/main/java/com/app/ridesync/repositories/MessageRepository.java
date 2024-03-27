@@ -16,7 +16,7 @@ public interface MessageRepository extends JpaRepository<Message,Integer>{
 	
 	@Query("SELECT "
 			+ "NEW com.app.ridesync.projections.MessageProjection(" 
-			+ "sender.fullName as senderName, recipient.fullName as recipientName, message.message, message.sentTime) "
+			+ "message.senderId, message.recipientId, message.message, message.sentTime) "
 			+ "FROM Message message "
 			+ "JOIN User sender ON message.senderId = sender.Id "
 			+ "JOIN User recipient ON message.recipientId = recipient.Id "
