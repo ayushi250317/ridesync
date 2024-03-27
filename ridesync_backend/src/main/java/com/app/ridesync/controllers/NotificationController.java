@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Controller class handling notification-related endpoints.
+ */
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/notification")
 @RestController
@@ -24,6 +27,9 @@ public class NotificationController {
     @Autowired
     private JwtService jwtService;
 
+    /**
+     * Endpoint for retrieving notifications for a user.
+     */
     @GetMapping("/getNotifications")
     public ResponseEntity<ApiResponse<List<Notification>>> getNotifications(
             @RequestHeader("Authorization") String jwtToken) {

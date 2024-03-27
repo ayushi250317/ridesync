@@ -17,6 +17,12 @@ import com.mapbox.geojson.Point;
 import com.mapbox.turf.TurfClassification;
 import com.mapbox.turf.TurfMeasurement;
 
+/*
+ * This service class handles the searching and filtering of available rides based on the user's input parameters:
+ * - Source and destination coordinates
+ * - Ride time
+ * It utilizes geographic calculations to filter rides that are within a certain distance from the specified source and destination points.
+ */
 @Service
 public class RideSearchService {
 	private final GeoPointRepository geoPointRepo;
@@ -31,6 +37,7 @@ public class RideSearchService {
 		this.rideRepository = rideRepository;
 	}
 
+	// Method to find rides based on user input parameters
 	public List<SearchResultProjection> findRides(Integer userId, LatLng source, LatLng destination,
 			LocalDateTime rideTime) {
 		return filterRides(geoPointRepo.findAll(),
@@ -41,6 +48,7 @@ public class RideSearchService {
 
 	}
 
+	// Method to filter rides based on geographic calculations
 	private List<SearchResultProjection> filterRides(List<GeoPoint> geoPoints, Point source, Point destination,
 			LocalDateTime rideTime, Integer userId) {
 		filteredRides = new ArrayList<>();
@@ -63,11 +71,13 @@ public class RideSearchService {
 		return findRideDetailsByFilteredRideIds(filteredRides, rideTime, userId);
 	}
 
+	// Method to retrieve ride details for filtered ride IDs
 	private List<SearchResultProjection> findRideDetailsByFilteredRideIds(List<Integer> rideIds, LocalDateTime rideTime,
 			Integer userId) {
 		return rideRepository.findRideDetailsByRideIds(rideIds, rideTime, rideTime.plusHours(12), userId);
 	}
 
+	// Method to check if the found points are valid based on distance limit
 	private boolean isValid(Point foundSrc, Point foundDes, Point src, Point des) {
 		return TurfMeasurement.distance(foundSrc, src) < WITHIN_LIMIT
 				&& TurfMeasurement.distance(foundDes, des) < WITHIN_LIMIT;

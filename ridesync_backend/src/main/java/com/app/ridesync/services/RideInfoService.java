@@ -12,6 +12,10 @@ import com.app.ridesync.entities.Location;
 import com.app.ridesync.entities.RideInfo;
 import com.app.ridesync.repositories.RideInfoRepository;
 
+/**
+ * This service class manages ride information, including adding, updating, and retrieving ride details,
+ * as well as updating pickup locations and getting driver locations.
+ */
 @Service
 public class RideInfoService {
 
@@ -20,22 +24,9 @@ public class RideInfoService {
 	@Autowired
 	private LocationService locationService;
 
+	 // Method to add ride information
 	public RideInfoResponse addRideInfo(RideInfoInput riInput) { // format for data that includes location.
 		RideInfoResponse res = new RideInfoResponse();
-
-		// Location location1=new Location();
-		// location1.setAddress(riInput.getAddress1());
-		// location1.setLandmark(riInput.getLandmark1());
-		// location1.setLattitude(riInput.getLattitude1());
-		// location1.setLongitude(riInput.getLongitude1());
-		// res.setLocation1(locationService.addLocation(location1));
-
-		// Location location2=new Location();
-		// location2.setAddress(riInput.getAddress2());
-		// location2.setLandmark(riInput.getLandmark2());
-		// location2.setLattitude(riInput.getLattitude2());
-		// location2.setLongitude(riInput.getLongitude2());
-		// res.setLocation2(locationService.addLocation(location2));
 
 		res.setLocation1(locationService.addLocation(new Location(
 								 riInput.getLattitude1(),
@@ -44,8 +35,6 @@ public class RideInfoService {
 								 riInput.getAddress1()
 								 )));
 		
-				
-		//add location 2
 		res.setLocation2(locationService.addLocation(new Location(
 				 riInput.getLattitude2(),
 				 riInput.getLongitude2(),
@@ -80,6 +69,7 @@ public class RideInfoService {
 
 	}
 
+	// Method to update ride information
 	public RideInfoResponse updateRideInfo(RideInfoInput riInput) {
 		RideInfoResponse res = new RideInfoResponse();
 		RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(riInput.getRideId(), riInput.getUserId());
@@ -109,6 +99,7 @@ public class RideInfoService {
 		return res;
 	}
 
+	// Method to update pickup location
 	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup) {
 		RideInfoResponse res = new RideInfoResponse();
 		res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));
@@ -126,6 +117,7 @@ public class RideInfoService {
 		return res;
 	}
 
+	// Method to get all members
 	public List<RideInfoResponse> getAllMembers(Integer RideId) {
 
 		List<RideInfoResponse> res = new ArrayList<>();
@@ -144,6 +136,7 @@ public class RideInfoService {
 
 	}
 
+	// Method to get driver location
 	public RideInfoResponse getDriverLocation(Integer rideId) {
 		RideInfo rideInfo = rideInfoRepository.findByRideIdAndIsDriver(rideId, true);
 		Location pickupLocation = locationService.findLocationById(rideInfo.getPickupLocationId());

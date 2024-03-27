@@ -16,6 +16,9 @@ import com.app.ridesync.services.JwtService;
 import com.app.ridesync.services.RideSearchService;
 import com.google.maps.model.LatLng;
 
+/**
+ * Controller class handling ride search-related endpoints.
+ */
 @RequestMapping(path = "/api/v1/geo")
 @CrossOrigin(origins = "*")
 
@@ -30,14 +33,17 @@ public class RideSearchController {
 		this.jwtService = jwtService;
 	}
 
+	/**
+	 * Endpoint for searching rides based on criteria.
+	 */
 	@PostMapping("/search")
 	public ResponseEntity<ApiResponse<List<SearchResultProjection>>> GetRides(
 			@RequestHeader("Authorization") String jwtToken, @RequestBody RideSearchRequest request) {
 		try {
 			Integer userId = jwtService.extractUserId(jwtToken.substring(7));
-			LatLng source=request.source();
-			LatLng destination=request.destination();
-			LocalDateTime rideTime=request.rideTime();
+			LatLng source = request.source();
+			LatLng destination = request.destination();
+			LocalDateTime rideTime = request.rideTime();
 			List<SearchResultProjection> rides = searchService.findRides(userId, source,
 					destination, rideTime);
 			ApiResponse<List<SearchResultProjection>> response = new ApiResponse<>(rides, true,

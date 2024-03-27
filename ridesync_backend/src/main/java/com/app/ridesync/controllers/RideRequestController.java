@@ -14,6 +14,9 @@ import com.app.ridesync.services.RideRequestService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller class handling ride request-related endpoints.
+ */
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/request")
 @RestController
@@ -22,6 +25,9 @@ public class RideRequestController {
 
     private final RideRequestService rideRequestService;
 
+    /**
+     * Endpoint for adding a ride request.
+     */
     @PostMapping("/addRequest")
     public ResponseEntity<RideRequestResponse> addRide(@RequestHeader("Authorization") String jwtToken,
             @RequestBody RideRequest input) {
@@ -35,6 +41,9 @@ public class RideRequestController {
         }
     }
 
+    /**
+     * Endpoint for retrieving ride requests for a ride.
+     */
     @GetMapping("/getRideRequest")
     public ResponseEntity<ApiResponse<List<RideRequestProjection>>> getRide(@RequestParam Integer rideId) {
         try {
@@ -51,6 +60,9 @@ public class RideRequestController {
         }
     }
 
+    /**
+     * Endpoint for updating a ride request.
+     */
     @CrossOrigin(origins = "*")
     @PutMapping("/updateRideRequest/{id}")
     public ResponseEntity<RideRequestResponse> updateRideRequest(@RequestHeader("Authorization") String jwtToken,

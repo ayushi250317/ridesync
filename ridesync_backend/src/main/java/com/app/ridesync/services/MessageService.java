@@ -14,6 +14,12 @@ import com.app.ridesync.projections.MessageProjection;
 import com.app.ridesync.repositories.ChatIdentifierRepository;
 import com.app.ridesync.repositories.MessageRepository;
 
+/**
+ * Service class for managing messages.
+ * Provides methods for persisting and sending messages, managing chat
+ * identifiers,
+ * retrieving chat messages, and creating notifications.
+ */
 @Service
 public class MessageService {
 	private final ChatIdentifierRepository chatIdentifierRepository;
@@ -24,62 +30,86 @@ public class MessageService {
 	private static final String DESTINATION = "/queue/messages/";
 
 	@Autowired
-	public MessageService(ChatIdentifierRepository chatIdentifierRepository, SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository,  NotificationService notificationService) {
+	public MessageService(ChatIdentifierRepository chatIdentifierRepository,
+			SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository,
+			NotificationService notificationService) {
 		this.chatIdentifierRepository = chatIdentifierRepository;
 		this.simpMessagingTemplate = simpMessagingTemplate;
 		this.messageRepository = messageRepository;
 		this.notificationService = notificationService;
 
 	}
-	
-	public void persistAndSendMessageToBroker(String channel, Message message) {		
+
+	/**
+	 * Persists a message and sends it to the message broker.
+	 */
+	public void persistAndSendMessageToBroker(String channel, Message message) {
 		persistMessage(message);
 		persistNotification(message);
 		sendMessage(channel, message);
 	}
-	
+
+	/**
+	 * Retrieves or creates a chat identifier for a given sender and recipient.
+	 */
 	public String getChatIdentifier(Integer senderId, Integer recipientId) {
-		String chatIdentifer = chatIdentifierRepository.findBySenderAndRecipientId(senderId,recipientId);
-		
-		if(chatIdentifer == null)
+		String chatIdentifer = chatIdentifierRepository.findBySenderAndRecipientId(senderId, recipientId);
+
+		if (chatIdentifer == null)
 			chatIdentifer = createAndPersistChatIdentifier(senderId, recipientId);
-		
+
 		return chatIdentifer;
 	}
-	
-	public List<MessageProjection> getChatMessagesByRecipientId(Integer recipientId){
+
+	/**
+	 * Retrieves chat messages by recipient ID.
+	 */
+	public List<MessageProjection> getChatMessagesByRecipientId(Integer recipientId) {
 		return messageRepository.findByRecipientId(recipientId);
 	}
-	
-	public List<MessageProjection> getChatMessagesBySenderAndRecipientId(Integer senderId, Integer recipientId){
+
+	/**
+	 * Retrieves chat messages by sender and recipient ID.
+	 */
+	public List<MessageProjection> getChatMessagesBySenderAndRecipientId(Integer senderId, Integer recipientId) {
 		return messageRepository.findBySenderAndRecipientId(senderId, recipientId);
 	}
-		
+
+	/**
+	 * Creates and persists a chat identifier based on sender and recipient IDs.
+	 */
 	private String createAndPersistChatIdentifier(Integer senderId, Integer recipientId) {
 		String generatedChatIdentifier = UUID.randomUUID().toString();
-		
+
 		ChatIdentifier createdChatIdentifier = new ChatIdentifier();
 		createdChatIdentifier.setSenderId(senderId);
-		createdChatIdentifier.setRecipientId(recipientId);		
+		createdChatIdentifier.setRecipientId(recipientId);
 		createdChatIdentifier.setChatIdentifier(generatedChatIdentifier);
-				
+
 		chatIdentifierRepository.save(createdChatIdentifier);
-				
+
 		return generatedChatIdentifier;
 	}
-	
+
+	/**
+	 * Persit notification for a message
+	 */
 	private void persistNotification(Message message) {
 		Notification createdNotification = notificationService.createNotificationFromMessage(message);
 		notificationService.addNotification(createdNotification);
 	}
-	
-	
+
+	/**
+	 * Persists message
+	 */
 	private void persistMessage(Message message) {
 		messageRepository.save(message);
 	}
-	
+
+	/**
+	 * Sends message
+	 */
 	private void sendMessage(String channel, Message message) {
-		simpMessagingTemplate.convertAndSend(DESTINATION+channel, message);
+		simpMessagingTemplate.convertAndSend(DESTINATION + channel, message);
 	}
 }
-

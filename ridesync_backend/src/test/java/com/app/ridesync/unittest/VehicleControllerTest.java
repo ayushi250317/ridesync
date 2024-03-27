@@ -1,4 +1,4 @@
-package com.app.ridesync.integrationtest;
+package com.app.ridesync.unittest;
 
 import com.app.ridesync.controllers.VehicleController;
 import com.app.ridesync.dto.requests.VehicleInput;

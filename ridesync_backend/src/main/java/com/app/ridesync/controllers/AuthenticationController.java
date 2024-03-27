@@ -25,17 +25,22 @@ import com.app.ridesync.services.JwtService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller class handling authentication-related endpoints.
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-
 public class AuthenticationController {
     private final AuthenticationService service;
 
     @Autowired
     JwtService jwtService;
 
+    /**
+     * Endpoint for user registration.
+     */
     @PostMapping("/register")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> register(
@@ -50,6 +55,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for user authentication.
+     */
     @PostMapping("/authenticate")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> authenticate(
@@ -64,6 +72,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for initiating password reset.
+     */
     @PostMapping("/forgotPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> forgotPassword(
@@ -78,6 +89,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for resetting user password.
+     */
     @GetMapping("/resetPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> resetPassword(@RequestParam String token,
@@ -92,6 +106,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for verifying user email.
+     */
     @GetMapping("/verifyEmail")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> verifyEmail(@RequestParam String email,
@@ -106,6 +123,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for setting a new user password.
+     */
     @PostMapping("/newPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request) {
@@ -119,6 +139,9 @@ public class AuthenticationController {
         }
     }
 
+    /**
+     * Endpoint for updating user details.
+     */
     @PutMapping("/updateUser")
     @CrossOrigin(origins = "*")
     public ResponseEntity<ApiResponse<User>> updateUserDetails(@RequestHeader("Authorization") String jwtToken,
