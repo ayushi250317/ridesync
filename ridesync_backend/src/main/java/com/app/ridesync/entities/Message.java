@@ -26,4 +26,5 @@ public class Message {
 	private Integer recipientId;
 	private String message;
 	private LocalDateTime sentTime;
+	private String ChatIdentifier;
 }

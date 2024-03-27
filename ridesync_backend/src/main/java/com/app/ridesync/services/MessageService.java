@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.app.ridesync.entities.ChatIdentifier;
 import com.app.ridesync.entities.Message;
+import com.app.ridesync.entities.Notification;
 import com.app.ridesync.projections.MessageProjection;
 import com.app.ridesync.repositories.ChatIdentifierRepository;
 import com.app.ridesync.repositories.MessageRepository;
@@ -18,27 +19,30 @@ public class MessageService {
 	private final ChatIdentifierRepository chatIdentifierRepository;
 	private final SimpMessagingTemplate simpMessagingTemplate;
 	private final MessageRepository messageRepository;
-	
+	private NotificationService notificationService;
+
 	private static final String DESTINATION = "/queue/messages/";
 
 	@Autowired
-	public MessageService(ChatIdentifierRepository chatIdentifierRepository, SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository) {
+	public MessageService(ChatIdentifierRepository chatIdentifierRepository, SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository,  NotificationService notificationService) {
 		this.chatIdentifierRepository = chatIdentifierRepository;
 		this.simpMessagingTemplate = simpMessagingTemplate;
 		this.messageRepository = messageRepository;
+		this.notificationService = notificationService;
 
 	}
 	
-	public void persistAndSendMessageToBroker(String channel, Message message) {	
+	public void persistAndSendMessageToBroker(String channel, Message message) {		
 		persistMessage(message);
+		persistNotification(message);
 		sendMessage(channel, message);
 	}
 	
-	public String getChatIdentifier(ChatIdentifier chat) {
-		String chatIdentifer = chatIdentifierRepository.findBySenderAndRecipientId(chat.getSenderId(),chat.getRecipientId());
+	public String getChatIdentifier(Integer senderId, Integer recipientId) {
+		String chatIdentifer = chatIdentifierRepository.findBySenderAndRecipientId(senderId,recipientId);
 		
 		if(chatIdentifer == null)
-			chatIdentifer = createAndPersistChatIdentifier(chat);
+			chatIdentifer = createAndPersistChatIdentifier(senderId, recipientId);
 		
 		return chatIdentifer;
 	}
@@ -51,14 +55,24 @@ public class MessageService {
 		return messageRepository.findBySenderAndRecipientId(senderId, recipientId);
 	}
 		
-	private String createAndPersistChatIdentifier(ChatIdentifier chat) {
-		String createdChatIdentifier = UUID.randomUUID().toString();
-		chat.setChatIdentifier(createdChatIdentifier);
+	private String createAndPersistChatIdentifier(Integer senderId, Integer recipientId) {
+		String generatedChatIdentifier = UUID.randomUUID().toString();
 		
-		chatIdentifierRepository.save(chat);
+		ChatIdentifier createdChatIdentifier = new ChatIdentifier();
+		createdChatIdentifier.setSenderId(senderId);
+		createdChatIdentifier.setRecipientId(recipientId);		
+		createdChatIdentifier.setChatIdentifier(generatedChatIdentifier);
 				
-		return createdChatIdentifier;
+		chatIdentifierRepository.save(createdChatIdentifier);
+				
+		return generatedChatIdentifier;
 	}
+	
+	private void persistNotification(Message message) {
+		Notification createdNotification = notificationService.createNotificationFromMessage(message);
+		notificationService.addNotification(createdNotification);
+	}
+	
 	
 	private void persistMessage(Message message) {
 		messageRepository.save(message);

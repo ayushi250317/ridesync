@@ -4,7 +4,7 @@ import { IoChatboxEllipsesSharp } from 'react-icons/io5'
 import { FaCar } from 'react-icons/fa'
 import { notificationEnum } from '../../sharedComponent/Enums/NotificationEnums'
 
-const NotificationCard = ({ cardAttributes }) => {
+const NotificationCard = ({ cardAttributes, onClick }) => {
 
     const getMonthName = (index) => {
         const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
@@ -20,7 +20,7 @@ const NotificationCard = ({ cardAttributes }) => {
     }
 
     return (
-        <Flex alignItems="center" justifyContent="space-between" borderRadius="xl" border="1px solid lightgray" m="3" p="5" >
+        <Flex alignItems="center" justifyContent="space-between" borderRadius="xl" border="1px solid lightgray" m="3" p="5" onClick={onClick} _hover={{ cursor: cardAttributes.notificationType === 'CHAT' ? "pointer" : '' }}>
             <Flex w="90%">
 
                 <Box borderRadius="20px" border="1px solid blue" height="15px" width="15px" backgroundColor="blue" mt="2">

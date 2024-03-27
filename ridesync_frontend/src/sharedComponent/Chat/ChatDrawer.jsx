@@ -1,6 +1,4 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
     Button,
     Drawer,
@@ -15,82 +13,135 @@ import {
     Text,
     Input,
     useBreakpointValue,
+    Spinner,
+    Center
 } from '@chakra-ui/react';
 import axios from 'axios';
+import SockJS from 'sockjs-client';
+import { Stomp } from '@stomp/stompjs';
 import { API } from '../API';
+import { dateAndTimeInString } from '../Utils';
 
-const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
+const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [chatIdentifier, setChatIdentifier] = useState(null);
+    const [connected, setConnected] = useState(false);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const isMobile = useBreakpointValue({ base: true, md: false });
     const [isLoading, setIsLoading] = useState(null);
+    const stompClient = useRef(null);
 
     useEffect(() => {
+        setIsLoading(true);
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
         setLoggedInUserDetails(loggedInUserInfo);
+        const asyncFunction = async () => {
+            try {
+                if (isOpen) {
+                    await connect(loggedInUserInfo);
+                    const config = {
+                        headers: { Authorization: `Bearer ${loggedInUserInfo.token}` }
+                    };
+                    const chatIdentifierResponse = await axios.get(`${API}/message/chatIdentifier/${chatPartnerId}`, config);
+                    if (chatIdentifierResponse.data.success) {
+                        setChatIdentifier(chatIdentifierResponse.data.responseObject);
+                        const messageHistoryResponse = await axios.get(`${API}/message/messageHistory/${chatPartnerId}`, config);
+                        setMessages(messageHistoryResponse.data.responseObject);
+                        subscribe(chatIdentifierResponse.data.responseObject);
+                    }
+                }
+            } catch (error) {
+                console.error('There was an error:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
 
-    }, [])
-    useEffect(() => {
-        if (isOpen) {
-            setIsLoading(true)
-            const config = {
-                headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
-            };
-            axios.get(`${API}/ride/getRideDetail/`, config)
-                .then(response => {
-                    setMessages(response.data.messages);
-                })
-                .catch(error => console.error('There was an error loading the messages:', error))
-                .finally(() => setIsLoading(false));
-        }
+        asyncFunction();
     }, [isOpen, chatPartnerId]);
+
+    const connect = (loggedInUserInfo) => {
+        return new Promise((resolve, reject) => {
+            var chatUrl = API.replace('/api/v1', '');
+            const socket = new SockJS('http://localhost:8073/chat');
+            stompClient.current = Stomp.over(socket);
+            stompClient.current.connect({}, (frame) => {
+                setConnected(true);
+                console.log('Connected: ' + frame);
+                resolve(frame);
+            }, (error) => {
+                console.error('Connection error: ' + error);
+                reject(error);
+            });
+        });
+    };
+    const disconnect = () => {
+        if (stompClient.current !== null) {
+            stompClient.current.disconnect();
+        }
+        setConnected(false);
+        console.log("Disconnected");
+    };
+
+    const subscribe = (chatIdentifier) => {
+        var chatUrl = API.replace('/api/v1', '');
+        stompClient.current.subscribe(`/queue/messages/${chatIdentifier}`, (message) => {
+            const jsonString = Object.keys(message._binaryBody).map(key => String.fromCharCode(message._binaryBody[key])).join('');
+            const jsonObject = JSON.parse(jsonString);
+            setMessages((prevMessage) => [...prevMessage, jsonObject]);
+        });
+    }
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            const message = { id: Date.now(), text: inputValue, sender: 'user' };
-            // Here, implement the API call to send the message, for example:
-            //   axios.post('https://yourapi/messages/send', { ...message, chatPartnerId })
-            //     .then(response => {
-            //       // Handle response, e.g., adding the message to the chat
-            //       setMessages(prev => [...prev, message]);
-            //     })
-            //     .catch(error => console.error('There was an error sending the message:', error));
+            const message = { sentTime: new Date().toISOString(), message: inputValue, senderId: loggedInUserDetails.user.userId, recipientId: chatPartnerId, chatIdentifier };
+            stompClient.current.send(`/app/send/${chatIdentifier}`, {}, JSON.stringify(message));
             setInputValue('');
         }
     };
 
     return (
-        <Drawer isOpen={isOpen} placement="right" onClose={onClose} size={isMobile ? "full" : 'md'}>
+        <Drawer isOpen={isOpen}
+            placement="right"
+            onClose={() => { disconnect(); onClose(); }}
+            size={isMobile ? "full" : 'md'}>
             <DrawerOverlay />
             <DrawerContent>
                 <DrawerCloseButton />
-                <DrawerHeader>Chat</DrawerHeader>
+                <DrawerHeader>Chat with{' ' + chatPartnerName}</DrawerHeader>
+                {isLoading ? <Center h="80vh">
+                    <Spinner size='xl' />
+                </Center> : <>
+                    <DrawerBody>
+                        <VStack align="stretch" spacing={4} overflowY="auto">
+                            {messages.map((message) => (
+                                <VStack key={message.id} align={message.senderId !== chatPartnerId ? 'flex-end' : 'flex-start'} spacing={0}>
+                                    <HStack key={message.id} justifyContent={message.senderId !== chatPartnerId ? 'flex-end' : 'flex-start'}>
+                                        <Text p={2} bg={message.senderId !== chatPartnerId ? 'blue.200' : 'green.200'} borderRadius="lg">
+                                            {message.message}
+                                        </Text>
+                                    </HStack>
+                                    <Text fontSize="sm" color="gray.500">{dateAndTimeInString(message.sentTime)}</Text>
+                                </VStack>
+                            ))}
+                        </VStack>
+                    </DrawerBody>
 
-                <DrawerBody>
-                    <VStack align="stretch" spacing={4} overflowY="auto">
-                        {messages.map((message) => (
-                            <HStack key={message.id} justifyContent={message.sender === 'user' ? 'flex-end' : 'flex-start'}>
-                                <Text p={2} bg={message.sender === 'user' ? 'blue.200' : 'green.200'} borderRadius="lg">
-                                    {message.text}
-                                </Text>
-                            </HStack>
-                        ))}
-                    </VStack>
-                </DrawerBody>
+                    <DrawerFooter borderTopWidth="1px">
+                        <Input
+                            placeholder="Type a message..."
+                            value={inputValue}
+                            onChange={(e) => setInputValue(e.target.value)}
+                            onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
+                        />
+                        <Button ml={2} onClick={sendMessage}>Send</Button>
+                    </DrawerFooter>
+                </>
 
-                <DrawerFooter borderTopWidth="1px">
-                    <Input
-                        placeholder="Type a message..."
-                        value={inputValue}
-                        onChange={(e) => setInputValue(e.target.value)}
-                        onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
-                    />
-                    <Button ml={2} onClick={sendMessage}>Send</Button>
-                </DrawerFooter>
+                }
             </DrawerContent>
-        </Drawer>
+        </Drawer >
     );
 };
 
