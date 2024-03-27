@@ -19,7 +19,7 @@ const Navbar = () => {
 
             <Flex w="90%" m="auto" p="4" justifyContent="space-between" alignItems="center" >
                 <Box>
-                    <Image src='/rs1.png' w="18%"></Image>
+                    <Image src='/ridesyncNewLogo.png' w="18%"></Image>
                 </Box>
                 <Flex fontSize="xl" >
                     <Box mx="5">

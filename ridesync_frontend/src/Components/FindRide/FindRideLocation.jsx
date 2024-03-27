@@ -29,7 +29,6 @@ const FindRideLocation = () => {
     });
     const [rideTime, setRideTime] = useState("")
 
-    console.log({ fromAddress, toAddress, rideTime });
 
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(
@@ -64,14 +63,12 @@ const FindRideLocation = () => {
             },
             rideTime: `${time}:00.000000`
         }
-        console.log("new obj", newObj);
         setLoading(true)
         setReqSent(true)
         const config = {
             headers: { Authorization: `Bearer ${token}` },
         };
         axios.post(`${API}/geo/search`, newObj, config).then(resp => {
-            console.log("search ride", resp.data);
             if (resp.data.success) {
                 setFindRidesResult(resp.data.responseObject)
             }
@@ -97,12 +94,10 @@ const FindRideLocation = () => {
             rideId,
             driverId
         }
-        console.log({ newReqObj })
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
         axios.post(`${API}/request/addRequest`, newReqObj, config).then(resp => {
-            console.log("request ride", resp.data);
             if (resp.data.success) {
                 toast({
                     title: "Ride requested successfully.",
@@ -110,6 +105,7 @@ const FindRideLocation = () => {
                     duration: 5000,
                     isClosable: true,
                 });
+                navigate("/activity")
             }
         }).catch(err => {
             console.log("err in req ride", err);
@@ -188,7 +184,7 @@ const FindRideLocation = () => {
 
                             </Box>
                             <Flex justifyContent="flex-end" mt="1">
-                                <Button colorScheme='green' mr="3" isDisabled={!rides.enableRequestRide || loading} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
+                                <Button colorScheme='green' mr="3" isDisabled={!rides.enableRequestRide || handleReqloading} isLoading={handleReqloading} onClick={() => handleRequestRide(rides.rideId, rides.driverId)}>{!rides.enableRequestRide ? "Already Requested" : "Request Ride"}</Button>
                                 <Button colorScheme='blue'
                                     onClick={() => {
                                         localStorage.setItem('searchInfo', JSON.stringify({ fromAddress, toAddress, rideTime }));

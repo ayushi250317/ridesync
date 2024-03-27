@@ -60,16 +60,16 @@ const PersonalInfoEdit = () => {
         mode: "onBlur",
         resolver: yupResolver(schema),
         values: {
-            fullName: loggedInUserInfo.user.fullName,
-            address: loggedInUserInfo.user.address,
+            fullName: loggedInUserInfo?.user?.fullName,
+            address: loggedInUserInfo?.user?.address,
             dateOfBirth: `${new Date(
-                loggedInUserInfo.user.dateOfBirth
+                loggedInUserInfo?.user?.dateOfBirth
             ).getFullYear()}-${changeDateFormat(
-                new Date(loggedInUserInfo.user.dateOfBirth).getMonth()
+                new Date(loggedInUserInfo?.user?.dateOfBirth).getMonth()
             )}-${changeDateFormat(
-                new Date(loggedInUserInfo.user.dateOfBirth).getDate()
+                new Date(loggedInUserInfo?.user?.dateOfBirth).getDate()
             )}`,
-            phoneNumber: loggedInUserInfo.user.phoneNumber,
+            phoneNumber: loggedInUserInfo?.user?.phoneNumber,
         },
     });
 
@@ -78,15 +78,11 @@ const PersonalInfoEdit = () => {
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
         };
-        console.log("config", config);
         axios
             .put(`${API}/auth/updateUser`, data, config)
             .then((response) => {
-                console.log("Response in edit user:", response);
                 if (response.data.success) {
-                    console.log("localstorgae data", loggedInUserInfo);
                     const newStorageObj = { ...loggedInUserInfo, user: response.data.responseObject }
-                    console.log({ newStorageObj });
                     localStorage.setItem('loggedInUserDetails', JSON.stringify(newStorageObj));
                     toast({
                         title: `User updated successfully`,
@@ -97,7 +93,6 @@ const PersonalInfoEdit = () => {
 
                     navigate("/")
                 } else {
-                    console.log("sdsa", response.data.message);
                     toast({
                         title: `${response.data.message}`,
                         status: "error",

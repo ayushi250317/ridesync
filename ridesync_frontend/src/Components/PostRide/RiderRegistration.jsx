@@ -79,7 +79,6 @@ const RiderRegistration = () => {
                         isClosable: true,
                     });
                     setLoading(false);
-                    console.log('Response:', response);
                 }
             })
             .catch(error => {
@@ -88,7 +87,6 @@ const RiderRegistration = () => {
     }
 
     const onSubmitVehicleDetails = ({ regNo, type, make, model, insuranceNo, insuranceExpiry }) => {
-        console.log({ regNo, type, make, model, insuranceNo, insuranceExpiry });
         setLoading(true);
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` }
@@ -110,7 +108,6 @@ const RiderRegistration = () => {
                         userId: loggedInUserDetails.user.userId,
                         documentId: response.data.document.documentId
                     }
-                    console.log("reaching", vehicleInfoReqObj);
                     axios.post(`${API}/vehicle/addVehicle`, vehicleInfoReqObj, config)
                         .then(response => {
                             if (response.data.success) {
@@ -133,7 +130,6 @@ const RiderRegistration = () => {
                                     localStorage.setItem('loggedInUserDetails', JSON.stringify(modifiedLocalStorage));
                                     return modifiedLocalStorage
                                 })
-                                console.log('Response:', response);
                             }
                         })
                         .catch(error => {
@@ -147,7 +143,6 @@ const RiderRegistration = () => {
                         isClosable: true,
                     });
                     setLoading(false);
-                    console.log('Response:', response);
                 }
             })
             .catch(error => {

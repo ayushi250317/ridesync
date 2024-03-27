@@ -15,17 +15,11 @@ export const getPolyLineCoordinates = (fromAddress, toAddress) => {
         }
     ).then(response => {
         const data = response.data;
-        console.log("dada5", data);
         if (data.status === "OK") {
             const route = data.routes[0];
-            console.log({
-                polyline: route.overview_polyline.points,
-                coordinates: decode(route.overview_polyline.points),
-            });
             return decode(route.overview_polyline.points)
         }
     }).catch(err => {
         console.log("Error in getting coordinates:", err);
     });
-    // console.log("return obj", retObj);
 }

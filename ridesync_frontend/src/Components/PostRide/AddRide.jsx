@@ -52,31 +52,30 @@ const AddRide = () => {
     const [vehiclesArr, setSelectedVehicleArr] = useState([]);
     const [description, setDescription] = useState("");
     const toast = useToast();
-    console.log("hithere");
     useEffect(() => {
         const loggedInUserInfo = JSON.parse(
             localStorage.getItem("loggedInUserDetails")
         );
-        console.log("loggedInUserInfo", loggedInUserInfo);
         if (loggedInUserInfo) {
             setLoggedInUserDetails(loggedInUserInfo);
             const authConfig = {
                 headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
             };
 
-            // console.log("config ", authConfig);
-            axios.get(`${API}/vehicle/getVehiclesByUserId/${loggedInUserInfo.user.userId}`, authConfig).then((res) => {
-                console.log("qqq", res.data);
-                if (res.data.success) {
-
-                    setSelectedVehicleArr(res.data.vehicles)
-                }
-
-            }).catch(err => {
-                console.log("err in fetch vehicle", err);
-            })
+            axios
+                .get(
+                    `${API}/vehicle/getVehiclesByUserId/${loggedInUserInfo.user.userId}`,
+                    authConfig
+                )
+                .then((res) => {
+                    if (res.data.success) {
+                        setSelectedVehicleArr(res.data.vehicles);
+                    }
+                })
+                .catch((err) => {
+                    console.log("err in fetch vehicle", err);
+                });
         }
-
     }, []);
 
     const onSubmitAddRide = () => {
@@ -85,77 +84,73 @@ const AddRide = () => {
         const config = {
             headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
-        getPolyLineCoordinates(fromAddress, toAddress).then(resp => {
-            return resp.map((elem) => {
-                return { lat: elem[0], lng: elem[1] }
-            })
-        }).then((cordinates => {
-            console.log("coooooo", cordinates);
-            // setGeoCoordinates({ geoPointRecord: { geoPoints: cordinates } })
-            const dateTime = moment(
-                depatureDate + " " + depatureTime,
-                "YYYY/MM/DD HH:mm"
-            );
-            // console.log("geooooccoor", geoCoordinates);
-            // Format the date and time into the desired format
-            const formattedDateTime = dateTime.format("YYYY-MM-DDTHH:mm:ss");
-            let requestObj = {
-                lattitude1: fromAddress.lat,
-                longitude1: fromAddress.lng,
-                address1: fromAddress.address,
-                lattitude2: toAddress.lat,
-                longitude2: toAddress.lng,
-                address2: toAddress.address,
-                landmark1: sourceLandmark,
-                landmark2: destinationLandmark,
-                startTime: formattedDateTime,
-                seatsAvailable: availableSeats,
-                description,
-                fare,
-                vehicleId: selectedVehicle,
-                // fields to be removed in later point of time
-                createdTime: "2024-02-11T14:30:00",
-                comments: "Test comments",
-                waitTime: "14:30:00",
-                estimatedTripStartTime: "2024-02-11T14:30:00",
-                estimatedTripEndTime: "2024-02-11T14:30:00",
-                routeCoordinates: { geoPointRecord: { geoPoints: cordinates } }
-            };
-
-            console.log("newoo", requestObj)
-
-            axios
-                .post(`${API}/ride/addRide`, requestObj, config)
-                .then((response) => {
-                    console.log("qwer", response.data);
-                    if (response.data.success) {
-                        toast({
-                            title: "Ride Created",
-                            status: "success",
-                            duration: 5000,
-                            isClosable: true,
-                        });
-                        navigate("/notifications")
-                    } else {
-                        toast({
-                            title: response.data.message,
-                            status: "error",
-                            duration: 5000,
-                            isClosable: true,
-                        });
-                        console.log("Response:", response);
-                    }
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
+        getPolyLineCoordinates(fromAddress, toAddress)
+            .then((resp) => {
+                return resp.map((elem) => {
+                    return { lat: elem[0], lng: elem[1] };
                 });
-        })).catch(err => {
-            console.log("err", err)
-        }).finally(() => {
-            setLoading(false)
-        })
+            })
+            .then((cordinates) => {
+                // setGeoCoordinates({ geoPointRecord: { geoPoints: cordinates } })
+                const dateTime = moment(
+                    depatureDate + " " + depatureTime,
+                    "YYYY/MM/DD HH:mm"
+                );
+                // Format the date and time into the desired format
+                const formattedDateTime = dateTime.format("YYYY-MM-DDTHH:mm:ss");
+                let requestObj = {
+                    lattitude1: fromAddress.lat,
+                    longitude1: fromAddress.lng,
+                    address1: fromAddress.address,
+                    lattitude2: toAddress.lat,
+                    longitude2: toAddress.lng,
+                    address2: toAddress.address,
+                    landmark1: sourceLandmark,
+                    landmark2: destinationLandmark,
+                    startTime: formattedDateTime,
+                    seatsAvailable: availableSeats,
+                    description,
+                    fare,
+                    vehicleId: selectedVehicle,
+                    // fields to be removed in later point of time
+                    createdTime: "2024-02-11T14:30:00",
+                    comments: "Test comments",
+                    waitTime: "14:30:00",
+                    estimatedTripStartTime: "2024-02-11T14:30:00",
+                    estimatedTripEndTime: "2024-02-11T14:30:00",
+                    routeCoordinates: { geoPointRecord: { geoPoints: cordinates } },
+                };
 
-
+                axios
+                    .post(`${API}/ride/addRide`, requestObj, config)
+                    .then((response) => {
+                        if (response.data.success) {
+                            toast({
+                                title: "Ride Created",
+                                status: "success",
+                                duration: 5000,
+                                isClosable: true,
+                            });
+                            navigate("/notifications");
+                        } else {
+                            toast({
+                                title: response.data.message,
+                                status: "error",
+                                duration: 5000,
+                                isClosable: true,
+                            });
+                        }
+                    })
+                    .catch((error) => {
+                        console.error("Error:", error);
+                    });
+            })
+            .catch((err) => {
+                console.log("err", err);
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     };
     return (
         <>
@@ -320,10 +315,13 @@ const AddRide = () => {
                                         setSelectedVehicle(e.target.value);
                                     }}
                                 >
-                                    {vehiclesArr.map(vehicle => {
-                                        return <option key={vehicle.vehicleId} value={vehicle.vehicleId} >{vehicle.model}</option>
+                                    {vehiclesArr.map((vehicle) => {
+                                        return (
+                                            <option key={vehicle.vehicleId} value={vehicle.vehicleId}>
+                                                {vehicle.model}
+                                            </option>
+                                        );
                                     })}
-
                                 </Select>
                             </Flex>
                         </Flex>

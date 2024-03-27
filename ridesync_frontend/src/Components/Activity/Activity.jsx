@@ -36,7 +36,6 @@ const Activity = ({ }) => {
                             ongoing: [],
                             completed: []
                         };
-                        console.log(resp.data)
                         resp.data.responseObject.forEach(ride => {
                             if (segregatedRides[ride.status] !== undefined) {
                                 segregatedRides[ride.status].push(ride);
@@ -51,7 +50,6 @@ const Activity = ({ }) => {
         }
     }, [])
     useEffect(() => {
-        console.log('Rides updated', rides);
     }, [rides]);
 
     const TabBody = ({ rideType }) => {
@@ -62,7 +60,6 @@ const Activity = ({ }) => {
             _hover: { color: 'gray.600' },
             _active: { color: 'gray.800' },
         };
-        console.log("rrrr", rides)
         return (
             <Flex w="100%" direction="column">
                 {rides[rideType].map((ride, index) => {
@@ -161,7 +158,7 @@ const Activity = ({ }) => {
                     return prevRides; // If no update is needed, return the previous state
                 });
                 toast({
-                    title: newStatus === "ongoing" ? "ride has started" : "ride has ended",
+                    title: newStatus === "ongoing" ? "Ride has started" : "Ride has ended",
                     status: "success",
                     duration: 5000,
                     isClosable: true,

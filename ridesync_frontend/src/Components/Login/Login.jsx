@@ -31,7 +31,6 @@ const Login = () => {
     })
 
     const onSubmit = (data) => {
-        console.log("dataonSubmit", data);
         setLoading(true);
         axios.post(`${API}/auth/authenticate`, data)
             .then(response => {
@@ -46,7 +45,6 @@ const Login = () => {
                         duration: 5000,
                         isClosable: true,
                     });
-                    console.log('Response:', response);
                 }
             })
             .catch(error => {

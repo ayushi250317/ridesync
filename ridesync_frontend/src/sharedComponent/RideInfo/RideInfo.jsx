@@ -146,7 +146,6 @@ const Activity = ({ route }) => {
                 isClosable: true,
             });
             console.log("err in find ride", err);
-        }).finally(() => {
         })
     };
 

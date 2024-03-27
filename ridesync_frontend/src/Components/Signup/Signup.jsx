@@ -41,11 +41,9 @@ const Signup = () => {
         setLoading(true)
         axios.post(`${API}/auth/register`, data)
             .then(response => {
-                console.log('Response:', response);
                 if (response.data.success) {
                     navigate('/account_email_verification', { state: { email: response.data.user.email } });
                 } else {
-                    console.log("sdsa", response.data.message);
                     toast({
                         title: `${response.data.message}`,
                         status: 'error',

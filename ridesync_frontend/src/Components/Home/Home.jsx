@@ -12,7 +12,6 @@ const Home = () => {
     const loggedInUserInfo = JSON.parse(
         localStorage.getItem("loggedInUserDetails")
     );
-    console.log("loggedInUserInfo", loggedInUserInfo);
 
     return (
         <>

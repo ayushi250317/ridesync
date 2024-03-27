@@ -18,7 +18,6 @@ const Notification = () => {
             headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
         };
         axios.get(`${API}/notification/getNotifications`, config).then((resp) => {
-            console.log("notification resp", resp.data);
             if (resp.data.success) {
                 setNotificationsArray(resp.data.responseObject)
 

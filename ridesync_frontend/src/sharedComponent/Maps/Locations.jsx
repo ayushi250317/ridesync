@@ -26,7 +26,6 @@ const MapSelectorModal = ({ isOpen, onClose, onLocationSelect, locationInfo }) =
 
     const geocoder = new window.google.maps.Geocoder();
     geocoder.geocode({ location: marker }, (results, status) => {
-      console.log(results)
       if (status === 'OK' && results[0]) {
         onLocationSelect({ ...marker, address: results[0].formatted_address });
         onClose();
@@ -67,7 +66,6 @@ const AddressInput = ({ label, setAddressInfo, addressInfo }) => {
   }
   const handlePlaceChanged = () => {
     const place = autocomplete?.getPlace();
-    console.log("asdsa", autocomplete);
     if (place?.formatted_address) {
       var lat = place.geometry.location.lat();
       var lng = place.geometry.location.lng();

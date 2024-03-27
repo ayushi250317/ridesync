@@ -17,7 +17,6 @@ const VehicleForm = ({ onSubmitVehicleDetails, loading }) => {
     } = useForm();
 
     const onSubmit = () => {
-        console.log(regNo)
         let vehicleDetails = {
             regNo: regNo,
             type: type,

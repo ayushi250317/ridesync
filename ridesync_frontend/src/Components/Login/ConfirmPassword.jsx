@@ -59,10 +59,8 @@ const ConfirmPassword = () => {
     }, []);
 
     const onSubmit = (data) => {
-        console.log("dataonSubmit", data);
         setIsLoading(true);
         axios.post(`${API}/auth/newPassword`, { ...data, token, id }).then(resp => {
-            console.log(resp.data);
             if (resp.data.success) {
                 navigate("/login")
                 toast({

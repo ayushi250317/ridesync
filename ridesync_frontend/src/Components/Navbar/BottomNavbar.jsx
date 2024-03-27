@@ -80,7 +80,9 @@ const BottomNavbar = () => {
                     </Link>
                 </Box>
                 <Box position="relative"><Link to="/notifications">
-                    <Box className='notification-number'><Text>5</Text> </Box> <IoNotifications size="33px" />
+                    {/* <Box className='notification-number'><Text>5</Text>
+                     </Box>  */}
+                    <IoNotifications size="33px" />
                 </Link>
                 </Box>
                 <Box><IoSettingsSharp size="33px" onClick={onOpen} /></Box>

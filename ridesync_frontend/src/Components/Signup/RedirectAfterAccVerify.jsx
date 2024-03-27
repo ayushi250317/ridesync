@@ -19,15 +19,14 @@ const RedirectAfterAccVerify = () => {
         }
         try {
             axios.get(`${API}/auth/verifyEmail?email=${email}&id=${id}`).then(resp => {
-                console.log("rrr", resp.data);
                 if (resp.data.success) {
-                    toast({
-                        title: 'Email verification',
-                        description: `${resp.data.message}`,
-                        status: 'success',
-                        duration: 3000,
-                        isClosable: true,
-                    })
+                    // toast({
+                    //     title: 'Email verification',
+                    //     description: `${resp.data.message}`,
+                    //     status: 'success',
+                    //     duration: 3000,
+                    //     isClosable: true,
+                    // })
                     navigate("/login");
                 } else {
                     toast({

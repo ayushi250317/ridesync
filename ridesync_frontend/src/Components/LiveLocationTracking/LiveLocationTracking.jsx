@@ -119,7 +119,6 @@ const LiveLocationTracking = () => {
             };
             const getDriverDetails = async () => {
                 await axios.get(`${API}/ride/getDriverLocation/${state?.rideId}`, config).then(getresp => {
-                    console.log("getres", getresp);
                     if (getresp.data.success) {
                         setCenter({ lat: getresp.data.responseObject.pickupLocation.lattitude, lng: getresp.data.responseObject.pickupLocation.longitude })
                     }
@@ -135,7 +134,6 @@ const LiveLocationTracking = () => {
 
             function success(pos) {
                 const crd = pos.coords;
-                console.log("state.isDriver", state);
 
                 if (state.isDriver) {
                     axios.put(`${API}/ride/updatePickupLocation`, {

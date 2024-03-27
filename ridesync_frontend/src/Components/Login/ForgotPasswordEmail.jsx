@@ -30,10 +30,8 @@ const ForgotPasswordEmail = () => {
     })
 
     const onSubmit = (data) => {
-        console.log("dataonSubmitemail", data);
         setLoading(true);
         axios.post(`${API}/auth/forgotPassword`, data).then(resp => {
-            console.log(resp.data)
             if (resp.data?.success) {
                 setSentSuccess(true)
             }
