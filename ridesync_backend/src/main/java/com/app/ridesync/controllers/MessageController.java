@@ -34,7 +34,7 @@ public class MessageController {
 	
 	@MessageMapping("/send/{channelIdentifier}")
 	public void sendMessage(@RequestHeader("Authorization") String jwtToken, @PathVariable String channelIdentifier, Message message){
-		message.setSenderId(jwtService.extractUserId(jwtToken.substring(7)));
+		message.setSenderId(message.getSenderId());
 		
 		messageService.persistAndSendMessageToBroker(channelIdentifier, message);
 	}

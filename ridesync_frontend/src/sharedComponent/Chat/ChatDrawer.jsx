@@ -22,7 +22,6 @@ import { Stomp } from '@stomp/stompjs';
 import { API } from '../API';
 
 const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
-    console.log(chatPartnerId)
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [chatIdentifier, setChatIdentifier] = useState(null);
@@ -35,6 +34,7 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
     useEffect(() => {
         setIsLoading(true);
         const loggedInUserInfo = JSON.parse(localStorage.getItem('loggedInUserDetails'));
+        console.log(loggedInUserInfo)
         setLoggedInUserDetails(loggedInUserInfo);
         console.log(loggedInUserInfo)
         const asyncFunction = async () => {
@@ -65,12 +65,8 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
 
     const connect = (loggedInUserInfo) => {
         return new Promise((resolve, reject) => {
-            const socket = new SockJS(`${API}/chat`, {
-
-                headers: {
-                    "Authorization": `Bearer ${loggedInUserInfo.token}`
-                }
-            });
+            var chatUrl = API.replace('/api/v1', '');
+            const socket = new SockJS('http://localhost:8073/chat');
             stompClient.current = Stomp.over(socket);
             stompClient.current.connect({}, (frame) => {
                 setConnected(true);
@@ -91,15 +87,19 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
     };
 
     const subscribe = (chatIdentifier) => {
-        stompClient.subscribe(`/topic/${chatIdentifier}`, (message) => {
+        var chatUrl = API.replace('/api/v1', '');
+        stompClient.current.subscribe(`/queue/messages/${chatIdentifier}`, (message) => {
+            console.log(message)
             setMessages((prevMessage) => [...prevMessage, message.body.message]);
         });
     }
 
     const sendMessage = () => {
         if (inputValue.trim() !== '') {
-            const message = { id: Date.now(), text: inputValue, sender: 'user' };
-            stompClient.send("/app/message", {}, JSON.stringify(message));
+            var chatUrl = API.replace('/api/v1', '');
+            console.log(Date.now())
+            const message = { sentTime: new Date().toISOString(), message: inputValue, senderId: loggedInUserDetails.user.userId,recipientId: chatPartnerId };
+            stompClient.current.send(`/app/send/${chatIdentifier}`, {}, JSON.stringify(message));
             setInputValue('');
         }
     };
@@ -121,7 +121,7 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId }) => {
                             {messages.map((message) => (
                                 <HStack key={message.id} justifyContent={message.sender === 'user' ? 'flex-end' : 'flex-start'}>
                                     <Text p={2} bg={message.sender === 'user' ? 'blue.200' : 'green.200'} borderRadius="lg">
-                                        {message.text}
+                                        {message.message}
                                     </Text>
                                 </HStack>
                             ))}

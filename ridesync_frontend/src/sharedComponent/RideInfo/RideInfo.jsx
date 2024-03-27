@@ -172,7 +172,7 @@ const Activity = ({ route }) => {
             return (<Flex>
                 <Button leftIcon={<SiLivechat />} variant='ghost' onClick={() => {
                     toggleChatDrawer();
-                    setchatUserId(riderInfo.driverId);
+                    setchatUserId(riderInfo.riderId);
                 }}>
                     {isMobile ? '' : 'chat'}
                 </Button>
