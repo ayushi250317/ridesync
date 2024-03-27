@@ -75,13 +75,13 @@ class NotificationServiceTest {
 		ArrayList<Notification> notificationList = new ArrayList<>();
 		notificationList.add(notification);
 
-		when(notificationRepository.findByUserId(1)).thenReturn(notificationList);
+		when(notificationRepository.findByUserIdOrderByTimeStampDesc(1)).thenReturn(notificationList);
 
 		// Act
 		List<Notification> actualNotification = notificationService.getNotification(1);
 
 		// Assert
-		verify(notificationRepository).findByUserId(Mockito.<Integer>any());
+		verify(notificationRepository).findByUserIdOrderByTimeStampDesc(Mockito.<Integer>any());
 
 		assertSame(notificationList, actualNotification);
 	}

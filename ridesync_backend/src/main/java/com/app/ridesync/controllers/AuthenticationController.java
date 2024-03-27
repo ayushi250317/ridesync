@@ -25,17 +25,22 @@ import com.app.ridesync.services.JwtService;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller class handling authentication-related endpoints.
+ */
 @RestController
 @CrossOrigin(origins = "*")
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
-
 public class AuthenticationController {
     private final AuthenticationService service;
 
     @Autowired
     JwtService jwtService;
 
+    /**
+     * Endpoint for user registration.
+     */
     @PostMapping("/register")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> register(
@@ -43,11 +48,16 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.validateRequest(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for user authentication.
+     */
     @PostMapping("/authenticate")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> authenticate(
@@ -55,11 +65,16 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.authenticate(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for initiating password reset.
+     */
     @PostMapping("/forgotPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> forgotPassword(
@@ -67,11 +82,16 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.forgotPassword(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for resetting user password.
+     */
     @GetMapping("/resetPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> resetPassword(@RequestParam String token,
@@ -79,11 +99,16 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.resetPassword(id, token));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for verifying user email.
+     */
     @GetMapping("/verifyEmail")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> verifyEmail(@RequestParam String email,
@@ -91,34 +116,45 @@ public class AuthenticationController {
         try {
             return ResponseEntity.ok(service.verifyEmail(id, email));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for setting a new user password.
+     */
     @PostMapping("/newPassword")
     @CrossOrigin(origins = "*")
     public ResponseEntity<AuthenticationResponse> setNewPassword(@RequestBody PasswordResetRequest request) {
         try {
             return ResponseEntity.ok(service.setNewPassword(request));
         } catch (Exception e) {
+            AuthenticationResponse response = AuthenticationResponse.builder().message(e.getMessage()).success(false)
+                    .build();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(AuthenticationResponse.builder().success(false).message(e.getMessage()).build());
+                    .body(response);
         }
     }
 
+    /**
+     * Endpoint for updating user details.
+     */
     @PutMapping("/updateUser")
     @CrossOrigin(origins = "*")
     public ResponseEntity<ApiResponse<User>> updateUserDetails(@RequestHeader("Authorization") String jwtToken,
             @RequestBody RegisterRequest request) {
         try {
             Integer userId = jwtService.extractUserId(jwtToken.substring(7));
+            ApiResponse<User> response = new ApiResponse<User>(service.updateUserDetails(request, userId), true,
+                    "Result set was retrieved successfully");
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(new ApiResponse<>(service.updateUserDetails(request, userId), true,
-                            "Result set was retrieved successfully"));
+                    .body(response);
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(new ApiResponse<>(null, false, "ERROR: " + e.getMessage()));
+            ApiResponse<User> response = new ApiResponse<>(null, false, "ERROR: " + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
         }
     }
 }

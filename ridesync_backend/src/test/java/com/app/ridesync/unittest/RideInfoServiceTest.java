@@ -110,22 +110,7 @@ class RideInfoServiceTest {
         rideInfo.setUserId(1);
         rideInfo.setWaitTime(LocalTime.MIDNIGHT);
 
-        RideInfo rideInfo2 = new RideInfo();
-        rideInfo2.setActive(true);
-        rideInfo2.setComments("Comments");
-        rideInfo2.setDriver(true);
-        rideInfo2.setEndLocationId(1);
-        rideInfo2.setEstimatedTripEndTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        rideInfo2.setEstimatedTripStartTime(LocalDate.of(1970, 1, 1).atStartOfDay());
-        rideInfo2.setFare(10.0d);
-        rideInfo2.setPickupLocationId(1);
-        rideInfo2.setRating(1);
-        rideInfo2.setRideId(1);
-        rideInfo2.setRideInfoId(1);
-        rideInfo2.setStartLocationId(1);
-        rideInfo2.setUserId(1);
-        rideInfo2.setWaitTime(LocalTime.MIDNIGHT);
-        when(rideInfoRepository.save(Mockito.<RideInfo>any())).thenReturn(rideInfo2);
+        when(rideInfoRepository.save(Mockito.<RideInfo>any())).thenReturn(rideInfo);
         when(rideInfoRepository.findByRideIdAndUserId(Mockito.<Integer>any(), Mockito.<Integer>any()))
                 .thenReturn(rideInfo);
 

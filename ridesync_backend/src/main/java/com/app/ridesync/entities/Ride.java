@@ -39,17 +39,17 @@ public class Ride {
     @OneToOne(mappedBy = "ride", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	private GeoPoint geopoint;
 	
-	public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
-			int seatsAvailable, Integer vehicleId, Integer userId) {
-		super();
-		this.startTime = startTime;
-		this.createdTime = createdTime;
-		this.oneTimePassword = oneTimePassword;
-		this.status = status;
-		this.description = description;
-		this.seatsAvailable = seatsAvailable;
-		this.vehicleId = vehicleId;
-		this.userId = userId;
-	}
+	// public Ride(LocalDateTime startTime, LocalDateTime createdTime, int oneTimePassword, String status, String description,
+	// 		int seatsAvailable, Integer vehicleId, Integer userId) {
+	// 	super();
+	// 	this.startTime = startTime;
+	// 	this.createdTime = createdTime;
+	// 	this.oneTimePassword = oneTimePassword;
+	// 	this.status = status;
+	// 	this.description = description;
+	// 	this.seatsAvailable = seatsAvailable;
+	// 	this.vehicleId = vehicleId;
+	// 	this.userId = userId;
+	// }
 
 }

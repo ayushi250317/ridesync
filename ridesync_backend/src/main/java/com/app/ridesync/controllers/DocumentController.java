@@ -20,6 +20,9 @@ import com.app.ridesync.services.JwtService;
 
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Controller class handling document-related endpoints.
+ */
 @RequestMapping("/api/v1/document")
 @CrossOrigin(origins = "*")
 @RestController
@@ -29,29 +32,43 @@ public class DocumentController {
 	private DocumentService documentService;
 	@Autowired
 	private JwtService jwtService;
-	
+
+	/**
+	 * Endpoint for adding a document.
+	 */
 	@PostMapping("/addDocument")
-	public DocumentResponse addDocument(@RequestHeader("Authorization") String jwtToken, @RequestBody DocumentInput input) {
-		
+	public DocumentResponse addDocument(@RequestHeader("Authorization") String jwtToken,
+			@RequestBody DocumentInput input) {
+
 		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		input.setUserId(userId);
-		DocumentResponse res =documentService.addDocument(input); 
+		DocumentResponse res = documentService.addDocument(input);
 		return res;
 	}
-	
+
+	/**
+	 * Endpoint for retrieving documents by user ID.
+	 */
 	@GetMapping("/getDocumentsByUserId/{id}")
-	public GetDocumentResponse getDocumentsById(@PathVariable Integer id, @RequestHeader("Authorization") String jwtToken){
+	public GetDocumentResponse getDocumentsById(@PathVariable Integer id,
+			@RequestHeader("Authorization") String jwtToken) {
 		Integer userId = jwtService.extractUserId(jwtToken.substring(7));
 		return documentService.getDocumentsByUserId(userId);
 	}
-	
+
+	/**
+	 * Endpoint for updating a document.
+	 */
 	@PostMapping("/updateDocument")
-	public DocumentResponse updateDocument(@RequestBody DocumentInput input) {	
+	public DocumentResponse updateDocument(@RequestBody DocumentInput input) {
 		return documentService.updateDocumentByDocId(input);
 	}
-	
+
+	/**
+	 * Endpoint for deleting a document.
+	 */
 	@DeleteMapping("/deleteDocument/{documentId}")
-    public DocumentResponse deleteDocument(@PathVariable Integer documentId) {
-        return documentService.deleteDocument(documentId);
-    }
+	public DocumentResponse deleteDocument(@PathVariable Integer documentId) {
+		return documentService.deleteDocument(documentId);
+	}
 }

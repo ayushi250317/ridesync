@@ -2,10 +2,10 @@ package com.app.ridesync.dto.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Data
+@Getter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +17,8 @@ public class VehicleInput {
 	private String type;
 	private Integer userId;
 	private Integer vehicleId;
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
+	}
 }

@@ -6,13 +6,17 @@ import com.app.ridesync.entities.RideRequestInfo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
 public class RideRequestResponse {
     private List<RideRequestInfo> requests; 
     private String message;

@@ -9,12 +9,16 @@ import com.app.ridesync.entities.Vehicle;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Setter
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class AuthenticationResponse {
     private String token;
     private User user;
@@ -22,4 +26,5 @@ public class AuthenticationResponse {
     private List<Vehicle> vehicles;
     private String message;
     private boolean success;
+
 }

@@ -28,24 +28,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.RequiredArgsConstructor;
 
-
+/**
+ * Service class handling user authentication-related operations.
+ */
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-	
+
     @Autowired
     private Environment env;
-	@Autowired
+    @Autowired
     private final UserRepository repository;
     @Autowired
     private final DocumentRepository documentRepository;
     @Autowired
     private final VehicleRepository vehicleRepository;
-	@Autowired
+    @Autowired
     private final PasswordEncoder passwordEncoder;
-	@Autowired
+    @Autowired
     private final JwtService jwtService;
-	@Autowired
+    @Autowired
     private final AuthenticationManager manager;
     @Autowired
     private final JavaMailSender javaMailSender;
@@ -56,16 +58,24 @@ public class AuthenticationService {
     @Value("${FRONTEND_PORT}")
     private String port;
 
+    /**
+     * Validates the registration request and proceeds with registration if the
+     * email is not already registered.
+     * Sends a verification email upon successful registration.
+     */
     public AuthenticationResponse validateRequest(RegisterRequest request) throws MessagingException {
-        User user=repository.findByEmail(request.getEmail());
-        if(user!=null){
+        User user = repository.findByEmail(request.getEmail());
+        if (user != null) {
             return AuthenticationResponse.builder().message("Email already registered").build();
         }
         return register(request);
     }
 
+    /**
+     * Registers a new user.
+     * Saves the user details and sends a verification email.
+     */
     public AuthenticationResponse register(RegisterRequest request) throws MessagingException {
-
 
         User user = User.builder()
                 .fullName(request.getFullName())
@@ -78,45 +88,58 @@ public class AuthenticationService {
         repository.save(user);
         MimeMessage message = javaMailSender.createMimeMessage();
         message.setFrom("ayushimalhotra9799@gmail.com");
-        message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
+        message.setRecipients(MimeMessage.RecipientType.TO, request.getEmail());
         message.setSubject("Verify Ridesync Account");
-//        String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
-        String htmlContent="<p>Click the <a href=\"http://"+ip_address+":"+port+"/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a> to verify your email </p>";
-        message.setContent(htmlContent,"text/html;charset=utf-8");
+        // String htmlContent="<p>Click the <a
+        // href=\"http://172.17.1.101:3000/confirm_registration/"+user.getUserId()+"/"+user.getEmail()+"\">link</a>
+        // to verify your email </p>";
+        String htmlContent = "<p>Click the <a href=\"http://" + ip_address + ":" + port + "/confirm_registration/"
+                + user.getUserId() + "/" + user.getEmail() + "\">link</a> to verify your email </p>";
+        message.setContent(htmlContent, "text/html;charset=utf-8");
         javaMailSender.send(message);
         return AuthenticationResponse.builder()
                 .message("Registration Successful")
                 .success(true)
                 .user(user)
                 .build();
-    
-    }
-    public AuthenticationResponse verifyEmail(Integer id,String email) {
-        User user=repository.findByUserId(id);
-        if(user.getEmail().equals(email)){
-            user.setVerified(true);
-            repository.save(user);
-            return AuthenticationResponse.builder().message("Account Email Verification Successful").success(true).build();
-        }
-       return AuthenticationResponse.builder().message("Email Verification Unsuccessful").build(); 
+
     }
 
+    /**
+     * Verifies a user's email address.
+     * Marks the user as verified in the database.
+     */
+    public AuthenticationResponse verifyEmail(Integer id, String email) {
+        User user = repository.findByUserId(id);
+        if (user.getEmail().equals(email)) {
+            user.setVerified(true);
+            repository.save(user);
+            return AuthenticationResponse.builder().message("Account Email Verification Successful").success(true)
+                    .build();
+        }
+        return AuthenticationResponse.builder().message("Email Verification Unsuccessful").build();
+    }
+
+    /**
+     * Authenticates a user.
+     * Verifies if the user exists, is verified, and the password is correct.
+     * Generates a JWT token upon successful authentication.
+     */
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        User user=repository.findByEmail(request.getEmail());
-        if(user==null){
+        User user = repository.findByEmail(request.getEmail());
+        if (user == null) {
             return AuthenticationResponse.builder().message("Email not registered").build();
         }
-        if(!user.isVerified()){
-           return AuthenticationResponse.builder().message("Please verify your account").build();
+        if (!user.isVerified()) {
+            return AuthenticationResponse.builder().message("Please verify your account").build();
         }
-        try{
-        manager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
-        }
-        catch(AuthenticationException e){
+        try {
+            manager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+        } catch (AuthenticationException e) {
             return AuthenticationResponse.builder().message("Incorrect Password").build();
         }
-        List<Document> documents=documentRepository.findByUserId(user.getUserId());
-        List<Vehicle> vehicles=vehicleRepository.findByUserId(user.getUserId());
+        List<Document> documents = documentRepository.findByUserId(user.getUserId());
+        List<Vehicle> vehicles = vehicleRepository.findByUserId(user.getUserId());
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .message("Login Successful")
@@ -128,38 +151,51 @@ public class AuthenticationService {
                 .build();
     }
 
+    /**
+     * Initiates the password reset process.
+     * Sends an email with a password reset link.
+     */
     public AuthenticationResponse forgotPassword(AuthenticationRequest request) throws MessagingException {
         String ip_address = env.getProperty("IP_ADDRESS");
         String port = env.getProperty("FRONTEND_PORT");
-      User user=repository.findByEmail(request.getEmail());
-      if(user==null){
-        return AuthenticationResponse.builder().message("Email do not exist").build();
-      }
-      String resetToken=jwtService.generateToken(user);
-      MimeMessage message = javaMailSender.createMimeMessage();
-      message.setFrom("ayushimalhotra9799@gmail.com");
-      message.setRecipients(MimeMessage.RecipientType.TO,request.getEmail());
-      message.setSubject("Reset Password");
-//      String htmlContent="<p>Click the <a href=\"http://172.17.1.101:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
-      String htmlContent="<p>Click the <a href=\"http://"+ip_address+":"+port+"/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a> to reset your password </p>";
-      message.setContent(htmlContent,"text/html;charset=utf-8");
-      javaMailSender.send(message);
-      return AuthenticationResponse.builder().message("email sent successfully").success(true).build();
+        User user = repository.findByEmail(request.getEmail());
+        if (user == null) {
+            return AuthenticationResponse.builder().message("Email do not exist").build();
+        }
+        String resetToken = jwtService.generateToken(user);
+        MimeMessage message = javaMailSender.createMimeMessage();
+        message.setFrom("ayushimalhotra9799@gmail.com");
+        message.setRecipients(MimeMessage.RecipientType.TO, request.getEmail());
+        message.setSubject("Reset Password");
+        // String htmlContent="<p>Click the <a
+        // href=\"http://172.17.1.101:3000/confirm_password/"+resetToken+"/"+user.getUserId()+"\">link</a>
+        // to reset your password </p>";
+        String htmlContent = "<p>Click the <a href=\"http://" + ip_address + ":" + port + "/confirm_password/"
+                + resetToken + "/" + user.getUserId() + "\">link</a> to reset your password </p>";
+        message.setContent(htmlContent, "text/html;charset=utf-8");
+        javaMailSender.send(message);
+        return AuthenticationResponse.builder().message("email sent successfully").success(true).build();
 
-}
+    }
 
+    /**
+     * Verifies the password reset token and user ID.
+     */
     public AuthenticationResponse resetPassword(Integer id, String token) {
-        User user=repository.findByUserId(id);
-        Integer tokenId=jwtService.extractUserId(token);
-        if(user.getUserId().equals(tokenId)){
-            return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();    
+        User user = repository.findByUserId(id);
+        Integer tokenId = jwtService.extractUserId(token);
+        if (user.getUserId().equals(tokenId)) {
+            return AuthenticationResponse.builder().message("Verification done successfully").success(true).build();
         }
         return AuthenticationResponse.builder().message("Email did not match").build();
     }
 
+    /**
+     * Sets a new password for the user after successful verification.
+     */
     public AuthenticationResponse setNewPassword(PasswordResetRequest request) {
-        if(request.getNewPassword().equals(request.getReNewPassword())){
-            User user=repository.findByUserId(request.getId());
+        if (request.getNewPassword().equals(request.getReNewPassword())) {
+            User user = repository.findByUserId(request.getId());
             user.setPassword(passwordEncoder.encode(request.getNewPassword()));
             repository.save(user);
             return AuthenticationResponse.builder().message("Password Reset Successful").success(true).build();
@@ -167,7 +203,10 @@ public class AuthenticationService {
         return AuthenticationResponse.builder().message("Passwords do not match").build();
     }
 
-    public User updateUserDetails(RegisterRequest request, Integer userId){
+    /**
+     * Updates the user's details.
+     */
+    public User updateUserDetails(RegisterRequest request, Integer userId) {
         User user = repository.findByUserId(userId);
         user.setFullName(request.getFullName());
         user.setAddress(request.getAddress());
@@ -176,9 +215,12 @@ public class AuthenticationService {
 
         return repository.save(user);
     }
-    
+
+    /**
+     * Deletes a user by their ID.
+     */
     @Transactional
     public void deleteByUserId(Integer userId) {
-    	repository.deleteByUserId(userId);
+        repository.deleteByUserId(userId);
     }
 }
