@@ -53,12 +53,14 @@ const Notification = () => {
                     {
                         notificationsArray.length ? (
                             notificationsArray.map(elem => {
-                                const handleClick = elem.notificationType === 'CHAT' ? () => {
-                                    setchatUser({ riderId: elem.userId, riderName: elem.message.split(' ')[0] })
-                                    toggleChatDrawer();
-                                } : undefined;
+                                // const handleClick = elem.notificationType === 'CHAT' ? () => {
+                                //     setchatUser({ riderId: elem.userId, riderName: elem.message.split(' ')[0] })
+                                //     toggleChatDrawer();
+                                // } : undefined;
 
-                                return <NotificationCard cardAttributes={elem} onClick={handleClick} />
+                                return <NotificationCard cardAttributes={elem}
+                                // onClick={handleClick}
+                                />
                             })
                         ) : (
                             <Text textAlign="center">No notifications available</Text>

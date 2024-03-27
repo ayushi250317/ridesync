@@ -114,6 +114,12 @@ const FindRideLocation = () => {
         })
 
     }
+    const handleSeconds = (time) => {
+        if (time < 10) {
+            return `0${time}`
+        }
+        return time;
+    }
 
     return <Box w={["88%", "92%", "63%", "67%"]} m="auto">
 
@@ -142,7 +148,7 @@ const FindRideLocation = () => {
                                 <Flex justifyContent="space-between">
 
 
-                                    <Text fontWeight="bold">{`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} at ${rides.startTime[3]}:${rides.startTime[4]}`}</Text>
+                                    <Text fontWeight="bold">{`${rides.startTime[0]}/${rides.startTime[1]}/${rides.startTime[2]} at ${rides.startTime[3]}:${handleSeconds(rides.startTime[4])}`}</Text>
                                     <Text>
                                         {rides.seatsAvailable} seats left - <span style={{ color: "blue" }}>
                                             ${rides.fare}

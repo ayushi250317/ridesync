@@ -131,7 +131,7 @@ const AddRide = () => {
                                 duration: 5000,
                                 isClosable: true,
                             });
-                            navigate("/notifications");
+                            navigate("/activity");
                         } else {
                             toast({
                                 title: response.data.message,

@@ -66,7 +66,6 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
             const socket = new SockJS(`${chatUrl}/chat`);
             stompClient.current = Stomp.over(socket);
             stompClient.current.connect({}, (frame) => {
-                console.log('Connected: ' + frame);
                 resolve(frame);
             }, (error) => {
                 console.error('Connection error: ' + error);
@@ -124,14 +123,14 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
                         </VStack>
                     </DrawerBody>
 
-                    <DrawerFooter borderTopWidth="1px">
+                    <DrawerFooter borderTopWidth="1px" mb="4">
                         <Input
                             placeholder="Type a message..."
                             value={inputValue}
                             onChange={(e) => setInputValue(e.target.value)}
                             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
                         />
-                        <Button ml={2} onClick={sendMessage}>Send</Button>
+                        <Button ml={2} onClick={sendMessage} backgroundColor="#383838" color="white">Send</Button>
                     </DrawerFooter>
                 </>
 
