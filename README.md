@@ -51,7 +51,6 @@ Ridesync is a ride-sharing application designed to connect riders and drivers se
 - react-router-dom
 - react-google-maps
 - googlemaps/polyline-codec
-
 - react-google-places-autocomplete
 
 ##### Dev Dependencies
