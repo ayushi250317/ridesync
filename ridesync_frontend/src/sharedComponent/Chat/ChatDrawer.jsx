@@ -26,7 +26,6 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
     const [messages, setMessages] = useState([]);
     const [inputValue, setInputValue] = useState('');
     const [chatIdentifier, setChatIdentifier] = useState(null);
-    const [connected, setConnected] = useState(false);
     const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const isMobile = useBreakpointValue({ base: true, md: false });
     const [isLoading, setIsLoading] = useState(null);
@@ -61,13 +60,12 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
         asyncFunction();
     }, [isOpen, chatPartnerId]);
 
-    const connect = (loggedInUserInfo) => {
+    const connect = () => {
         return new Promise((resolve, reject) => {
             var chatUrl = API.replace('/api/v1', '');
-            const socket = new SockJS('http://localhost:8073/chat');
+            const socket = new SockJS(`${chatUrl}/chat`);
             stompClient.current = Stomp.over(socket);
             stompClient.current.connect({}, (frame) => {
-                setConnected(true);
                 console.log('Connected: ' + frame);
                 resolve(frame);
             }, (error) => {
@@ -80,8 +78,6 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
         if (stompClient.current !== null) {
             stompClient.current.disconnect();
         }
-        setConnected(false);
-        console.log("Disconnected");
     };
 
     const subscribe = (chatIdentifier) => {
