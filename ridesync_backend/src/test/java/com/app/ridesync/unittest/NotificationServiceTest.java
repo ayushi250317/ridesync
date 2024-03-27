@@ -93,7 +93,7 @@ class NotificationServiceTest {
 		user.setUserId(1);
 		user.setFullName("Test User");
 
-		Message message = new Message(1, user.getUserId(), 2, "Test notification", LocalDateTime.now());
+		Message message = new Message(1, user.getUserId(), 2, "Test notification", LocalDateTime.now(),"");
 
 		when(userRepository.findByUserId(1)).thenReturn(user);
 		String expectedMessage = String.format(" %s is trying to reach you.", user.getFullName());
