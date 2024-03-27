@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="./ridesync_frontend/public/ridesyncNewLogo.png" alt="Image Description" width="300" height="180">
+    <img src="./ridesync_frontend/public/ridesyncNewLogo.png" alt="Ridesync" width="300" height="180">
 </p>
 
 # Ridesync
