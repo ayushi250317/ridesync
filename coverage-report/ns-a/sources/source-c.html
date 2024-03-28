@@ -1,0 +1,209 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > VehicleService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.services</a>
+</div>
+
+<h1>Coverage Summary for Class: VehicleService (com.app.ridesync.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">VehicleService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (5/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    86%
+  </span>
+  <span class="absValue">
+    (49/57)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.services;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import com.app.ridesync.dto.requests.VehicleInput;
+&nbsp;import com.app.ridesync.dto.responses.VehicleResponse;
+&nbsp;import com.app.ridesync.dto.responses.GetVehicleResponse;
+&nbsp;import com.app.ridesync.entities.Vehicle;
+&nbsp;import com.app.ridesync.repositories.VehicleRepository;
+&nbsp;
+&nbsp;/**
+&nbsp; * This service class manages operations related to vehicles, including adding, retrieving,
+&nbsp; * updating, and deleting vehicles.
+&nbsp; */
+&nbsp;@Service
+<b class="fc">&nbsp;public class VehicleService {</b>
+&nbsp;
+&nbsp;	@Autowired
+&nbsp;	private VehicleRepository vehicleRepository;
+&nbsp;
+&nbsp;	// Method to add a new vehicle
+&nbsp;	public VehicleResponse addVehicle(VehicleInput input) {
+<b class="fc">&nbsp;		VehicleResponse res = new VehicleResponse();</b>
+&nbsp;
+&nbsp;		try {
+<b class="fc">&nbsp;			Vehicle vehicle = new Vehicle();</b>
+<b class="fc">&nbsp;			vehicle.setRegNo(input.getRegNo());</b>
+<b class="fc">&nbsp;			vehicle.setDocumentId(input.getDocumentId());</b>
+<b class="fc">&nbsp;			vehicle.setModel(input.getModel());</b>
+<b class="fc">&nbsp;			vehicle.setMake(input.getMake());</b>
+<b class="fc">&nbsp;			vehicle.setType(input.getType());</b>
+<b class="fc">&nbsp;			vehicle.setUserId(input.getUserId());</b>
+<b class="fc">&nbsp;			Vehicle response = vehicleRepository.save(vehicle);</b>
+&nbsp;
+<b class="fc">&nbsp;			res.setVehicle(response);</b>
+<b class="fc">&nbsp;		} catch (Exception e) {</b>
+<b class="fc">&nbsp;			res.setSuccess(false);</b>
+<b class="fc">&nbsp;			res.setMessage(e.toString());</b>
+<b class="fc">&nbsp;			return res;</b>
+<b class="fc">&nbsp;		}</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setSuccess(true);</b>
+<b class="fc">&nbsp;		res.setMessage(&quot;Vehicle inserted Successfully&quot;);</b>
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to retrieve vehicles by user ID
+&nbsp;	public GetVehicleResponse getVehiclesByUserId(Integer userId) {
+<b class="fc">&nbsp;		GetVehicleResponse res = new GetVehicleResponse();</b>
+&nbsp;		try {
+&nbsp;
+<b class="fc">&nbsp;			res.setVehicles(vehicleRepository.findByUserId(userId));</b>
+&nbsp;
+<b class="nc">&nbsp;		} catch (Exception e) {</b>
+<b class="nc">&nbsp;			res.setMessage(e.toString());</b>
+<b class="nc">&nbsp;			res.setSuccess(true);</b>
+<b class="nc">&nbsp;			return res;</b>
+<b class="fc">&nbsp;		}</b>
+<b class="fc">&nbsp;		res.setMessage(&quot;Vehicles Fetched Successfully&quot;);</b>
+<b class="fc">&nbsp;		res.setSuccess(true);</b>
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to update vehicle by ID
+&nbsp;	public VehicleResponse updateVehicleById(VehicleInput input) {
+<b class="fc">&nbsp;		VehicleResponse res = new VehicleResponse();</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			Vehicle vehicle = vehicleRepository.findByVehicleId(input.getVehicleId());</b>
+&nbsp;
+<b class="fc">&nbsp;			vehicle.setMake(input.getMake());</b>
+<b class="fc">&nbsp;			vehicle.setDocumentId(input.getDocumentId());</b>
+<b class="fc">&nbsp;			vehicle.setModel(input.getModel());</b>
+<b class="fc">&nbsp;			vehicle.setRegNo(input.getRegNo());</b>
+<b class="fc">&nbsp;			vehicle.setType(input.getType());</b>
+&nbsp;
+<b class="fc">&nbsp;			res.setVehicle(vehicleRepository.save(vehicle));</b>
+<b class="fc">&nbsp;		} catch (Exception e) {</b>
+<b class="fc">&nbsp;			res.setMessage(e.toString());</b>
+<b class="fc">&nbsp;			res.setSuccess(false);</b>
+<b class="fc">&nbsp;			return res;</b>
+<b class="fc">&nbsp;		}</b>
+<b class="fc">&nbsp;		res.setMessage(&quot;Updated Selected Vehicle Successfully&quot;);</b>
+<b class="fc">&nbsp;		res.setSuccess(true);</b>
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to delete vehicle
+&nbsp;	public VehicleResponse deleteVehicle(Integer vehicleId) {
+<b class="fc">&nbsp;		VehicleResponse res = new VehicleResponse();</b>
+&nbsp;		try {
+<b class="fc">&nbsp;			Vehicle vehicle = vehicleRepository.findByVehicleId(vehicleId);</b>
+&nbsp;
+<b class="fc">&nbsp;			res.setVehicle(vehicle);</b>
+<b class="fc">&nbsp;			vehicleRepository.delete(vehicle);</b>
+<b class="nc">&nbsp;		} catch (Exception e) {</b>
+<b class="nc">&nbsp;			res.setMessage(e.toString());</b>
+<b class="nc">&nbsp;			res.setSuccess(false);</b>
+<b class="nc">&nbsp;			return res;</b>
+<b class="fc">&nbsp;		}</b>
+<b class="fc">&nbsp;		res.setMessage(&quot;Deleted Selected Vehicle Successfully&quot;);</b>
+<b class="fc">&nbsp;		res.setSuccess(true);</b>
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

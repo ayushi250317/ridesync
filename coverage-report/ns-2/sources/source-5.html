@@ -1,0 +1,139 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > WebSocketConfig</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.config</a>
+</div>
+
+<h1>Coverage Summary for Class: WebSocketConfig (com.app.ridesync.config)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">WebSocketConfig</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">WebSocketConfig$$SpringCGLIB$$0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (3/3)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.config;
+&nbsp;
+&nbsp;import org.springframework.context.annotation.Configuration;
+&nbsp;import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+&nbsp;import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+&nbsp;import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+&nbsp;import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+&nbsp;
+&nbsp;@Configuration
+&nbsp;@EnableWebSocketMessageBroker
+<b class="fc">&nbsp;public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {</b>
+&nbsp;
+&nbsp;	private static final String CHAT_ENDPOINT = &quot;/chat&quot;;
+&nbsp;		
+&nbsp;    @Override
+&nbsp;    public void registerStompEndpoints(StompEndpointRegistry registry) {
+<b class="fc">&nbsp;        registry.addEndpoint(CHAT_ENDPOINT).withSockJS();</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;	@Override
+&nbsp;	public void configureMessageBroker(MessageBrokerRegistry registry) {
+<b class="fc">&nbsp;        registry.setApplicationDestinationPrefixes(&quot;/app&quot;).enableSimpleBroker(&quot;/topic&quot;,&quot;/queue&quot;);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

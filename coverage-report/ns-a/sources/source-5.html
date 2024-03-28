@@ -1,0 +1,153 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > LocationService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.services</a>
+</div>
+
+<h1>Coverage Summary for Class: LocationService (com.app.ridesync.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">LocationService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (4/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.services;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import com.app.ridesync.entities.Location;
+&nbsp;import com.app.ridesync.repositories.LocationRepository;
+&nbsp;
+&nbsp;/**
+&nbsp; * Service class for managing locations.
+&nbsp; * Provides methods for adding, updating, and finding locations.
+&nbsp; */
+&nbsp;@Service
+<b class="fc">&nbsp;public class LocationService {</b>
+&nbsp;
+&nbsp;	@Autowired
+&nbsp;	private LocationRepository locationRepository;
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Adds a new location to the repository.
+&nbsp;	 */
+&nbsp;	public Location addLocation(Location location) {
+<b class="fc">&nbsp;		return locationRepository.save(location);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Updates an existing location in the repository.
+&nbsp;	 */
+&nbsp;	public Location updateLocation(Location location) {
+<b class="fc">&nbsp;		Location oldLoc = locationRepository.findByLocationId(location.getLocationId());</b>
+&nbsp;
+<b class="fc">&nbsp;		oldLoc.setAddress(location.getAddress());</b>
+<b class="fc">&nbsp;		oldLoc.setLandmark(location.getLandmark());</b>
+<b class="fc">&nbsp;		oldLoc.setLattitude(location.getLattitude());</b>
+<b class="fc">&nbsp;		oldLoc.setLongitude(location.getLongitude());</b>
+&nbsp;
+<b class="fc">&nbsp;		locationRepository.save(oldLoc);</b>
+&nbsp;
+<b class="fc">&nbsp;		return oldLoc;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Finds a location by its ID.
+&nbsp;	 */
+&nbsp;	public Location findLocationById(Integer Id) {
+<b class="fc">&nbsp;		return locationRepository.findByLocationId(Id);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

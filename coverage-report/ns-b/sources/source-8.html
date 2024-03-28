@@ -1,0 +1,104 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RideRequestRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: RideRequestRepository (com.app.ridesync.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">RideRequestRepository$MockitoMock$2qCxyiKY</td>
+  </tr>
+  <tr>
+    <td class="name">RideRequestRepository$MockitoMock$2qCxyiKY$auxiliary$SJmBv5uK</td>
+  </tr>
+  <tr>
+    <td class="name">RideRequestRepository$MockitoMock$2qCxyiKY$auxiliary$swyuGxL0</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.repositories;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.data.jpa.repository.Query;
+&nbsp;import org.springframework.data.repository.query.Param;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;
+&nbsp;import com.app.ridesync.entities.RideInfo;
+&nbsp;import com.app.ridesync.entities.RideRequestInfo;
+&nbsp;import com.app.ridesync.projections.RideRequestProjection;
+&nbsp;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public interface RideRequestRepository extends JpaRepository&lt;RideRequestInfo,Integer&gt;{
+&nbsp;    @Query(&quot;SELECT new com.app.ridesync.projections.RideRequestProjection(rideRequest.rideRequestId as rideRequestId, rideRequest.rideId as rideId,rideRequest.riderId as riderId,rideRequest.driverId as driverId,rideRequest.tripStartTime, rideRequest.requestStatus as requestStatus, pickupLocation.address as pickupAddress, pickupLocation.lattitude as pickupLat, pickupLocation.longitude as pickupLong, dropLocation.address as dropAddress, dropLocation.lattitude as dropLat, dropLocation.longitude as dropLong, user.fullName as riderName)&quot;
+&nbsp;			+ &quot; FROM RideRequestInfo rideRequest &quot;
+&nbsp;			+ &quot; JOIN Location pickupLocation ON pickupLocation.locationId = rideRequest.startLocationId&quot;
+&nbsp;			+ &quot; JOIN Location dropLocation ON dropLocation.locationId = rideRequest.endLocationId&quot;
+&nbsp;			+ &quot; JOIN User user ON user.userId=rideRequest.riderId&quot;
+&nbsp;			+ &quot; WHERE  rideRequest.rideId=:rideId&quot;
+&nbsp;			)
+&nbsp;    List&lt;RideRequestProjection&gt; findByRideId(@Param(&quot;rideId&quot;) Integer rideId);
+&nbsp;    RideRequestInfo findByRideRequestId(Integer rideRequestId);
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

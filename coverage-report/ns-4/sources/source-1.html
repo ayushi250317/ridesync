@@ -1,0 +1,141 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > GeoPointConverter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.converter</a>
+</div>
+
+<h1>Coverage Summary for Class: GeoPointConverter (com.app.ridesync.converter)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">GeoPointConverter</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (2/3)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    37.5%
+  </span>
+  <span class="absValue">
+    (3/8)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.converter;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;
+&nbsp;import com.app.ridesync.config.ObjectMapperConfig;
+&nbsp;import com.app.ridesync.entities.GeoPointRecord;
+&nbsp;
+&nbsp;import jakarta.persistence.AttributeConverter;
+&nbsp;import jakarta.persistence.Converter;
+&nbsp;
+&nbsp;@Converter
+&nbsp;public class GeoPointConverter implements AttributeConverter&lt;GeoPointRecord,byte[]&gt;{
+&nbsp;	private final ObjectMapperConfig objectMapperConfig;
+&nbsp;
+&nbsp;	@Autowired
+<b class="fc">&nbsp;	public GeoPointConverter(ObjectMapperConfig objectMapperConfig) {</b>
+<b class="fc">&nbsp;		this.objectMapperConfig = objectMapperConfig;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	@Override
+&nbsp;	public byte[] convertToDatabaseColumn(GeoPointRecord geoPoints) {		
+&nbsp;		try {
+<b class="fc">&nbsp;			return objectMapperConfig.objectMapper().writeValueAsBytes(geoPoints);</b>
+<b class="nc">&nbsp;		} catch (Exception e) {</b>
+<b class="nc">&nbsp;			throw new RuntimeException(&quot;Error serializing the route coordinates to JSON.&quot;, e);</b>
+&nbsp;		}
+&nbsp;	}
+&nbsp;
+&nbsp;	@Override
+&nbsp;	public GeoPointRecord convertToEntityAttribute(byte[] geoPoints) {
+&nbsp;		try {
+<b class="nc">&nbsp;			return objectMapperConfig.objectMapper().readValue(geoPoints,GeoPointRecord.class);</b>
+<b class="nc">&nbsp;		} catch (Exception e) {</b>
+<b class="nc">&nbsp;			throw new RuntimeException(&quot;Error de serializing the route coordinates to class object.&quot;, e);</b>
+&nbsp;		}	
+&nbsp;	}	
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,250 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RideInfoService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.services</a>
+</div>
+
+<h1>Coverage Summary for Class: RideInfoService (com.app.ridesync.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RideInfoService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    90.5%
+  </span>
+  <span class="absValue">
+    (67/74)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.services;
+&nbsp;
+&nbsp;import java.util.ArrayList;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import com.app.ridesync.dto.requests.RideInfoInput;
+&nbsp;import com.app.ridesync.dto.responses.RideInfoResponse;
+&nbsp;import com.app.ridesync.entities.Location;
+&nbsp;import com.app.ridesync.entities.RideInfo;
+&nbsp;import com.app.ridesync.repositories.RideInfoRepository;
+&nbsp;
+&nbsp;/**
+&nbsp; * This service class manages ride information, including adding, updating, and retrieving ride details,
+&nbsp; * as well as updating pickup locations and getting driver locations.
+&nbsp; */
+&nbsp;@Service
+<b class="fc">&nbsp;public class RideInfoService {</b>
+&nbsp;
+&nbsp;	@Autowired
+&nbsp;	private RideInfoRepository rideInfoRepository;
+&nbsp;	@Autowired
+&nbsp;	private LocationService locationService;
+&nbsp;
+&nbsp;	 // Method to add ride information
+&nbsp;	public RideInfoResponse addRideInfo(RideInfoInput riInput) { // format for data that includes location.
+<b class="fc">&nbsp;		RideInfoResponse res = new RideInfoResponse();</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setLocation1(locationService.addLocation(new Location(</b>
+<b class="fc">&nbsp;								 riInput.getLattitude1(),</b>
+<b class="fc">&nbsp;								 riInput.getLongitude1(),</b>
+<b class="fc">&nbsp;								 riInput.getLandmark1(),</b>
+<b class="fc">&nbsp;								 riInput.getAddress1()</b>
+&nbsp;								 )));
+&nbsp;		
+<b class="fc">&nbsp;		res.setLocation2(locationService.addLocation(new Location(</b>
+<b class="fc">&nbsp;				 riInput.getLattitude2(),</b>
+<b class="fc">&nbsp;				 riInput.getLongitude2(),</b>
+<b class="fc">&nbsp;				 riInput.getLandmark2(),</b>
+<b class="fc">&nbsp;				 riInput.getAddress2()</b>
+&nbsp;				 )));
+&nbsp;
+&nbsp;
+&nbsp;		// this is a dummy entry in the location table that will be created for rider
+&nbsp;		// pickup points.
+<b class="fc">&nbsp;		int pickupLatLong = locationService.addLocation(new Location(</b>
+&nbsp;				0,
+&nbsp;				0,
+&nbsp;				&quot;&quot;,
+<b class="fc">&nbsp;				&quot;&quot;)).getLocationId();</b>
+&nbsp;
+&nbsp;		// get their Ids and then save RideInfo entry.
+<b class="fc">&nbsp;		RideInfo rideInfo = new RideInfo();</b>
+<b class="fc">&nbsp;		rideInfo.setRideId(riInput.getRideId());</b>
+<b class="fc">&nbsp;		rideInfo.setUserId(riInput.getUserId());</b>
+<b class="fc">&nbsp;		rideInfo.setStartLocationId(res.getLocation1().getLocationId());</b>
+<b class="fc">&nbsp;		rideInfo.setEndLocationId(res.getLocation2().getLocationId());</b>
+<b class="fc">&nbsp;		rideInfo.setDriver(true);</b>
+<b class="fc">&nbsp;		rideInfo.setActive(true);</b>
+<b class="fc">&nbsp;		rideInfo.setFare(riInput.getFare());</b>
+<b class="fc">&nbsp;		rideInfo.setComments(riInput.getComments());</b>
+<b class="fc">&nbsp;		rideInfo.setEstimatedTripStartTime(riInput.getEstimatedTripStartTime());</b>
+<b class="fc">&nbsp;		rideInfo.setEstimatedTripEndTime(riInput.getEstimatedTripEndTime());</b>
+<b class="fc">&nbsp;		rideInfo.setPickupLocationId(pickupLatLong);</b>
+<b class="fc">&nbsp;		res.setRideInfo(rideInfoRepository.save(rideInfo));</b>
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to update ride information
+&nbsp;	public RideInfoResponse updateRideInfo(RideInfoInput riInput) {
+<b class="fc">&nbsp;		RideInfoResponse res = new RideInfoResponse();</b>
+<b class="fc">&nbsp;		RideInfo rideInfo = rideInfoRepository.findByRideIdAndUserId(riInput.getRideId(), riInput.getUserId());</b>
+<b class="fc">&nbsp;		System.out.println(riInput.getUserId() + &quot; &quot; + riInput.getRideId());</b>
+<b class="fc">&nbsp;		System.out.println(rideInfo);</b>
+<b class="fc">&nbsp;		rideInfo.setFare(riInput.getFare());</b>
+<b class="fc">&nbsp;		rideInfo.setComments(riInput.getComments());</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setRideInfo(rideInfoRepository.save(rideInfo));</b>
+&nbsp;
+<b class="fc">&nbsp;		Location location1=new Location();</b>
+<b class="fc">&nbsp;		location1.setAddress(riInput.getAddress1());</b>
+<b class="fc">&nbsp;		location1.setLandmark(riInput.getLandmark1());</b>
+<b class="fc">&nbsp;		location1.setLattitude(riInput.getLattitude1());</b>
+<b class="fc">&nbsp;		location1.setLongitude(riInput.getLongitude1());</b>
+&nbsp;
+<b class="fc">&nbsp;		Location location2=new Location();</b>
+<b class="fc">&nbsp;		location2.setAddress(riInput.getAddress2());</b>
+<b class="fc">&nbsp;		location2.setLandmark(riInput.getLandmark2());</b>
+<b class="fc">&nbsp;		location2.setLattitude(riInput.getLattitude2());</b>
+<b class="fc">&nbsp;		location2.setLongitude(riInput.getLongitude2());</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setLocation1(locationService.updateLocation(location1));</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setLocation2(locationService.updateLocation(location2));</b>
+&nbsp;
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to update pickup location
+&nbsp;	public RideInfoResponse updatePickupLocation(Integer rideId, Integer userId, Location pickup) {
+<b class="fc">&nbsp;		RideInfoResponse res = new RideInfoResponse();</b>
+<b class="fc">&nbsp;		res.setRideInfo(rideInfoRepository.findByRideIdAndUserId(rideId, userId));</b>
+<b class="fc">&nbsp;		Location pickupLocation=new Location();</b>
+<b class="fc">&nbsp;		pickupLocation.setLocationId(res.getRideInfo().getPickupLocationId());</b>
+<b class="fc">&nbsp;		pickupLocation.setAddress(pickup.getAddress());</b>
+<b class="fc">&nbsp;		pickupLocation.setLandmark(pickup.getLandmark());</b>
+<b class="fc">&nbsp;		pickupLocation.setLattitude(pickup.getLattitude());</b>
+<b class="fc">&nbsp;		pickupLocation.setLongitude(pickup.getLongitude());</b>
+<b class="fc">&nbsp;		res.setPickupLocation(locationService.updateLocation(pickupLocation));</b>
+&nbsp;
+<b class="fc">&nbsp;		res.setLocation1(locationService.findLocationById(res.getRideInfo().getStartLocationId()));</b>
+<b class="fc">&nbsp;		res.setLocation2(locationService.findLocationById(res.getRideInfo().getEndLocationId()));</b>
+&nbsp;
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to get all members
+&nbsp;	public List&lt;RideInfoResponse&gt; getAllMembers(Integer RideId) {
+&nbsp;
+<b class="fc">&nbsp;		List&lt;RideInfoResponse&gt; res = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;		List&lt;RideInfo&gt; members = rideInfoRepository.findByRideId(RideId);</b>
+&nbsp;
+<b class="fc">&nbsp;		for (RideInfo member : members) {</b>
+<b class="nc">&nbsp;			RideInfoResponse temp = new RideInfoResponse();</b>
+<b class="nc">&nbsp;			temp.setLocation1(locationService.findLocationById(member.getStartLocationId()));</b>
+<b class="nc">&nbsp;			temp.setLocation2(locationService.findLocationById(member.getEndLocationId()));</b>
+<b class="nc">&nbsp;			temp.setRideInfo(member);</b>
+<b class="nc">&nbsp;			temp.setPickupLocation(locationService.findLocationById(member.getPickupLocationId()));</b>
+<b class="nc">&nbsp;			res.add(temp);</b>
+<b class="nc">&nbsp;		}</b>
+&nbsp;
+<b class="fc">&nbsp;		return res;</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	// Method to get driver location
+&nbsp;	public RideInfoResponse getDriverLocation(Integer rideId) {
+<b class="fc">&nbsp;		RideInfo rideInfo = rideInfoRepository.findByRideIdAndIsDriver(rideId, true);</b>
+<b class="fc">&nbsp;		Location pickupLocation = locationService.findLocationById(rideInfo.getPickupLocationId());</b>
+<b class="fc">&nbsp;		return RideInfoResponse.builder().pickupLocation(pickupLocation).build();</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

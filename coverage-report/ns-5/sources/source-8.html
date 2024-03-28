@@ -1,0 +1,208 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RideInfoInput</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.dto.requests</a>
+</div>
+
+<h1>Coverage Summary for Class: RideInfoInput (com.app.ridesync.dto.requests)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">RideInfoInput</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.2%
+  </span>
+  <span class="absValue">
+    (16/19)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    84.2%
+  </span>
+  <span class="absValue">
+    (16/19)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">RideInfoInput$RideInfoInputBuilder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (16/20)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    80%
+  </span>
+  <span class="absValue">
+    (16/20)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.dto.requests;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.time.LocalTime;
+&nbsp;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Builder;
+&nbsp;import lombok.Getter;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;import lombok.Setter;
+&nbsp;
+&nbsp;@Getter
+<b class="fc">&nbsp;@Setter</b>
+<b class="nc">&nbsp;@Builder</b>
+<b class="nc">&nbsp;@AllArgsConstructor</b>
+<b class="fc">&nbsp;@NoArgsConstructor</b>
+&nbsp;public class RideInfoInput {
+&nbsp;	
+<b class="fc">&nbsp;	private Integer userId;</b>
+&nbsp;	
+&nbsp;	//Location - 1 start
+<b class="fc">&nbsp;	private double lattitude1;</b>
+<b class="fc">&nbsp;	private double longitude1;</b>
+<b class="fc">&nbsp;	private String landmark1;</b>
+<b class="fc">&nbsp;	private String address1;</b>
+&nbsp;	
+&nbsp;	//Location - 2 end
+<b class="fc">&nbsp;	private double lattitude2;</b>
+<b class="fc">&nbsp;	private double longitude2;</b>
+<b class="fc">&nbsp;	private String landmark2;</b>
+<b class="fc">&nbsp;	private String address2;</b>
+&nbsp;	
+&nbsp;	//RideInfo
+<b class="fc">&nbsp;	private Integer rideId; //--------------------generated (extract from ride Insertion)</b>
+<b class="fc">&nbsp;	private double fare;</b>
+<b class="fc">&nbsp;	private String comments;</b>
+<b class="nc">&nbsp;	private LocalTime waitTime;</b>
+<b class="fc">&nbsp;	private LocalDateTime estimatedTripStartTime;</b>
+<b class="fc">&nbsp;	private LocalDateTime estimatedTripEndTime;</b>
+&nbsp;	
+&nbsp;	// public RideInfoInput(Integer userId, double d, double e, String landmark1, String address1, double f,
+&nbsp;	// 		double g, String landmark2, String address2, Integer rideId2, double h, String comments,
+&nbsp;	// 		LocalDateTime localDate, LocalDateTime localDate2) {
+&nbsp;	// 	super();
+&nbsp;	// 	this.userId = userId;
+&nbsp;	// 	this.lattitude1 = d;
+&nbsp;	// 	this.longitude1 = e;
+&nbsp;	// 	this.landmark1 = landmark1;
+&nbsp;	// 	this.address1 = address1;
+&nbsp;	// 	this.lattitude2 = f;
+&nbsp;	// 	this.longitude2 = g;
+&nbsp;	// 	this.landmark2 = landmark2;
+&nbsp;	// 	this.address2 = address2;
+&nbsp;	// 	this.rideId = rideId2;
+&nbsp;	// 	this.fare = h;
+&nbsp;	// 	this.comments = comments;
+&nbsp;	// 	this.estimatedTripStartTime = localDate;
+&nbsp;	// 	this.estimatedTripEndTime = localDate2;
+&nbsp;	// }
+&nbsp;
+&nbsp;	// public RideInfoInput(Integer userId, double lattitude1, double longitude1, String landmark1, String address1,
+&nbsp;	// 		double lattitude2, double longitude2, String landmark2, String address2, Integer rideId, double fare,
+&nbsp;	// 		String comments) {
+&nbsp;	// 	super();
+&nbsp;	// 	this.userId = userId;
+&nbsp;	// 	this.lattitude1 = lattitude1;
+&nbsp;	// 	this.longitude1 = longitude1;
+&nbsp;	// 	this.landmark1 = landmark1;
+&nbsp;	// 	this.address1 = address1;
+&nbsp;	// 	this.lattitude2 = lattitude2;
+&nbsp;	// 	this.longitude2 = longitude2;
+&nbsp;	// 	this.landmark2 = landmark2;
+&nbsp;	// 	this.address2 = address2;
+&nbsp;	// 	this.rideId = rideId;
+&nbsp;	// 	this.fare = fare;
+&nbsp;	// 	this.comments = comments;
+&nbsp;	// }		
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

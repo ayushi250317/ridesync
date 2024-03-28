@@ -17,6 +17,16 @@ build-backend:
   only:
     - develop
 
+build-frontend:
+  stage: build-frontend
+  image: node:14-alpine
+  script:
+    - cd ridesync_frontend
+    - npm install
+    - npm run build
+  only:
+    - develop
+
 test-backend:
   stage: test-backend
   image: maven:latest

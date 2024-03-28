@@ -1,0 +1,174 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RideRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: RideRepository (com.app.ridesync.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">RideRepository$MockitoMock$OoGmVAnP</td>
+  </tr>
+  <tr>
+    <td class="name">RideRepository$MockitoMock$OoGmVAnP$auxiliary$TyeOVAEf</td>
+  </tr>
+  <tr>
+    <td class="name">RideRepository$MockitoMock$OoGmVAnP$auxiliary$Z2HuEwIH</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.repositories;
+&nbsp;
+&nbsp;import java.time.LocalDateTime;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.data.jpa.repository.Query;
+&nbsp;import org.springframework.data.repository.query.Param;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;
+&nbsp;import com.app.ridesync.entities.Ride;
+&nbsp;import com.app.ridesync.entities.RequestStatus;
+&nbsp;import com.app.ridesync.entities.User;
+&nbsp;import com.app.ridesync.projections.RideHeaderProjection;
+&nbsp;import com.app.ridesync.projections.RideHistoryProjection;
+&nbsp;import com.app.ridesync.projections.RideInfoProjection;
+&nbsp;import com.app.ridesync.projections.SearchResultProjection;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public interface RideRepository extends JpaRepository&lt;Ride, Integer&gt; {
+&nbsp;
+&nbsp;	List&lt;User&gt; findByUserId(Integer userId);
+&nbsp;
+&nbsp;	Ride findByRideId(Integer rideId);
+&nbsp;
+&nbsp;	List&lt;Ride&gt; findAllByUserId(Integer userId);
+&nbsp;
+&nbsp;	@Query(&quot;SELECT &quot;
+&nbsp;			+ &quot;NEW com.app.ridesync.projections.RideHistoryProjection(ride.Id AS rideId, user.fullName AS riderName, rideInfo.isDriver, &quot;
+&nbsp;			+ &quot;ride.description,ride.startTime AS originalTripStartTime, ride.createdTime as tripPostedTime, ride.status, &quot;
+&nbsp;			+ &quot;vehicle.model AS rideVehicle, &quot;
+&nbsp;			+ &quot;startLocation.address AS startLocationAddress, startLocation.landmark AS startLocationLandmark, &quot;
+&nbsp;			+ &quot;endLocation.address AS endLocationAddress, endLocation.landmark AS endLocationLandmark, &quot;
+&nbsp;			+ &quot;rideInfo.fare) &quot;
+&nbsp;			+ &quot;FROM RideInfo rideInfo &quot;
+&nbsp;			+ &quot;JOIN Ride ride ON rideInfo.rideId = ride.rideId &quot;
+&nbsp;			+ &quot;JOIN Vehicle vehicle ON ride.vehicleId = vehicle.vehicleId &quot;
+&nbsp;			+ &quot;JOIN Location startLocation ON rideInfo.startLocationId = startLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN Location AS endLocation ON rideInfo.endLocationId = endLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN User user ON rideInfo.userId = user.userId &quot;
+&nbsp;			+ &quot;WHERE rideInfo.userId = :userId&quot;)
+&nbsp;
+&nbsp;
+&nbsp;	List&lt;RideHistoryProjection&gt; findRidesByUserId(@Param(&quot;userId&quot;) Integer userId);
+&nbsp;
+&nbsp;	@Query (&quot;SELECT &quot;
+&nbsp;			+ &quot;NEW com.app.ridesync.projections.RideInfoProjection(user.fullName AS riderName,user.userId riderId ,rideInfo.isDriver, &quot;
+&nbsp;			+ &quot;startLocation.address AS startLocationAddress, startLocation.landmark AS startLocationLandmark, &quot;
+&nbsp;			+ &quot;startLocation.lattitude startLat, startLocation.longitude startLong, &quot;
+&nbsp;			+ &quot;endLocation.address AS endLocationAddress, endLocation.landmark AS endLocationLandmark, &quot;
+&nbsp;			+ &quot;endLocation.lattitude endLat, endLocation.longitude endLong, &quot;
+&nbsp;			+ &quot;rideInfo.fare,rideInfo.comments,rideInfo.rating,rideInfo.waitTime,rideInfo.estimatedTripStartTime AS riderTripStartTime, rideInfo.estimatedTripEndTime AS riderTripEndTime) &quot;
+&nbsp;
+&nbsp;			+ &quot;FROM RideInfo rideInfo &quot;
+&nbsp;			+ &quot;JOIN Location startLocation ON rideInfo.startLocationId = startLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN Location AS endLocation ON rideInfo.endLocationId = endLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN User user ON rideInfo.userId = user.userId &quot;
+&nbsp;			+ &quot;WHERE rideInfo.rideId = :rideId&quot;)
+&nbsp;	List&lt;RideInfoProjection&gt; findRideInfoByRideId(@Param(&quot;rideId&quot;) Integer rideId);
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;	@Query (&quot;SELECT &quot;
+&nbsp;			+ &quot;NEW com.app.ridesync.projections.RideHeaderProjection(ride.description,ride.startTime AS originalTripStartTime, &quot;
+&nbsp;			+ &quot;ride.createdTime as tripPostedTime, ride.status, &quot;
+&nbsp;			+ &quot;ride.seatsAvailable,&quot;
+&nbsp;			+ &quot;startLocation.address startLocationAddress, &quot;
+&nbsp;			+ &quot;endLocation.address endLocationAddress,&quot;
+&nbsp;			+ &quot;vehicle.model AS rideVehicle) &quot;
+&nbsp;			+ &quot;FROM Ride ride &quot;
+&nbsp;			+ &quot;JOIN RideInfo rideInfo ON ride.rideId = rideInfo.rideId AND rideInfo.isDriver &quot;
+&nbsp;			+ &quot;JOIN Location startLocation ON rideInfo.startLocationId = startLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN Location endLocation ON rideInfo.endLocationId = endLocation.locationId &quot;
+&nbsp;			+ &quot;JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId &quot;
+&nbsp;			+ &quot;WHERE ride.rideId = :rideId&quot;)
+&nbsp;
+&nbsp;
+&nbsp;	List&lt;RideHeaderProjection&gt; findRideHeaderInfoByRideId(@Param(&quot;rideId&quot;) Integer rideId);
+&nbsp;
+&nbsp;	
+&nbsp;	@Query(&quot;SELECT new com.app.ridesync.projections.SearchResultProjection(ride.rideId as rideId,rideInfo.userId as driverId,ride.startTime,&quot;
+&nbsp;			+ &quot; startLocation.address startLocationAddress, startLocation.landmark startLocationLandmark, endLocation.address endLocationAddress, endLocation.landmark endLocationLandmark, &quot;
+&nbsp;			+ &quot; ride.createdTime, ride.status, ride.description, ride.seatsAvailable, vehicle.model AS rideVehicle, &quot;
+&nbsp;			+ &quot; CASE WHEN rideRequest.rideRequestId IS NULL THEN true&quot;
+&nbsp;			+ &quot;      WHEN rideRequest.requestStatus IN (RequestStatus.REJECTED, RequestStatus.EXPIRED) THEN true &quot;
+&nbsp;			+ &quot; ELSE false END AS enableRequestRide,&quot;
+&nbsp;			+ &quot; rideInfo.fare) &quot;
+&nbsp;			+ &quot; FROM Ride ride &quot;
+&nbsp;			+ &quot; JOIN RideInfo rideInfo ON ride.rideId = rideInfo.rideId AND rideInfo.isDriver&quot;
+&nbsp;			+ &quot; JOIN Location startLocation ON startLocation.locationId = rideInfo.startLocationId&quot;
+&nbsp;			+ &quot; JOIN Location endLocation ON endLocation.locationId = rideInfo.endLocationId&quot;
+&nbsp;			+ &quot; JOIN Vehicle vehicle on vehicle.vehicleId = ride.vehicleId&quot;
+&nbsp;			+ &quot; LEFT JOIN RideRequestInfo rideRequest ON rideRequest.driverId = rideInfo.userId AND rideRequest.rideId = ride.rideId AND rideRequest.riderId = :userId&quot;
+&nbsp;			+ &quot; WHERE rideInfo.userId != :userId AND ride.status != &#39;completed&#39; AND ride.startTime &gt;= :rideTimeStartLimit AND ride.startTime &lt;= :rideTimeEndLimit AND ride.rideId IN :rideIds&quot;
+&nbsp;			+ &quot; ORDER BY ride.startTime&quot;)
+&nbsp;	List&lt;SearchResultProjection&gt;findRideDetailsByRideIds(@Param(&quot;rideIds&quot;) List&lt;Integer&gt; rideIds, @Param(&quot;rideTimeStartLimit&quot;) LocalDateTime rideTimeStartLimit, @Param(&quot;rideTimeEndLimit&quot;) LocalDateTime rideTimeEndLimit, @Param(&quot;userId&quot;) Integer userId);
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

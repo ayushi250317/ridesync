@@ -1,0 +1,219 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > MessageService</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.services</a>
+</div>
+
+<h1>Coverage Summary for Class: MessageService (com.app.ridesync.services)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MessageService</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    33.3%
+  </span>
+  <span class="absValue">
+    (3/9)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    64%
+  </span>
+  <span class="absValue">
+    (16/25)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.services;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.UUID;
+&nbsp;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.messaging.simp.SimpMessagingTemplate;
+&nbsp;import org.springframework.stereotype.Service;
+&nbsp;
+&nbsp;import com.app.ridesync.entities.ChatIdentifier;
+&nbsp;import com.app.ridesync.entities.Message;
+&nbsp;import com.app.ridesync.entities.Notification;
+&nbsp;import com.app.ridesync.projections.MessageProjection;
+&nbsp;import com.app.ridesync.repositories.ChatIdentifierRepository;
+&nbsp;import com.app.ridesync.repositories.MessageRepository;
+&nbsp;
+&nbsp;/**
+&nbsp; * Service class for managing messages.
+&nbsp; * Provides methods for persisting and sending messages, managing chat
+&nbsp; * identifiers,
+&nbsp; * retrieving chat messages, and creating notifications.
+&nbsp; */
+&nbsp;@Service
+&nbsp;public class MessageService {
+&nbsp;	private final ChatIdentifierRepository chatIdentifierRepository;
+&nbsp;	private final SimpMessagingTemplate simpMessagingTemplate;
+&nbsp;	private final MessageRepository messageRepository;
+&nbsp;	private NotificationService notificationService;
+&nbsp;
+&nbsp;	private static final String DESTINATION = &quot;/queue/messages/&quot;;
+&nbsp;
+&nbsp;	@Autowired
+&nbsp;	public MessageService(ChatIdentifierRepository chatIdentifierRepository,
+&nbsp;			SimpMessagingTemplate simpMessagingTemplate, MessageRepository messageRepository,
+<b class="fc">&nbsp;			NotificationService notificationService) {</b>
+<b class="fc">&nbsp;		this.chatIdentifierRepository = chatIdentifierRepository;</b>
+<b class="fc">&nbsp;		this.simpMessagingTemplate = simpMessagingTemplate;</b>
+<b class="fc">&nbsp;		this.messageRepository = messageRepository;</b>
+<b class="fc">&nbsp;		this.notificationService = notificationService;</b>
+&nbsp;
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Persists a message and sends it to the message broker.
+&nbsp;	 */
+&nbsp;	public void persistAndSendMessageToBroker(String channel, Message message) {
+<b class="nc">&nbsp;		persistMessage(message);</b>
+<b class="nc">&nbsp;		persistNotification(message);</b>
+<b class="nc">&nbsp;		sendMessage(channel, message);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Retrieves or creates a chat identifier for a given sender and recipient.
+&nbsp;	 */
+&nbsp;	public String getChatIdentifier(Integer senderId, Integer recipientId) {
+<b class="fc">&nbsp;		String chatIdentifer = chatIdentifierRepository.findBySenderAndRecipientId(senderId, recipientId);</b>
+&nbsp;
+<b class="fc">&nbsp;		if (chatIdentifer == null)</b>
+<b class="fc">&nbsp;			chatIdentifer = createAndPersistChatIdentifier(senderId, recipientId);</b>
+&nbsp;
+<b class="fc">&nbsp;		return chatIdentifer;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Retrieves chat messages by recipient ID.
+&nbsp;	 */
+&nbsp;	public List&lt;MessageProjection&gt; getChatMessagesByRecipientId(Integer recipientId) {
+<b class="nc">&nbsp;		return messageRepository.findByRecipientId(recipientId);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Retrieves chat messages by sender and recipient ID.
+&nbsp;	 */
+&nbsp;	public List&lt;MessageProjection&gt; getChatMessagesBySenderAndRecipientId(Integer senderId, Integer recipientId) {
+<b class="nc">&nbsp;		return messageRepository.findBySenderAndRecipientId(senderId, recipientId);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Creates and persists a chat identifier based on sender and recipient IDs.
+&nbsp;	 */
+&nbsp;	private String createAndPersistChatIdentifier(Integer senderId, Integer recipientId) {
+<b class="fc">&nbsp;		String generatedChatIdentifier = UUID.randomUUID().toString();</b>
+&nbsp;
+<b class="fc">&nbsp;		ChatIdentifier createdChatIdentifier = new ChatIdentifier();</b>
+<b class="fc">&nbsp;		createdChatIdentifier.setSenderId(senderId);</b>
+<b class="fc">&nbsp;		createdChatIdentifier.setRecipientId(recipientId);</b>
+<b class="fc">&nbsp;		createdChatIdentifier.setChatIdentifier(generatedChatIdentifier);</b>
+&nbsp;
+<b class="fc">&nbsp;		chatIdentifierRepository.save(createdChatIdentifier);</b>
+&nbsp;
+<b class="fc">&nbsp;		return generatedChatIdentifier;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Persit notification for a message
+&nbsp;	 */
+&nbsp;	private void persistNotification(Message message) {
+<b class="nc">&nbsp;		Notification createdNotification = notificationService.createNotificationFromMessage(message);</b>
+<b class="nc">&nbsp;		notificationService.addNotification(createdNotification);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Persists message
+&nbsp;	 */
+&nbsp;	private void persistMessage(Message message) {
+<b class="nc">&nbsp;		messageRepository.save(message);</b>
+&nbsp;	}
+&nbsp;
+&nbsp;	/**
+&nbsp;	 * Sends message
+&nbsp;	 */
+&nbsp;	private void sendMessage(String channel, Message message) {
+<b class="nc">&nbsp;		simpMessagingTemplate.convertAndSend(DESTINATION + channel, message);</b>
+&nbsp;	}
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

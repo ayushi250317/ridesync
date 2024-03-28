@@ -1,0 +1,181 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Document</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.entities</a>
+</div>
+
+<h1>Coverage Summary for Class: Document (com.app.ridesync.entities)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Document</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (2/10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    14.3%
+  </span>
+  <span class="absValue">
+    (2/14)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">Document$DocumentBuilder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">Document$HibernateInstantiator$5lks4AjQ</td>
+  </tr>
+  <tr>
+    <td class="name">Document$HibernateInstantiator$TY6Tfdaj</td>
+  </tr>
+  <tr>
+    <td class="name">Document$HibernateProxy$3eo0fjNl</td>
+  </tr>
+  <tr>
+    <td class="name">Document$HibernateProxy$t6gNB8I2</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    18.2%
+  </span>
+  <span class="absValue">
+    (2/11)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    13.3%
+  </span>
+  <span class="absValue">
+    (2/15)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.entities;
+&nbsp;
+&nbsp;import java.time.LocalDate;
+&nbsp;
+&nbsp;import jakarta.persistence.Entity;
+&nbsp;import jakarta.persistence.GeneratedValue;
+&nbsp;import jakarta.persistence.GenerationType;
+&nbsp;import jakarta.persistence.Id;
+&nbsp;import jakarta.persistence.Table;
+&nbsp;import lombok.AllArgsConstructor;
+&nbsp;import lombok.Builder;
+&nbsp;import lombok.Data;
+&nbsp;import lombok.NoArgsConstructor;
+&nbsp;
+<b class="fc">&nbsp;@Data</b>
+<b class="nc">&nbsp;@Builder</b>
+<b class="fc">&nbsp;@NoArgsConstructor</b>
+<b class="nc">&nbsp;@AllArgsConstructor</b>
+&nbsp;@Entity
+&nbsp;@Table(name = &quot;document&quot;)
+&nbsp;public class Document{
+&nbsp;	
+&nbsp;	@Id
+&nbsp;    @GeneratedValue(strategy = GenerationType.AUTO)
+<b class="nc">&nbsp;	private Integer documentId;</b>
+<b class="nc">&nbsp;	private String userDocumentID;</b>
+<b class="nc">&nbsp;	private Integer userId;</b>
+<b class="nc">&nbsp;	private String documentType;</b>
+<b class="nc">&nbsp;	private LocalDate expiryDate;</b>
+&nbsp;	
+&nbsp;	public Document(String documentName, Integer userId, String documentType, LocalDate expiryDate) {
+<b class="nc">&nbsp;		super();</b>
+<b class="nc">&nbsp;		this.userDocumentID = documentName;</b>
+<b class="nc">&nbsp;		this.userId = userId;</b>
+<b class="nc">&nbsp;		this.documentType = documentType;</b>
+<b class="nc">&nbsp;		this.expiryDate = expiryDate;</b>
+&nbsp;	}
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,100 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > RideInfoRepository</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.app.ridesync.repositories</a>
+</div>
+
+<h1>Coverage Summary for Class: RideInfoRepository (com.app.ridesync.repositories)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+</tr>
+  <tr>
+    <td class="name">RideInfoRepository$MockitoMock$eAT6WqIL</td>
+  </tr>
+  <tr>
+    <td class="name">RideInfoRepository$MockitoMock$eAT6WqIL$auxiliary$3ZXvvPZV</td>
+  </tr>
+  <tr>
+    <td class="name">RideInfoRepository$MockitoMock$eAT6WqIL$auxiliary$AMef3dXO</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.app.ridesync.repositories;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;import java.util.Optional;
+&nbsp;
+&nbsp;import org.springframework.data.jpa.repository.JpaRepository;
+&nbsp;import org.springframework.stereotype.Repository;
+&nbsp;
+&nbsp;import com.app.ridesync.entities.RideInfo;
+&nbsp;
+&nbsp;@Repository
+&nbsp;public interface RideInfoRepository extends JpaRepository&lt;RideInfo, Integer&gt; {
+&nbsp;	List&lt;RideInfo&gt; findByRideId(Integer rideId);
+&nbsp;	
+&nbsp;	Optional&lt;RideInfo&gt; findByRideInfoId(Integer rideInfoId);
+&nbsp;    
+&nbsp;    Optional&lt;RideInfo&gt; findByUserId(Integer userId);
+&nbsp;
+&nbsp;	RideInfo findByRideIdAndUserId(Integer rideId, Integer userId);
+&nbsp;
+&nbsp;	RideInfo findByRideIdAndIsDriver(Integer rideId, boolean isDriver);
+&nbsp;}
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-03-27 13:09</div>
+</div>
+</body>
+</html>
