@@ -16,7 +16,7 @@ Ridesync is a ride-sharing application designed to connect riders and drivers se
 
 ## Backend (Java SpringBoot)
 
-##### Dependencies
+#### Dependencies
 
 | Dependency Group             | Description                                               | Artifact                      | Version |
 | ---------------------------- | --------------------------------------------------------- | ----------------------------- | ------- |
@@ -69,14 +69,14 @@ Ridesync is a ride-sharing application designed to connect riders and drivers se
 | web-vitals                       | Library for tracking web vital metrics                | 2.1.4   |
 | yup                              | JavaScript schema builder for validation              | 1.3.3   |
 
-## Scripts
+### Scripts
 
 - `start`: Starts the development server.
 - `build`: Builds the production-ready app.
 - `test`: Runs tests using React testing framework.
 - `eject`: Ejects the configuration for customization.
 
-## Development Dependencies
+### Development Dependencies
 
 | Dependency  | Description                           | Version |
 | ----------- | ------------------------------------- | ------- |
@@ -253,6 +253,8 @@ To build the frontend application in your CI/CD pipeline, follow these steps:
 
 After the successful execution of the pipeline, you will have the compiled assets of the frontend application ready for deployment.
 
+---
+
 ## Backend Deployment Steps
 
 To deploy the backend application, follow these steps:
@@ -349,7 +351,7 @@ To deploy the frontend application, follow these steps:
 
 Adjust the commands as per your project's configuration as per your requirements.
 
-...
+---
 
 ## User Scenarios
 
@@ -375,6 +377,8 @@ Drivers receive ride requests from riders and can accept or reject them accordin
 
 Drivers can view their current, upcoming, and completed rides in the activity section.
 
+---
+
 #### Rider Perspective
 
 ##### Finding a Ride:
@@ -393,52 +397,66 @@ Riders can track the status of their rides, including live location tracking of 
 
 Riders can view their current, upcoming, and completed rides in the activity section.
 
-- Login and Signup
+---
+
+- Authentication: User can login, signup and reset password.
 
   ![Screenshot 1](/ridesync_frontend/public/login.png)
   ![Screenshot 2](/ridesync_frontend/public/registration.png)
+  ![Screenshot 2](/ridesync_frontend/public/forgotPassword.png)
 
-- Driver Registration: Drivers can easily register by providing necessary documents such as license details and vehicle registration.
+- Driver Registration: Drivers can register by providing necessary documents such as license details and vehicle registration.
   ![Screenshot 3](/ridesync_frontend/public/documentreg.png)
   ![Screenshot 4](/ridesync_frontend/public/Vehicleregistration.png)
-- Ride Posting: Drivers can post available rides specifying start location, end location, start time, and fare.
+- Posting Ride: Drivers can post available rides specifying start location, end location, start time, and fare.
   ![Screenshot 5](/ridesync_frontend/public/postride.png)
   ![Screenshot 6](/ridesync_frontend/public/postride2.png)
-- Ride Request: Riders can search for rides based on driver proximity and request rides accordingly.
 - Find Ride: Riders can find ride by entering their start location, end location and start time which returns all the available rides.
+- Ride Request: Riders can search for rides and request rides based on driver's proximity.
   ![Screenshot 7](/ridesync_frontend/public/findride.png)
+
 - Activity Section: The app includes an activity section with three tabs: current, upcoming, and completed rides, providing users with a comprehensive view of their ride history.
 
-- ###### Upcoming ride
+- ###### Upcoming rides
 
 ![Screenshot 8](/ridesync_frontend/public/activity.png)
 
-- ###### Current ride
+- ###### Current rides
 
 ![Screenshot 9](/ridesync_frontend/public/activitySectionCurrent.png)
 
-- ###### Past ride
+- ###### Past rides
 
 ![Screenshot 10](/ridesync_frontend/public/activitySectionPast.png)
 
 - Get all ride requests: Driver can get all ride requests in the ride info page to accept or reject the ride.
-- Ride Acceptance: Drivers have the option to accept or reject ride requests from riders.
 
   ![Screenshot 9](/ridesync_frontend/public/rideinfo.png)
 
-- Accept ride
+- ###### Accept ride
 
 ![Screenshot 10](/ridesync_frontend/public/rideinfoRideAccepted.png)
 
 - Live Location Tracking: Ridesync features live location tracking, allowing riders to monitor the real-time location of drivers and drivers to track the pickup location of riders.
   ![Screenshot 11](/ridesync_frontend/public/livelocationtracking.png)
 
-- Notification System: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
+- In-app Notification: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
   ![Screenshot 12](/ridesync_frontend/public/notifications.png)
-- Chatting: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
+- In-app Messaging: The app employs a notification system to keep users informed about accepted or rejected ride requests and other relevant updates.
   ![Screenshot 13](/ridesync_frontend/public/Chat.png)
 
-#### Contributors
+### Test Coverage
+
+[![Coverage Status](https://img.shields.io/badge/Line_Coverage-82%25-brightgreen.svg)](./coverage-report/index.html)
+[![Coverage Status](https://img.shields.io/badge/Class_Coverage-82.5%25-brightgreen.svg)](./coverage-report/index.html)
+[![Coverage Status](https://img.shields.io/badge/Method_Coverage-83.2%25-brightgreen.svg)](./coverage-report/index.html)
+[![Coverage Status](https://img.shields.io/badge/JUnit_Test_Cases-90-brightgreen.svg)](./coverage-report/index.html)
+
+#### Detailed Report
+
+You can view the detailed test coverage report [here](./coverage-report/index.html).
+
+### Contributors
 
 - Meer Patel
 - Ayushi Malhotra
