@@ -1,0 +1,3 @@
+CORS-ISSUE
+
+- Due to security configuration of Gmap location api we are not able to use it without secured line(https) so in order to resolve that we are using cors extension for Gmap api calls. However, websocket cannot work with cors extension so we have to toggle it off while displaying chat functionality.
