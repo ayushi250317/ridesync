@@ -80,7 +80,6 @@ const ChatDrawer = ({ isOpen, onClose, chatPartnerId, chatPartnerName }) => {
     };
 
     const subscribe = (chatIdentifier) => {
-        var chatUrl = API.replace('/api/v1', '');
         stompClient.current.subscribe(`/queue/messages/${chatIdentifier}`, (message) => {
             const jsonString = Object.keys(message._binaryBody).map(key => String.fromCharCode(message._binaryBody[key])).join('');
             const jsonObject = JSON.parse(jsonString);

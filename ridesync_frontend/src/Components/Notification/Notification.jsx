@@ -4,16 +4,12 @@ import NotificationCard from './NotificationCard.';
 import axios from 'axios';
 import { API } from '../../sharedComponent/API';
 import { Spinner } from '@chakra-ui/react'
-import ChatDrawer from '../../sharedComponent/Chat/ChatDrawer';
+
 const Notification = () => {
     const backbtn = "<"
     const [isLargerThan1280] = useMediaQuery("(min-width: 700px)");
     const [notificationsArray, setNotificationsArray] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [isChatDrawerOpen, setIsChatDrawerOpen] = useState(false);
-    const [chatUser, setchatUser] = useState({ riderId: null, riderName: null });
-
-    const toggleChatDrawer = () => setIsChatDrawerOpen(!isChatDrawerOpen);
 
     useEffect(() => {
         setLoading(true)
@@ -53,14 +49,7 @@ const Notification = () => {
                     {
                         notificationsArray.length ? (
                             notificationsArray.map(elem => {
-                                // const handleClick = elem.notificationType === 'CHAT' ? () => {
-                                //     setchatUser({ riderId: elem.userId, riderName: elem.message.split(' ')[0] })
-                                //     toggleChatDrawer();
-                                // } : undefined;
-
-                                return <NotificationCard cardAttributes={elem}
-                                // onClick={handleClick}
-                                />
+                                return <NotificationCard cardAttributes={elem}/>
                             })
                         ) : (
                             <Text textAlign="center">No notifications available</Text>
@@ -70,12 +59,6 @@ const Notification = () => {
 
 
             </Center>
-            <ChatDrawer
-                isOpen={isChatDrawerOpen}
-                onClose={toggleChatDrawer}
-                chatPartnerId={chatUser.riderId}
-                chatPartnerName={chatUser.riderName}
-            />
         </Box>
     )
 }

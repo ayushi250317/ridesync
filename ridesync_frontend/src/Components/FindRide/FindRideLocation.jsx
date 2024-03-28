@@ -142,8 +142,8 @@ const FindRideLocation = () => {
             {reqSent && findRidesResult.length === 0 ? <Text fontSize="xl" textAlign="center" mt="6"> ☹️ No Rides Available</Text> :
                 <Box w="100%"  >
                     {reqSent && <Text fontSize="3xl" textAlign="center" mt="6">Available Rides</Text>}
-                    {findRidesResult.map(rides => {
-                        return <Box border="1px solid #D4D4D4" borderRadius="xl" my="5" p={["4", "4", "5", "6"]} boxShadow="xl" >
+                    {findRidesResult.map((rides, index) => {
+                        return <Box border="1px solid #D4D4D4" borderRadius="xl" my="5" p={["4", "4", "5", "6"]} boxShadow="xl" key={index}>
                             <Box >
                                 <Flex justifyContent="space-between">
 
