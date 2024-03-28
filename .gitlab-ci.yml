@@ -19,7 +19,7 @@ build-backend:
 
 build-frontend:
   stage: build-frontend
-  image: node:14-alpine
+  image: node:latest
   script:
     - cd ridesync_frontend
     - npm install
