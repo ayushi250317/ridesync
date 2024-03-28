@@ -128,10 +128,10 @@ const VehicleForm = ({ onSubmitVehicleDetails, loading }) => {
                     </FormErrorMessage>
                 </FormControl>
             </SimpleGrid>
-            <Flex justifyContent="flex-end" w="100%">
+            <Flex justifyContent="center" w="100%">
                 <Button
                     isLoading={loading}
-                    w="50%"
+                    w={["92%", "92%", "50%", "50%"]}
                     py="5"
                     colorScheme='blue'
                     type='submit'

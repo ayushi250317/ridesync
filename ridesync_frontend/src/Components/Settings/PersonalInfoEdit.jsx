@@ -9,7 +9,7 @@ import {
     useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { API } from "../../sharedComponent/API";
 import { useNavigate } from "react-router-dom"
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -34,14 +34,21 @@ const schema = yup
     })
     .required();
 
-const loggedInUserInfo = JSON.parse(
-    localStorage.getItem("loggedInUserDetails")
-);
-
 const PersonalInfoEdit = () => {
     const [loading, setLoading] = useState(false);
+    const [loggedInUserDetails, setLoggedInUserDetails] = useState({});
     const toast = useToast();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        setLoading(true);
+        const loggedInUserInfo = JSON.parse(
+            localStorage.getItem("loggedInUserDetails")
+        );
+        setLoggedInUserDetails(loggedInUserInfo);
+        setLoading(false);
+    }, [])
+    
 
     const changeDateFormat = (monthOrDay) => {
         if (monthOrDay < 10) {
@@ -60,29 +67,29 @@ const PersonalInfoEdit = () => {
         mode: "onBlur",
         resolver: yupResolver(schema),
         values: {
-            fullName: loggedInUserInfo?.user?.fullName,
-            address: loggedInUserInfo?.user?.address,
+            fullName: loggedInUserDetails?.user?.fullName,
+            address: loggedInUserDetails?.user?.address,
             dateOfBirth: `${new Date(
-                loggedInUserInfo?.user?.dateOfBirth
+                loggedInUserDetails?.user?.dateOfBirth
             ).getFullYear()}-${changeDateFormat(
-                new Date(loggedInUserInfo?.user?.dateOfBirth).getMonth()
+                new Date(loggedInUserDetails?.user?.dateOfBirth).getMonth()
             )}-${changeDateFormat(
-                new Date(loggedInUserInfo?.user?.dateOfBirth).getDate()
+                new Date(loggedInUserDetails?.user?.dateOfBirth).getDate()
             )}`,
-            phoneNumber: loggedInUserInfo?.user?.phoneNumber,
+            phoneNumber: loggedInUserDetails?.user?.phoneNumber,
         },
     });
 
     const onSubmit = (data) => {
         setLoading(true);
         const config = {
-            headers: { Authorization: `Bearer ${loggedInUserInfo.token}` },
+            headers: { Authorization: `Bearer ${loggedInUserDetails.token}` },
         };
         axios
             .put(`${API}/auth/updateUser`, data, config)
             .then((response) => {
                 if (response.data.success) {
-                    const newStorageObj = { ...loggedInUserInfo, user: response.data.responseObject }
+                    const newStorageObj = { ...loggedInUserDetails, user: response.data.responseObject }
                     localStorage.setItem('loggedInUserDetails', JSON.stringify(newStorageObj));
                     toast({
                         title: `User updated successfully`,
