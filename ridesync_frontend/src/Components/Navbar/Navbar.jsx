@@ -10,8 +10,7 @@ import {
     PopoverBody,
     PopoverCloseButton,
 } from '@chakra-ui/react'
-import { IoMdDocument } from 'react-icons/io';
-import { FaCar, FaUser } from 'react-icons/fa';
+import { FaUser } from 'react-icons/fa';
 
 const Navbar = () => {
     return (
@@ -71,21 +70,6 @@ const Navbar = () => {
                                                 <Box mx="2">
 
                                                     <Link to="/editpersonalinfo" >Personal Details</Link>
-                                                </Box>
-                                            </Flex>
-                                            <Flex justifyContent="start" alignItems="center" my="1">
-
-                                                <FaCar size="25px" />
-                                                <Box mx="2">
-
-                                                    <Link>Vehicle</Link>
-                                                </Box>
-                                            </Flex>
-                                            <Flex justifyContent="start" alignItems="center" my="1">
-                                                <IoMdDocument size="25px" />
-                                                <Box mx="2">
-
-                                                    <Link>Documents</Link>
                                                 </Box>
                                             </Flex>
                                         </Flex>

@@ -1,7 +1,7 @@
-import { Box, Center, Flex, Text, useDisclosure } from '@chakra-ui/react'
+import { Box, Center, Flex, useDisclosure } from '@chakra-ui/react'
 import React from 'react'
 import { IoNotifications, IoSettingsSharp } from "react-icons/io5";
-import { FaCar, FaHistory, FaHome, FaUser, FaUserEdit } from "react-icons/fa";
+import { FaHistory, FaHome, FaUser, FaUserEdit } from "react-icons/fa";
 import { RiLogoutCircleRFill } from "react-icons/ri";
 import {
     Drawer,
@@ -11,7 +11,6 @@ import {
     DrawerContent,
     DrawerCloseButton,
 } from '@chakra-ui/react'
-import { IoMdDocument } from "react-icons/io";
 
 import { Link } from 'react-router-dom';
 const BottomNavbar = () => {
@@ -39,21 +38,6 @@ const BottomNavbar = () => {
                                 <Box mx="2">
 
                                     <Link to="/editpersonalinfo">Personal Details</Link>
-                                </Box>
-                            </Flex>
-                            <Flex justifyContent="start" alignItems="center" my="1">
-
-                                <FaCar size="30px" />
-                                <Box mx="2">
-
-                                    <Link>Vehicle</Link>
-                                </Box>
-                            </Flex>
-                            <Flex justifyContent="start" alignItems="center" my="1">
-                                <IoMdDocument size="30px" />
-                                <Box mx="2">
-
-                                    <Link>Documents</Link>
                                 </Box>
                             </Flex>
                             <Flex justifyContent="start" alignItems="center" my="1">
