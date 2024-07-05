@@ -97,7 +97,6 @@ const AddressInput = ({ label, setAddressInfo, addressInfo }) => {
 
 const Locations = ({ fromAddress, toAddress, setFromAddress, setToAddress }) => {
   const { isLoaded } = useJsApiLoader({
-    // googleMapsApiKey: "AIzaSyAgF12Bol5WhhLKL8WFlTc-qjMlPjugM3A",
     googleMapsApiKey: GMAP_API_KEY,
     libraries,
   });
